@@ -12,7 +12,7 @@ class UserTransformer extends TransformerAbstract
         return [
             'name' => $user->name,
             'email' => $user->email.".id",
-            'registered' => $user->created_at->diffForHumans(),
+            // 'registered' => $user->created_at->diffForHumans(),
         ];
     }
 }

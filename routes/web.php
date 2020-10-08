@@ -12,5 +12,5 @@
 */
 
 Route::get('/', function () {
-    return view('dashboard.index');
+    return view('dashboard.testing');
 });

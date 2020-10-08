@@ -26,10 +26,14 @@
         <!-- END Icons -->
 
         <!-- Stylesheets -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <!-- Fonts and Codebase framework -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">
         <link rel="stylesheet" id="css-main" href="{{ asset('codebase/src/assets/css/codebase.min.css') }}">
+        {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/styles.css') }}" /> --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.light.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.common.css') }}" />
 
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->

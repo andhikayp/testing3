@@ -11,11 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('dashboard.index');
+Route::get('/', 'AuthController@home');
+Route::post('/login', 'AuthController@login');
+
+Route::middleware(['auth'])->group(function () {
+	Route::get('/dashboard', function () {
+	    return view('dashboard.testing');
+	});
+
 });
-Route::get('/testing', function () {
-    return view('dashboard.testing');
+
+Route::get('/test', 'AuthController@testing_auth');
+Route::get('/wkwk', function () {
+    return view('dashboard.index');
 });
 Route::get('/pelajaran', 'UserController@pelajaran');
 Route::get('/admindt', 'UserController@admindt');

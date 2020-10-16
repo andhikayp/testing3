@@ -8,7 +8,7 @@
         <div class="hero-static col-md-6 col-xl-8 d-none d-md-flex align-items-md-end">
             <div class="p-30 invisible" data-toggle="appear">
                 <p class="font-size-h3 font-w600 text-white">
-                    MONEV USP-BKS - Aplikasi Monitoring dan Evaluasi Hasil USP-BKS Dinas Pendidikan Provinsi Jawa Timur
+                    MONEV USP-BKS - Aplikasi Monitoring dan Evaluasi USP-BKS Dinas Pendidikan Provinsi Jawa Timur
                 </p>
                 <p class="font-italic text-white-op">
                     Copyright &copy; Dinas Pendidikan Provinsi Jawa Timur <span class="js-year-copy"></span>
@@ -37,6 +37,10 @@
                     <div class="alert alert-danger">
                         <strong>Login Gagal!</strong>
                         {{ session('error') }}
+                    </div>
+                @elseif(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}                        
                     </div>
                 @endif
                 <form id="login-form" class="js-validation-signin px-30" action="{{url('/login')}}" method="post">

@@ -37,8 +37,7 @@
                 <!-- Logo -->
                 <div class="content-header-item">
                     <a class="link-effect font-w700" href="index.html">
-                        <i class="si si-fire text-primary"></i>
-                        <span class="font-size-xl text-dual-primary-dark">code</span><span class="font-size-xl text-primary">base</span>
+                        <span class="font-size-l text-dual-primary-dark">MONEV </span><span class="font-size-l text-primary">USP-BKS 2020</span>
                     </a>
                 </div>
                 <!-- END Logo -->
@@ -61,9 +60,9 @@
                     <img class="img-avatar" src="{{ asset('img/logo_jatim.png') }}" alt="">
                 </a>
                 <ul class="list-inline mt-10">
-                    <li class="list-inline-item">
+                    {{-- <li class="list-inline-item">
                         <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="be_pages_generic_profile.html">J. Smith</a>
-                    </li>
+                    </li> --}}
                     <li class="list-inline-item">
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                         <a class="link-effect text-dual-primary-dark" data-toggle="layout" data-action="sidebar_style_inverse_toggle" href="javascript:void(0)">

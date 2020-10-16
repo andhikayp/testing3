@@ -30,11 +30,18 @@ class AuthController extends Controller
                 return redirect('/dashboard');
             }
         }
-        dd($tes);
+        return redirect('/')->with('error','Username atau Password salah!');
     }
 
     public function testing_auth()
     {
         dd(Auth::user());
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::User();
+        Auth::logout();
+        return redirect('/')->with('success','logout berhasil');
     }
 }

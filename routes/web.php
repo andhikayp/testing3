@@ -15,10 +15,18 @@ Route::get('/', 'AuthController@home');
 Route::post('/login', 'AuthController@login');
 
 Route::middleware(['auth'])->group(function () {
-	Route::get('/dashboard', function () {
-	    return view('dashboard.testing');
-	});
+	Route::get('/dashboard', 'DashboardController@index');
+	Route::get('/logout', 'AuthController@logout');
 
+	Route::middleware(['admin'])->group(function () {
+
+	});
+	Route::middleware(['siswa'])->group(function () {
+		
+	});
+	Route::middleware(['sekolah'])->group(function () {
+		
+	});
 });
 
 Route::get('/test', 'AuthController@testing_auth');

@@ -12,5 +12,11 @@
 */
 
 Route::get('/', function () {
+    return view('dashboard.index');
+});
+Route::get('/testing', function () {
     return view('dashboard.testing');
 });
+Route::get('/pelajaran', 'UserController@pelajaran');
+Route::get('/admindt', 'UserController@admindt');
+Route::get('/testing_db', 'UserController@testing_db');

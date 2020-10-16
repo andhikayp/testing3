@@ -467,4 +467,11 @@
         });
     });
 </script>
+<script>
+    $.getJSON('{{ url('/admindt') }}')
+      .done(function(result) {
+        console.log(result);
+        // renderDataGrid(result.data);
+      });
+</script>
 @endsection

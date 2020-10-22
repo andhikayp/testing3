@@ -35,6 +35,12 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.light.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.common.css') }}" />
 
+        <!-- Page JS Plugins CSS -->
+        <link rel="stylesheet" href="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">   
+        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> --}}
+        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/> --}}
+        {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" /> --}}
+
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
         <!-- END Stylesheets -->

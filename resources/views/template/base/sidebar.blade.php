@@ -84,7 +84,7 @@
         <div class="content-side content-side-full">
             <ul class="nav-main">
                 <li>
-                    <a href="be_pages_dashboard.html"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                    <a href="{{ url('ssp') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Tes Server Side</span></a>
                 </li>
                 <li class="open">
                     <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Page Kits</span></a>

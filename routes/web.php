@@ -17,6 +17,9 @@ Route::post('/login', 'AuthController@login');
 Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard', 'DashboardController@index');
 	Route::get('/logout', 'AuthController@logout');
+	Route::get('/ssp', 'AuthController@ssp');
+	Route::post('/users/ajax/datatables', 'UserController@datatables');
+
 
 	Route::middleware(['admin'])->group(function () {
 

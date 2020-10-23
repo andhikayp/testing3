@@ -17,8 +17,6 @@ Route::post('/login', 'AuthController@login');
 Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard', 'DashboardController@index');
 	Route::get('/logout', 'AuthController@logout');
-	Route::get('/ssp', 'AuthController@ssp');
-	Route::post('/users/ajax/datatables', 'UserController@datatables');
 	
 	//siswa
 	Route::get('/siswa', 'SiswaController@index');
@@ -38,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 		
 	});
 });
+
 
 Route::get('/test', 'AuthController@testing_auth');
 Route::get('/wkwk', function () {

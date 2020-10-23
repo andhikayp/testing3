@@ -24,6 +24,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/datatables/sekolah/{id}', 'SiswaController@ajaxSekolah');
 	Route::get('/ajax/datatables/siswa/{id}', 'SiswaController@ajaxSiswa');
 	Route::get('/siswa/{id}', 'SiswaController@siswa');
+	Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
 
 
 	Route::middleware(['admin'])->group(function () {

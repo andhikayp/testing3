@@ -7,7 +7,7 @@ use App\Models\KabKota;
 use DataTables;
 use App\Models\Sekolah;
 use App\Models\User;
-
+use DB;
 
 class SiswaController extends Controller
 {
@@ -44,5 +44,22 @@ class SiswaController extends Controller
     {
     	$siswa = User::where('sekolah_id', $id)->where('level','siswa')->get();
         return Datatables::of($siswa)->make(true);
+    }
+
+    public function ajaxSiswaGrafik($id)
+    {
+    	$data['jenis_kelamin'] = DB::table('user')
+        	->select('jenis_kelamin', DB::raw('count(*) as total'))
+        	->where('sekolah_id', $id)
+        	->where('level','siswa')
+          	->groupBy('jenis_kelamin')
+           	->get();
+    	$data['jurusan'] = DB::table('user')
+        	->select('jurusan', DB::raw('count(*) as total'))
+        	->where('sekolah_id', $id)
+        	->where('level','siswa')
+          	->groupBy('jurusan')
+           	->get();
+        return response()->json($data);
     }
 }

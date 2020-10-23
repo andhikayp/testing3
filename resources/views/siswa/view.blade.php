@@ -18,12 +18,29 @@
     tr.shown td.details-control {
         background: url('{{ asset('img/details_close.png') }}') no-repeat center center;
     }
+    #jenis_kelamin {
+        max-width: 600px;
+        margin: 0 auto
+    }
 </style>
+
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <a class="breadcrumb-item" href="{{ url('/siswa') }}">Data Siswa</a>
     <span class="breadcrumb-item active">Data Siswa {{ $sekolah->nama }}</span>
 </nav>
+<div class="row">
+    <div class="col-md-6 col-xl-6">
+        <div class="block">
+            <div class="block-content" id="jenis_kelamin"></div>
+        </div>
+    </div>
+    <div class="col-md-6 col-xl-6">
+        <div class="block">
+            <div class="block-content" id="jurusan"></div>
+        </div>
+    </div>
+</div>
 <div class="block">
     <div class="block-header block-header-default bg-gd-primary">
         <h3 class="block-title text-white">Data Siswa {{ $sekolah->nama }}</h3>
@@ -72,6 +89,91 @@
             });
         });
     </script>
+    <script>
+        $.getJSON('{{ url('/ajax/grafik/siswa')}}/{{ $sekolah->id }}').done(function(result) {
+            renderDataGrid(result);
+        });
+        function renderDataGrid(gridDataSource) {
+            var jenis_kelamin = $("#jenis_kelamin").dxPieChart({
+                adaptiveLayout: {
+                    width: 300
+                },
+                palette: "office",
+                dataSource: gridDataSource.jenis_kelamin,
+                title: "Statistik Jenis Kelamin",
+                margin: {
+                    bottom: 0
+                },
+                legend: {
+                    visible: true
+                },
+                animation: {
+                    enabled: true
+                },
+                resolveLabelOverlapping: "none",
+                "export": {
+                    enabled: true
+                },
+                type: 'doughnut',
+                series: [{
+                    argumentField: "jenis_kelamin",
+                    valueField: "total",
+                    label: {
+                        visible: true,
+                        customizeText: function(arg) {
+                            (arg.argumentText == "P") ? arg.argumentText="Perempuan" : arg.argumentText="Laki-laki"  
+                            return arg.argumentText+': ' + arg.originalValue + ' Orang'+
+                                "<br>(" + arg.percentText + ")";
+                        },
+                        connector: {
+                            visible: true,
+                            width: 1
+                        }
+                    }
+                }]
+            }).dxPieChart("instance");
+
+            var jurusan = $("#jurusan").dxPieChart({
+                adaptiveLayout: {
+                    width: 300
+                },
+                palette: "ocean",
+                dataSource: gridDataSource.jurusan,
+                title: "Statistik Jurusan",
+                margin: {
+                    bottom: 0
+                },
+                legend: {
+                    visible: true
+                },
+                animation: {
+                    enabled: true
+                },
+                resolveLabelOverlapping: "none",
+                "export": {
+                    enabled: true
+                },
+                type: 'doughnut',
+                series: [{
+                    argumentField: "jurusan",
+                    valueField: "total",
+                    label: {
+                        visible: true,
+                        customizeText: function(arg) {
+                            return arg.argumentText+': ' + arg.originalValue + ' Orang'+
+                                "<br>(" + arg.percentText + ")";
+                        },
+                        connector: {
+                            visible: true,
+                            width: 1
+                        }
+                    }
+                }]
+            }).dxPieChart("instance");
+        }
+    </script>
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
+
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

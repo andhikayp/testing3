@@ -20,8 +20,12 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ssp', 'AuthController@ssp');
 	Route::post('/users/ajax/datatables', 'UserController@datatables');
 	
+	//siswa
 	Route::get('/siswa', 'SiswaController@index');
-	Route::get('/siswa/ajax/datatables', 'SiswaController@ajaxIndex');
+	Route::get('/ajax/datatables/siswa', 'SiswaController@ajaxIndex');
+	Route::get('/ajax/datatables/sekolah/{id}', 'SiswaController@ajaxSekolah');
+	Route::get('/ajax/datatables/siswa/{id}', 'SiswaController@ajaxSiswa');
+	Route::get('/siswa/{id}', 'SiswaController@siswa');
 
 
 	Route::middleware(['admin'])->group(function () {

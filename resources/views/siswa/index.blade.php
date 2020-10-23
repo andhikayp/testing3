@@ -46,20 +46,16 @@
 @section('moreJS')
     <script>
         function format ( d ) {
-            // `d` is the original data object for the row
-            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">'+
-                '<tr>'+
-                    '<td>Full name:</td>'+
-                    '<td>Andhika</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>Extension number:</td>'+
-                    '<td>Yoga</td>'+
-                '</tr>'+
-                '<tr>'+
-                    '<td>Extra info:</td>'+
-                    '<td>And any further details here (images etc)...</td>'+
-                '</tr>'+
+            return '<table class="table details-table" id="posts-'+d.kd_rayon+'">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Nama</th>'+
+                        '<th>Alamat</th>'+
+                        '<th>Kode</th>'+
+                        '<th>Kurikulum</th>'+
+                        '<th></th>'+
+                    '</tr>'+
+                '</thead>'+
             '</table>';
         }
 
@@ -70,16 +66,16 @@
                 "searchDelay": 1000,
                 "autoWidth": false,
                 "ajax":{
-                    "url": "{{ url('siswa/ajax/datatables')}}",
+                    "url": "{{ url('ajax/datatables/siswa')}}",
                     "dataType": "json",
                     "type": "GET",
                 },
                 "columns": [
                     {
-                        "className":      'details-control',
-                        "orderable":      false,
-                        "data":           null,
-                        "defaultContent": ''
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
                     },
                     { data: 'kd_rayon'},
                     { data: 'nama'},
@@ -87,22 +83,38 @@
                 "order": [[1, "asc"]]
             });
 
-            // Add event listener for opening and closing details
             $('#users-table tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
-                var row = table.row( tr );
-         
-                if ( row.child.isShown() ) {
+                var row = table.row(tr);
+                var tableId = 'posts-' + row.data().kd_rayon;
+
+                if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
                     tr.removeClass('shown');
-                }
-                else {
+                } else {
                     // Open this row
-                    row.child( format(row.data()) ).show();
+                    row.child(format(row.data())).show();
+                    initTable(tableId, row.data());
                     tr.addClass('shown');
+                    tr.next().find('td').addClass('no-padding bg-gray');
                 }
-            } );
+            });
+
+            function initTable(tableId, data) {
+                $('#' + tableId).DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ url('ajax/datatables/sekolah')}}/"+data.kd_rayon,
+                    columns: [
+                        { data: 'nama', name: 'nama' },
+                        { data: 'alamat', name: 'alamat' },
+                        { data: 'kode', name: 'kode' },
+                        { data: 'kurikulum', name: 'kurikulum' },
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ]
+                })
+            }
         });
 
     </script>

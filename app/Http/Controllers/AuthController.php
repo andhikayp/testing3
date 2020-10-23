@@ -16,6 +16,9 @@ class AuthController extends Controller
 {
     public function home()
     {
+        if (Auth::user()) {
+            return redirect('/dashboard');
+        }
         return view('auth.login');
     }
 
@@ -33,16 +36,16 @@ class AuthController extends Controller
         return redirect('/')->with('error','Username atau Password salah!');
     }
 
-    public function testing_auth()
-    {
-        dd(Auth::user());
-    }
-
     public function logout(Request $request)
     {
         $user = Auth::User();
         Auth::logout();
         return redirect('/')->with('success','logout berhasil');
+    }
+
+    public function testing_auth()
+    {
+        dd(Auth::user());
     }
 
     public function ssp()

@@ -18,7 +18,10 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard', 'DashboardController@index');
 	Route::get('/logout', 'AuthController@logout');
 	Route::get('/ssp', 'AuthController@ssp');
-	Route::post('/users/ajax/datatables', 'UserController@datatables');
+	Route::get('/users/ajax/datatables', 'UserController@tes_yajra');
+
+	Route::get('/siswa', 'SiswaController@index');
+	Route::get('/siswa/ajax/datatables', 'SiswaController@ajaxIndex');
 
 
 	Route::middleware(['admin'])->group(function () {
@@ -31,6 +34,9 @@ Route::middleware(['auth'])->group(function () {
 		
 	});
 });
+
+
+
 
 Route::get('/test', 'AuthController@testing_auth');
 Route::get('/wkwk', function () {

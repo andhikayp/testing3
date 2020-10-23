@@ -27,7 +27,6 @@
                         <th>Sekolah</th>
                         <th>Username</th>
                         <th>Level</th>
-                        <th>Action</th>
                     </tr>
                 </thead>
             </table>
@@ -50,15 +49,13 @@
                 "ajax":{
                     "url": "{{ url('users/ajax/datatables')}}",
                     "dataType": "json",
-                    "type": "POST",
-                    "data":{ _token: "{{csrf_token()}}"}
+                    "type": "GET",
                 },
                 "columns": [
-                    { "data": "nama"},
-                    { "data": "sekolah"},
-                    { "data": "username"},
-                    { "data": "level"},
-                    { "data": "action", "orderable": false, "width": "28%"}
+                    { data: 'nama'},
+                    { data: 'jenis_kelamin'},
+                    { data: 'nisn'},
+                    { data: 'username'},
                 ],
                 "order": [[2, "asc"]]
             });

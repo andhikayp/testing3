@@ -9,15 +9,15 @@ class DashboardController extends Controller
 {
     public function index()
     {
-    	if (Auth::user()->level == "admin") {
+    	// if (Auth::user()->level == "admin") {
     		
-    	} 
-    	elseif (Auth::user()->level == "siswa") {
+    	// } 
+    	// elseif (Auth::user()->level == "siswa") {
     		
-    	}
-    	elseif (Auth::user()->level == "proktor" || Auth::user()->level == "guru") {
+    	// }
+    	// elseif (Auth::user()->level == "proktor" || Auth::user()->level == "guru") {
     		
-    	}
+    	// }
 	    return view('dashboard.testing');
     }
 }

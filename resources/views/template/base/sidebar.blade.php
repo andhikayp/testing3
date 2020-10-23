@@ -60,9 +60,6 @@
                     <img class="img-avatar" src="{{ asset('img/logo_jatim.png') }}" alt="">
                 </a>
                 <ul class="list-inline mt-10">
-                    {{-- <li class="list-inline-item">
-                        <a class="link-effect text-dual-primary-dark font-size-xs font-w600 text-uppercase" href="be_pages_generic_profile.html">J. Smith</a>
-                    </li> --}}
                     <li class="list-inline-item">
                         <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                         <a class="link-effect text-dual-primary-dark" data-toggle="layout" data-action="sidebar_style_inverse_toggle" href="javascript:void(0)">
@@ -84,165 +81,22 @@
         <div class="content-side content-side-full">
             <ul class="nav-main">
                 <li>
-                    <a href="{{ url('ssp') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Tes Server Side</span></a>
-                </li>
-                <li class="open">
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Page Kits</span></a>
-                    <ul>
-                        <li class="open">
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">Dashboards</span></a>
-                            <ul>
-                                <li>
-                                    <a href="be_pages_dashboard2.html"><span class="sidebar-mini-hide">Dashboard 2</span></a>
-                                </li>
-                                <li>
-                                    <a class="active" href="be_pages_dashboard3.html"><span class="sidebar-mini-hide">Dashboard 3</span></a>
-                                </li>
-                                <li>
-                                    <a href="be_pages_dashboard4.html"><span class="sidebar-mini-hide">Dashboard 4</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a class="nav-submenu" data-toggle="nav-submenu" href="#"><span class="sidebar-mini-hide">Real Estate</span></a>
-                            <ul>
-                                <li>
-                                    <a href="be_pages_real_estate_dashboard.html">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="be_pages_real_estate_listing.html">Listing</a>
-                                </li>
-                                <li>
-                                    <a href="be_pages_real_estate_listing_new.html">Add New Listing</a>
-                                </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-main-heading"><span class="sidebar-mini-visible">UI</span><span class="sidebar-mini-hidden">User Interface</span></li>
-                <li>
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-puzzle"></i><span class="sidebar-mini-hide">Blocks</span></a>
-                    <ul>
-                        <li>
-                            <a href="be_blocks.html">Styles</a>
-                        </li>
-                        <li>
-                            <a href="be_blocks_tiles.html">Tiles</a>
-                        </li>
-                        <li>
-                            <a href="be_blocks_draggable.html">Draggable</a>
-                        </li>
-                        <li>
-                            <a href="be_blocks_api.html">API</a>
-                        </li>
-                    </ul>
+                    <a href="{{ url('ssp') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                 </li>
                 <li>
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-moustache"></i><span class="sidebar-mini-hide">Widgets</span></a>
-                    <ul>
-                        <li>
-                            <a href="be_blocks_widgets_users.html">Users</a>
-                        </li>
-                        <li>
-                            <a href="be_blocks_widgets_stats.html">Statistics</a>
-                        </li>
-                    </ul>
+                    <a href="{{ url('ssp') }}"><i class="si si-badge"></i><span class="sidebar-mini-hide">Statistik Nilai</span></a>
                 </li>
                 <li>
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-energy"></i><span class="sidebar-mini-hide">Elements</span></a>
-                    <ul>
-                        <li>
-                            <a href="be_ui_grid.html">Grid</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_icons.html">Icons</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_typography.html">Typography</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_activity.html">Activity</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_buttons.html">Buttons</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_navigation.html">Navigation</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_tabs.html">Tabs</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_modals_tooltips.html">Modals &amp; Tooltips</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_images.html">Images</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_animations.html">Animations</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_ribbons.html">Ribbons</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_timeline.html">Timeline</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_accordion.html">Accordion</a>
-                        </li>
-                        <li>
-                            <a href="be_ui_color_themes.html">Color Themes</a>
-                        </li>
-                    </ul>
+                    <a href="{{ url('ssp') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat Sekolah</span></a>
                 </li>
                 <li>
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-layers"></i><span class="sidebar-mini-hide">Tables</span></a>
-                    <ul>
-                        <li>
-                            <a href="be_tables_styles.html">Styles</a>
-                        </li>
-                        <li>
-                            <a href="be_tables_responsive.html">Responsive</a>
-                        </li>
-                        <li>
-                            <a href="be_tables_helpers.html">Helpers</a>
-                        </li>
-                        <li>
-                            <a href="be_tables_pricing.html">Pricing</a>
-                        </li>
-                        <li>
-                            <a href="be_tables_datatables.html">DataTables</a>
-                        </li>
-                    </ul>
+                    <a href="{{ url('ssp') }}"><i class="si si-puzzle"></i><span class="sidebar-mini-hide">Analisis Butir Soal</span></a>
                 </li>
                 <li>
-                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-note"></i><span class="sidebar-mini-hide">Forms</span></a>
-                    <ul>
-                        <li>
-                            <a href="be_forms_elements_bootstrap.html">Bootstrap Elements</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_elements_material.html">Material Elements</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_css_inputs.html">CSS Inputs</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_plugins.html">Plugins</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_editors.html">Editors</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_validation.html">Validation</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_wizard.html">Wizard</a>
-                        </li>
-                        <li>
-                            <a href="be_forms_premade.html">Pre-made</a>
-                        </li>
-                    </ul>
+                    <a href="{{ url('siswa') }}"><i class="si si-user"></i><span class="sidebar-mini-hide">Data Siswa</span></a>
+                </li>
+                <li>
+                    <a href="{{ url('ssp') }}"><i class="si si-note"></i><span class="sidebar-mini-hide">Detail Ujian</span></a>
                 </li>
             </ul>
         </div>

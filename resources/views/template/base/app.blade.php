@@ -31,15 +31,24 @@
         <!-- Fonts and Codebase framework -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,400i,600,700">
         <link rel="stylesheet" id="css-main" href="{{ asset('codebase/src/assets/css/codebase.min.css') }}">
-        {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/styles.css') }}" /> --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/styles.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.light.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.common.css') }}" />
 
         <!-- Page JS Plugins CSS -->
-        <link rel="stylesheet" href="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">   
+        {{-- <link rel="stylesheet" href="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">   --}}
+        {{-- <link rel="stylesheet" href="{{ asset('datatables.bootstrap.css') }}">   --}}
         {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> --}}
         {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/> --}}
         {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css" /> --}}
+
+        {{-- <link href="{{ asset('datatables/css/app.css') }}" rel="stylesheet"> --}}
+        {{-- <link href="{{ asset('datatables/css/demo.css" rel="stylesheet') }}"> --}}
+        <link href="{{ asset('datatables/css/datatables.bootstrap.css') }}" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Lato:400,700,300|Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+        <link href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="{{ asset('datatables/highlight/styles/zenburn.css') }}">
+        <script src="{{ asset('datatables/highlight/highlight.pack.js') }}"></script>
 
         <!-- You can include a specific file from css/themes/ folder to alter the default color theme of the template. eg: -->
         <!-- <link rel="stylesheet" id="css-theme" href="assets/css/themes/flat.min.css"> -->
@@ -107,7 +116,7 @@
                         <!-- User Info -->
                         <div class="content-header-item">
                             <a class="img-link mr-5" href="be_pages_generic_profile.html">
-                                <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar15.jpg" alt="">
+                                {{-- <img class="img-avatar img-avatar32" src="assets/media/avatars/avatar15.jpg" alt=""> --}}
                             </a>
                             <a class="align-middle link-effect text-primary-dark font-w600" href="be_pages_generic_profile.html">John Smith</a>
                         </div>
@@ -251,7 +260,7 @@
             Custom functionality including Blocks/Layout API as well as other vital and optional helpers
             webpack is putting everything together at assets/_es6/main/app.js
         -->
-        <script src="{{ asset('codebase/src/assets/js/codebase.app.min.js')}}"></script>
+        {{-- <script src="{{ asset('codebase/src/assets/js/codebase.app.min.js')}}"></script> --}}
         <!-- Page JS Plugins -->
         <script src="{{ asset('codebase/src/assets/js/plugins/chartjs/Chart.bundle.min.js')}}"></script>
         <!-- Page JS Code -->

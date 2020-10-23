@@ -9,6 +9,7 @@ use App\Transformers\UserTransformer;
 use DB;
 use App\Models\User;
 use App\Models\Sekolah;
+use DataTables;
 // use App\Http\Requests\Admin\UserRequest;
 use Uuid;
 
@@ -138,5 +139,10 @@ class UserController extends Controller
         // return json_encode($json_data);
         return response()->json($json_data);
         //<-- Gak Perlu Diubah END -->
+    }
+
+    public function tes_yajra()
+    {
+        return Datatables::of(User::select('nama','jenis_kelamin','nisn','username')->where('level', 'siswa'))->make(true);
     }
 }

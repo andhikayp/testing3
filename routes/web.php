@@ -26,6 +26,12 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/siswa/{id}', 'SiswaController@siswa');
 	Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
 
+	//ujian
+	Route::get('/ujian', 'UjianController@index');
+	Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
+	Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
+	
+
 
 	Route::middleware(['admin'])->group(function () {
 

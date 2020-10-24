@@ -96,7 +96,7 @@
                     <a href="{{ url('siswa') }}"><i class="si si-user"></i><span class="sidebar-mini-hide">Data Siswa</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('ssp') }}"><i class="si si-note"></i><span class="sidebar-mini-hide">Detail Ujian</span></a>
+                    <a href="{{ url('ujian') }}"><i class="si si-note"></i><span class="sidebar-mini-hide">Detail Ujian</span></a>
                 </li>
             </ul>
         </div>

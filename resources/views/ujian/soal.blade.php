@@ -44,26 +44,6 @@
                         <th>Tipe Soal</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @php
-                        $no=1;
-                    @endphp
-                    @foreach($soal as $soals)
-                        <tr>
-                            <td>{{$no++}}</td>
-                            <td>
-                                {!! $soals->deskripsi !!}
-                            </td>
-                            <td>{!! $soals->pilihan_a !!}</td>
-                            <td>{!! $soals->pilihan_b !!}</td>
-                            <td>{!! $soals->pilihan_c !!}</td>
-                            <td>{!! $soals->pilihan_d !!}</td>
-                            <td>{!! $soals->pilihan_e !!}</td>
-                            <td>{!! $soals->kunci_jawaban !!}</td>
-                            <td>{{ str_replace('_', ' ', $soals->tipe_soal) }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
         </div>
     </div>
@@ -74,7 +54,32 @@
     <script>
         $(function(){
             var table = $('#users-table').DataTable({
-                "scrollX": true
+                "processing": true,
+                "serverSide": true,
+                "searchDelay": 1000,
+                "autoWidth": false,
+                "ajax":{
+                    "url": "{{ url('ajax/datatables/soal')}}/{{$paket->id}}",
+                    "dataType": "json",
+                    "type": "GET",
+                },
+                "columns": [
+                    { 
+                        data: null,
+                        sortable: false, 
+                        render: function (data, type, row, meta) {
+                            return meta.row + meta.settings._iDisplayStart + 1;
+                        }  
+                    },
+                    { data: 'deskripsi'},
+                    { data: 'pilihan_a'},
+                    { data: 'pilihan_b'},
+                    { data: 'pilihan_c'},
+                    { data: 'pilihan_d'},
+                    { data: 'pilihan_e'},
+                    { data: 'kunci_jawaban'},
+                    { data: 'tipe_soal'},
+                ],
             });
         });
     </script>

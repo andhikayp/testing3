@@ -32,6 +32,14 @@ class SoalController extends Controller
     {
         $paket = Paket::find($id);
     	$soal = Soal::where('paket_id', $id)->orderBy('tipe_soal','desc')->get();
-        return view('ujian.soal', compact('soal','paket'));
+        return view('ujian.soal', compact('paket'));
+    }
+
+    public function ajaxSoal($id)
+    {
+    	$soal = Soal::select('deskripsi', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'pilihan_e', 'kunci_jawaban', 'tipe_soal')->where('paket_id', $id)->orderBy('tipe_soal','desc')->get();
+        return Datatables::of($soal)
+        	->rawColumns(['deskripsi', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'pilihan_e', 'kunci_jawaban', 'tipe_soal'])
+        	->make(true);
     }
 }

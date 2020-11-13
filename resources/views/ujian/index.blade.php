@@ -33,9 +33,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-profile">Soal Ujian</a>
                 </li>
-                <li class="nav-item ml-auto">
+                {{-- <li class="nav-item ml-auto">
                     <a class="nav-link" href="#btabs-animated-slideright-settings"><i class="si si-settings"></i></a>
-                </li>
+                </li> --}}
             </ul>
             <div class="block-content tab-content overflow-hidden">
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
@@ -54,13 +54,25 @@
                     </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
-                    <h4 class="font-w400">Profile Content</h4>
-                    <p>Content slides in to the right..</p>
+                    {{-- <h4 class="font-w400">Profile Content</h4>
+                    <p>Content slides in to the right..</p> --}}
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="kurikulums-table">
+                            <thead>
+                                <tr>
+                                    <th></th>
+                                    <th>Kurikulum</th>
+                                    <th>Mata Pelajaran</th>
+                                    <th>Jenjang</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
                 </div>
-                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-settings" role="tabpanel">
+                {{-- <div class="tab-pane fade fade-right" id="btabs-animated-slideright-settings" role="tabpanel">
                     <h4 class="font-w400">Settings Content</h4>
                     <p>Content slides in to the right..</p>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -69,8 +81,8 @@
 
 @section('moreJS')
     <script>
-        function format ( d ) {
-            return '<table class="table details-table" id="posts-'+d.kd_rayon+'">'+
+        function formatUjian ( d ) {
+            return '<table class="table details-table" id="posts-'+d.date+'">'+
                 '<thead>'+
                     '<tr>'+
                         '<th>Nama</th>'+
@@ -82,7 +94,6 @@
                 '</thead>'+
             '</table>';
         }
-
         $(function(){
             var table = $('#users-table').DataTable({
                 "processing": true,
@@ -106,26 +117,26 @@
                 ],
                 "order": [[1, "asc"]]
             });
-
             $('#users-table tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');
                 var row = table.row(tr);
-                var tableId = 'posts-' + row.data().id;
-
+                console.log(row.data())
+                var tableId = 'posts-' + row.data().date;
+                console.log(tableId)
                 if (row.child.isShown()) {
                     // This row is already open - close it
                     row.child.hide();
                     tr.removeClass('shown');
                 } else {
                     // Open this row
-                    row.child(format(row.data())).show();
-                    initTable(tableId, row.data());
+                    row.child(formatUjian(row.data())).show();
+                    initTableUjian(tableId, row.data());
                     tr.addClass('shown');
                     tr.next().find('td').addClass('no-padding bg-gray');
                 }
             });
-
-            function initTable(tableId, data) {
+            function initTableUjian(tableId, data) {
+                console.log(tableId)
                 $('#' + tableId).DataTable({
                     processing: true,
                     serverSide: true,
@@ -140,7 +151,72 @@
                 })
             }
         });
-
+    </script>
+    <script>
+        function format ( d ) {
+            return '<table class="table details-table" id="posts_kurikulum-'+d.id+'">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Paket</th>'+
+                        '<th></th>'+
+                    '</tr>'+
+                '</thead>'+
+            '</table>';
+        }
+        $(function(){
+            var table = $('#kurikulums-table').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "searchDelay": 1000,
+                "autoWidth": false,
+                "ajax":{
+                    "url": "{{ url('ajax/datatables/pelajaran')}}",
+                    "dataType": "json",
+                    "type": "GET",
+                },
+                "columns": [
+                    {
+                        "className": 'details-control',
+                        "orderable": false,
+                        "data": null,
+                        "defaultContent": '',
+                    },
+                    { data: 'kurikulum'},
+                    { data: 'nama'},
+                    { data: 'jenjang'},
+                ],
+                "order": [[1, "asc"]]
+            });
+            $('#kurikulums-table tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = table.row(tr);
+                console.log(row.data())
+                var tableId = 'posts_kurikulum-' + row.data().id;
+                console.log(tableId)
+                if (row.child.isShown()) {
+                    // This row is already open - close it
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    // Open this row
+                    row.child(format(row.data())).show();
+                    initTable(tableId, row.data());
+                    tr.addClass('shown');
+                    tr.next().find('td').addClass('no-padding bg-gray');
+                }
+            });
+            function initTable(tableId, data) {
+                $('#' + tableId).DataTable({
+                    processing: true,
+                    serverSide: true,
+                    ajax: "{{ url('ajax/datatables/paket')}}/"+data.id,
+                    columns: [
+                        { data: 'nama', name: 'nama' },
+                        {data: 'action', name: 'action', orderable: false, searchable: false},
+                    ]
+                })
+            }
+        });
     </script>
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>

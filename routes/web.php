@@ -31,7 +31,10 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
 	Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
 	
-
+	//soal
+	Route::get('/ajax/datatables/pelajaran','SoalController@ajaxPelajaran');
+	Route::get('/ajax/datatables/paket/{id}','SoalController@ajaxPaket');
+	Route::get('/paket/{id}', 'SoalController@paket');	
 
 	Route::middleware(['admin'])->group(function () {
 

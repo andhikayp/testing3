@@ -22,7 +22,7 @@ class SoalController extends Controller
         $paket = Paket::where('pelajaran_id', $pelajaran)->get();
         return Datatables::of($paket)
         	->addColumn('action', function ($user) {
-                return '<a href="'.url('paket', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+                return '<a href="'.url('paket', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75 float-right">Lihat Detail</button></a>';
             })
             ->rawColumns(['action'])
         	->make(true);
@@ -30,7 +30,8 @@ class SoalController extends Controller
 
     public function paket($id)
     {
-    	$soal = Soal::where('paket_id', $id)->get();
-        return Datatables::of($soal)->make(true);
+        $paket = Paket::find($id);
+    	$soal = Soal::where('paket_id', $id)->orderBy('tipe_soal','desc')->get();
+        return view('ujian.soal', compact('soal','paket'));
     }
 }

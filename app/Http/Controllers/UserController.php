@@ -32,11 +32,11 @@ class UserController extends Controller
 
     public function admindt()
     {
-    	$data['results'] = DB::select( DB::raw("SELECT * FROM kelas WHERE gelombang = 2 LIMIT 5"));
-    	foreach ($data['results'] as $result) {
-    		$result->logbook = DB::select( DB::raw("SELECT * FROM logbook l WHERE l.kode_rombel='$result->kode_rombel'"));
-    	}
-    	return response()->json($data);
+    	// $data['results'] = DB::select( DB::raw("SELECT * FROM kelas WHERE gelombang = 2 LIMIT 5"));
+    	// foreach ($data['results'] as $result) {
+    	// 	$result->logbook = DB::select( DB::raw("SELECT * FROM logbook l WHERE l.kode_rombel='$result->kode_rombel'"));
+    	// }
+    	// return response()->json($data);
     }
 
     public function testing_db()

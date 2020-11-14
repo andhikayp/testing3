@@ -10,6 +10,55 @@
 @endsection
 
 @section('content')
+    <div class="row js-appear-enabled animated fadeIn" data-toggle="appear">
+        <!-- Row #1 -->
+        <div class="col-6 col-xl-3">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-book fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($pelajaran, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Pelajaran</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-xl-3">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-school fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker"><span data-toggle="countTo" data-speed="1000" data-to="780" class="js-count-to-enabled">{{ number_format($sekolah, 0, ',', '.') }}</span></div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">SMA</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-xl-3">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-user-graduate fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="15">{{ number_format($user[5]->total, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">{{ $user[5]->level }}</div>
+                </div>
+            </a>
+        </div>
+        {{-- user --}}
+        <div class="col-6 col-xl-3">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-chalkboard-teacher fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="4252">{{ number_format($user[4]->total, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">{{ $user[4]->level }}</div>
+                </div>
+            </a>
+        </div>
+        <!-- END Row #1 -->
+    </div>
     <div class="demo-container">
         <div id="chart"></div>
     </div>

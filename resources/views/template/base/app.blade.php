@@ -34,6 +34,7 @@
         {{-- <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/styles.css') }}" /> --}}
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.light.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.common.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('fontawesome-free-5.15.1-web/css/all.css') }}" />
 
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">   

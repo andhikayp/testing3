@@ -21,11 +21,11 @@
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <span class="breadcrumb-item active">Data Siswa</span>
+    <span class="breadcrumb-item active">Nilai Siswa</span>
 </nav>
 <div class="block">
     <div class="block-header block-header-default bg-gd-primary">
-        <h3 class="block-title text-white">Data Siswa</h3>
+        <h3 class="block-title text-white">Nilai Siswa</h3>
     </div>
     <div class="block-content">
         <div class="table-responsive">
@@ -105,7 +105,7 @@
                 $('#' + tableId).DataTable({
                     processing: true,
                     serverSide: true,
-                    ajax: "{{ url('ajax/datatables/sekolah/siswa')}}/"+data.kd_rayon,
+                    ajax: "{{ url('ajax/datatables/sekolah/nilai')}}/"+data.kd_rayon,
                     columns: [
                         { data: 'nama', name: 'nama' },
                         { data: 'alamat', name: 'alamat' },

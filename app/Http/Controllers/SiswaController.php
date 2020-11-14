@@ -22,16 +22,25 @@ class SiswaController extends Controller
         return Datatables::of($kota)->make(true);
     }
 
-    public function ajaxSekolah($id)
+    public function ajaxSekolah($param, $id)
     {
         $kode_kota = '__'.$id.'%'; 
         $sekolah = Sekolah::where('kode','LIKE',$kode_kota)->orderBy('created_at', 'asc')->get();
-        return Datatables::of($sekolah)
-        	->addColumn('action', function ($user) {
-                return '<a href="'.url('siswa', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
-            })
-            ->rawColumns(['action'])
-        	->make(true);
+        if ($param == 'nilai') {
+            return Datatables::of($sekolah)
+            	->addColumn('action', function ($user) {
+                    return '<a href="'.url('nilai', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+                })
+                ->rawColumns(['action'])
+            	->make(true);
+        } elseif ($param == 'siswa') {
+            return Datatables::of($sekolah)
+                ->addColumn('action', function ($user) {
+                    return '<a href="'.url('siswa', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
 
     public function siswa($id)
@@ -40,10 +49,19 @@ class SiswaController extends Controller
         return view('siswa.view', compact('sekolah'));
     }
 
-    public function ajaxSiswa($id)
+    public function ajaxSiswa($param, $id)
     {
     	$siswa = User::where('sekolah_id', $id)->where('level','siswa')->get();
-        return Datatables::of($siswa)->make(true);
+        if ($param == 'nilai') {
+            return Datatables::of($siswa)
+                ->addColumn('action', function ($user) {
+                    return '<a href="'.url('siswa').'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        } elseif ($param == 'siswa') {
+            return Datatables::of($siswa)->make(true);
+        }
     }
 
     public function ajaxSiswaGrafik($id)

@@ -81,10 +81,10 @@
         <div class="content-side content-side-full">
             <ul class="nav-main">
                 <li>
-                    <a href="{{ url('ssp') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
+                    <a href="{{ url('dashboard') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('ssp') }}"><i class="si si-badge"></i><span class="sidebar-mini-hide">Statistik Nilai</span></a>
+                    <a href="{{ url('nilai') }}"><i class="si si-badge"></i><span class="sidebar-mini-hide">Statistik Nilai</span></a>
                 </li>
                 <li>
                     <a href="{{ url('ssp') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat Sekolah</span></a>

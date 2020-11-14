@@ -21,8 +21,8 @@ Route::middleware(['auth'])->group(function () {
 	//siswa
 	Route::get('/siswa', 'SiswaController@index');
 	Route::get('/ajax/datatables/siswa', 'SiswaController@ajaxIndex');
-	Route::get('/ajax/datatables/sekolah/{id}', 'SiswaController@ajaxSekolah');
-	Route::get('/ajax/datatables/siswa/{id}', 'SiswaController@ajaxSiswa');
+	Route::get('/ajax/datatables/sekolah/{param}/{id}', 'SiswaController@ajaxSekolah');
+	Route::get('/ajax/datatables/{param}/{id}', 'SiswaController@ajaxSiswa');
 	Route::get('/siswa/{id}', 'SiswaController@siswa');
 	Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
 
@@ -36,6 +36,11 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/datatables/paket/{id}','SoalController@ajaxPaket');
 	Route::get('/paket/{id}', 'SoalController@paket');
 	Route::get('/ajax/datatables/soal/{id}','SoalController@ajaxSoal');
+
+	//nilai
+	Route::get('/nilai', 'NilaiController@index');
+	Route::get('/nilai/{id}', 'NilaiController@nilai');
+	
 
 	Route::middleware(['admin'])->group(function () {
 

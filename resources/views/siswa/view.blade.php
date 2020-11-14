@@ -26,7 +26,7 @@
 
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <a class="breadcrumb-item" href="{{ url('/siswa') }}">Data Siswa</a>
+    <a class="breadcrumb-item" href="{{ url('/siswa') }}">Sekolah</a>
     <span class="breadcrumb-item active">Data Siswa {{ $sekolah->nama }}</span>
 </nav>
 <div class="row">

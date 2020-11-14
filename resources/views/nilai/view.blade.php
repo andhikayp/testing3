@@ -10,20 +10,6 @@
 @endsection
 
 @section('content')
-<style>
-    td.details-control {
-        background: url('{{ asset('img/details_open.png') }}') no-repeat center center;
-        cursor: pointer;
-    }
-    tr.shown td.details-control {
-        background: url('{{ asset('img/details_close.png') }}') no-repeat center center;
-    }
-    #jenis_kelamin {
-        max-width: 600px;
-        margin: 0 auto
-    }
-</style>
-
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <a class="breadcrumb-item" href="{{ url('/siswa') }}">Sekolah</a>
@@ -73,7 +59,7 @@
                     { data: 'username'},
                     { data: 'password_siswa'},
                     { data: 'jurusan'},
-                    {data: 'action', name: 'action', orderable: false, searchable: false},
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
                 ],
                 "order": [[0, "asc"]]
             });

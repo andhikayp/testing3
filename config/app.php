@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Spatie\Fractal\FractalServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -228,6 +229,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Fractal' => Spatie\Fractal\FractalServiceProvider::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];

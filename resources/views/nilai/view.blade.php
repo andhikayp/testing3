@@ -27,9 +27,12 @@
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <a class="breadcrumb-item" href="{{ url('/siswa') }}">Sekolah</a>
-    <span class="breadcrumb-item active">Data Siswa {{ $sekolah->nama }}</span>
+    <span class="breadcrumb-item active">Data Siswa</span>
 </nav>
 <div class="block">
+    <div class="block-header block-header-default bg-gd-primary">
+        <h3 class="block-title text-white">Data Siswa {{ $sekolah->nama }}</h3>
+    </div>
     <div class="block-content">
         <div class="table-responsive">
             <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">

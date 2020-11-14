@@ -55,7 +55,7 @@ class SiswaController extends Controller
         if ($param == 'nilai') {
             return Datatables::of($siswa)
                 ->addColumn('action', function ($user) {
-                    return '<a href="'.url('siswa').'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+                    return '<a href="'.url('nilai', ['sekolah' => $user->sekolah_id, 'id' => $user->id]).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
                 })
                 ->rawColumns(['action'])
                 ->make(true);

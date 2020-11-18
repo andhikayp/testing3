@@ -39,8 +39,8 @@
                     <div class="font-size-sm font-w600 text-uppercase text-muted">{{ $nilais->JadwalUjian->waktu_mulai }} - {{ $nilais->JadwalUjian->waktu_selesai }}</div>
                     <div class="font-size-sm font-w600 text-uppercase text-muted">Paket {{ $nilais->Paket->nama[-1] }}</div>
                 </div>
-                <a class="btn btn-secondary" href="javascript:void(0)">
-                    <i class="fa fa-send mr-5"></i> Soal
+                <a class="btn btn-secondary" href="{{ url('/nilai/soal', ['mapel'=>$nilais->id, 'id'=>$nilai[0]->user->id]) }}">
+                    <i class="fa fa-send mr-5"></i> Analisis Soal
                 </a>
                 <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
                     <i class="fa fa-qrcode mr-5"></i> Nilai

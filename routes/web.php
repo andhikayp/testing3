@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/nilai', 'NilaiController@index');
 	Route::get('/nilai/{id}', 'NilaiController@nilai');
 	Route::get('/nilai/{sekolah}/{id}', 'NilaiController@nilai_individu');
+	Route::get('/nilai/soal/{mapel}/{id}', 'NilaiController@soal_individu');
 	
 
 	Route::middleware(['admin'])->group(function () {

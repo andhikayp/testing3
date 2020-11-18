@@ -73,7 +73,7 @@
                 "searchDelay": 1000,
                 "autoWidth": false,
                 "ajax":{
-                    "url": "{{ url('ajax/datatables/siswa')}}/{{ $sekolah->id }}",
+                    "url": "{{ url('ajax/datatables/siswa/siswa')}}/{{ $sekolah->id }}",
                     "dataType": "json",
                     "type": "GET",
                 },

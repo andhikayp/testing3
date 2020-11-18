@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/siswa', 'SiswaController@index');
 	Route::get('/ajax/datatables/siswa', 'SiswaController@ajaxIndex');
 	Route::get('/ajax/datatables/sekolah/{param}/{id}', 'SiswaController@ajaxSekolah');
-	Route::get('/ajax/datatables/{param}/{id}', 'SiswaController@ajaxSiswa');
+	Route::get('/ajax/datatables/siswa/{param}/{id}', 'SiswaController@ajaxSiswa');
 	Route::get('/siswa/{id}', 'SiswaController@siswa');
 	Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
 

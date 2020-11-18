@@ -24,8 +24,6 @@ class NilaiController extends Controller
     public function nilai_individu($sekolah, $id)
     {
     	$nilai = UjianSiswa::where('user_id', $id)->get();
-    	// dd($nilai[0]->user->nama);
-    	// Debugbar::error($nilai);
         return view('nilai.nilai_individu', compact('nilai','sekolah'));
     }
 
@@ -59,6 +57,7 @@ class NilaiController extends Controller
             }
             array_push($all_soal, $soal);
         }
+        Debugbar::error($all_soal);
         return view('nilai.soal_individu', compact('ujian_siswa','all_soal'));
     }
 }

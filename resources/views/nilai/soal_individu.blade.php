@@ -40,7 +40,9 @@
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">Soal</th>
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">Jawaban Siswa</th>
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">Kunci Jawaban</th>
-                        <th rowspan="2" style="text-align: center; vertical-align: middle;">Tingkat Kesulitan</th>
+                        <th rowspan="2" style="text-align: center; vertical-align: middle;">
+                            <a href="#" data-toggle="tooltip" title="Pengukuran seberapa besar derajat kesukaran suatu soal.">Tingkat Kesulitan</a>
+                        </th>
                         <th colspan="2" style="text-align: center; vertical-align: middle;">Persentase menjawab benar</th>
                     </tr>
                     <tr>
@@ -55,23 +57,23 @@
                             {!! $soal->deskripsi !!}
                             <div class="row" style="margin-top: -10px;">
                                 <div class="col-1">A).</div>
-                                <div class="col-11" style="margin-left: -35px;">{!! $soal->pilihan_a !!}</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_a !!}</div>
                             </div>
                             <div class="row" style="margin-top: -20px;">
                                 <div class="col-1">B).</div>
-                                <div class="col-11" style="margin-left: -35px;">{!! $soal->pilihan_b !!}</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_b !!}</div>
                             </div>
                             <div class="row" style="margin-top: -20px;">
                                 <div class="col-1">C).</div>
-                                <div class="col-11" style="margin-left: -35px;">{!! $soal->pilihan_c !!}</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_c !!}</div>
                             </div>
                             <div class="row" style="margin-top: -20px;">
                                 <div class="col-1">D).</div>
-                                <div class="col-11" style="margin-left: -35px;">{!! $soal->pilihan_d !!}</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_d !!}</div>
                             </div>
                             <div class="row" style="margin-top: -20px;">
                                 <div class="col-1">E).</div>
-                                <div class="col-11" style="margin-left: -35px;">{!! $soal->pilihan_e !!}</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_e !!}</div>
                             </div>
                         </td>
                         <td class="text-center" style="font-weight: bold;">
@@ -80,8 +82,21 @@
                         <td class="text-center" style="font-weight: bold;">
                             {{ $soal->kunci_jawaban }}
                         </td>
-                        <td></td>
-                        <td></td>
+                        <td class="text-center" style="font-weight: bold;">
+                            {{ number_format((float)$soal->analisis->tingkat_kesulitan*100, 2, '.', '') }}% <br>
+                            @if($soal->analisis->tingkat_kesulitan > 0.73)
+                                (Sukar)
+                            @elseif($soal->analisis->tingkat_kesulitan > 0.28)
+                                (Sedang)
+                            @else
+                                (Mudah)
+                            @endif
+                        </td>
+                        <td class="text-center" style="font-weight: bold;">
+                            @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
+                                {{ number_format((float)$soal->jumlah_benar_siswa/$soal->jumlah_siswa*100, 2, '.', '') }}%
+                            @endif
+                        </td>
                         <td></td>
                     </tr>
                     @endforeach
@@ -97,42 +112,11 @@
         $(document).ready(function(){
             $('#users-table').DataTable({
                 "autoWidth": true,
-                "ordering": false,
+                "ordering": true,
             });
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
-    {{-- <script>
-        $(function(){
-            var table = $('#users-table').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "searchDelay": 1000,
-                "autoWidth": false,
-                "ajax":{
-                    "url": "{{ url('ajax/datatables/soal')}}/{{$paket->id}}",
-                    "dataType": "json",
-                    "type": "GET",
-                },
-                "columns": [
-                    { 
-                        data: null,
-                        sortable: false, 
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }  
-                    },
-                    { data: 'deskripsi'},
-                    { data: 'pilihan_a'},
-                    { data: 'pilihan_b'},
-                    { data: 'pilihan_c'},
-                    { data: 'pilihan_d'},
-                    { data: 'pilihan_e'},
-                    { data: 'kunci_jawaban'},
-                    { data: 'tipe_soal'},
-                ],
-            });
-        });
-    </script> --}}
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

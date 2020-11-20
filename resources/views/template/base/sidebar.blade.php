@@ -87,10 +87,10 @@
                     <a href="{{ url('nilai') }}"><i class="si si-badge"></i><span class="sidebar-mini-hide">Statistik Nilai</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('ssp') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat Sekolah</span></a>
+                    <a href="{{ url('sekolah') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat Sekolah</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('ssp') }}"><i class="si si-puzzle"></i><span class="sidebar-mini-hide">Analisis Butir Soal</span></a>
+                    <a href="{{ url('soal') }}"><i class="si si-puzzle"></i><span class="sidebar-mini-hide">Analisis Butir Soal</span></a>
                 </li>
                 <li>
                     <a href="{{ url('siswa') }}"><i class="si si-user"></i><span class="sidebar-mini-hide">Data Siswa</span></a>

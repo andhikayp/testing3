@@ -72,4 +72,8 @@ class Soal extends Model
     public function correctionCounter() {
         return $this->belongsTo('App\Models\SoalCorrectionsCounter', 'id');
     }
+
+    public function analisis() { 
+        return $this->hasOne('App\Models\SoalAnalisis', 'id'); 
+    }
 }

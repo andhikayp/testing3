@@ -43,6 +43,9 @@
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">
                             <a href="#" data-toggle="tooltip" title="Pengukuran seberapa besar derajat kesukaran suatu soal.">Tingkat Kesulitan</a>
                         </th>
+                        <th rowspan="2" style="text-align: center; vertical-align: middle;">
+                            <a href="#" data-toggle="tooltip" title="Pengukuran sejauh mana suatu butir soal mampu membedakan peserta didik yang sudah menguasai kompetensi dengan peserta didik yang belum menguasai kompetensi.">Daya Pembeda</a>
+                        </th>
                         <th colspan="2" style="text-align: center; vertical-align: middle;">Persentase menjawab benar</th>
                     </tr>
                     <tr>
@@ -90,6 +93,23 @@
                                 (Sedang)
                             @else
                                 (Mudah)
+                            @endif
+                        </td>
+                        <td class="text-center" style="font-weight: bold;">
+                            @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
+                                @php
+                                    $daya_pembeda = ($soal->analisis->salah_bawah-$soal->analisis->salah_atas)/($soal->jumlah_siswa*0.27);
+                                @endphp
+                                {{ number_format((float)($daya_pembeda), 2, '.', '') }} <br>
+                                @if($daya_pembeda > 0.4)
+                                    (Sangat baik)
+                                @elseif($daya_pembeda > 0.3)
+                                    (Cukup baik)
+                                @elseif($daya_pembeda > 0.2)
+                                    (Revisi)
+                                @else
+                                    (Ditolak)
+                                @endif
                             @endif
                         </td>
                         <td class="text-center" style="font-weight: bold;">

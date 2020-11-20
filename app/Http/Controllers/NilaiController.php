@@ -54,8 +54,8 @@ class NilaiController extends Controller
                         $soal->benar = 1;
                     }
                 }
+                array_push($all_soal, $soal);
             }
-            array_push($all_soal, $soal);
         }
         Debugbar::error($all_soal);
         return view('nilai.soal_individu', compact('ujian_siswa','all_soal'));

@@ -56,6 +56,67 @@
                             <div id="nilai_jawaban"></div>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="block block-fx-shadow text-center">
+                                <div class="block-header block-header-default">
+                                    <h3 class="block-title">Nilai Tertinggi</h3>
+                                </div>
+                                <div class="block-content">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="width: 50px;">#</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th class="d-none d-sm-table-cell" style="width: 15%;">Nilai</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $i=0 @endphp
+                                            @foreach($nilai_tertinggi as $nilai_tertinggis)
+                                            <tr>
+                                                <th class="text-center" scope="row">{{ ++$i }}</th>
+                                                <td>{{ $nilai_tertinggis->paket->pelajaran->nama }}</td>
+                                                <td class="d-none d-sm-table-cell">
+                                                    {{ round($nilai_tertinggis->nilai,2) }}
+                                                </td>
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="block block-fx-shadow text-center">
+                                <div class="block-header block-header-default">
+                                    <h3 class="block-title">Nilai Terendah</h3>
+                                </div>
+                                <div class="block-content">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center" style="width: 50px;">#</th>
+                                                <th>Mata Pelajaran</th>
+                                                <th class="d-none d-sm-table-cell" style="width: 15%;">Nilai</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $i=0 @endphp
+                                            @foreach($nilai_terendah as $nilai_terendahs)
+                                            <tr>
+                                                <th class="text-center" scope="row">{{ ++$i }}</th>
+                                                <td>{{ $nilai_terendahs->paket->pelajaran->nama }}</td>
+                                                <td class="d-none d-sm-table-cell">
+                                                    {{ round($nilai_terendahs->nilai,2) }}
+                                            </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
                     {{-- diisi disini --}}

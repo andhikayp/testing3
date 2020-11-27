@@ -8,6 +8,7 @@ use App\Models\UjianSiswa;
 use App\Models\Soal;
 use Debugbar;
 use DataTables;
+use DB;
 
 class NilaiController extends Controller
 {
@@ -25,7 +26,10 @@ class NilaiController extends Controller
     public function nilai_individu($sekolah, $id)
     {
     	$nilai = UjianSiswa::where('user_id', $id)->get();
-        return view('nilai.nilai_individu', compact('nilai','sekolah'));
+        $urutan_nilai = UjianSiswa::select(DB::raw('(jumlah_benar/(jumlah_benar+jumlah_salah+jumlah_kosong-5))*100 AS nilai'), 'paket_id')->where('user_id', $id)->orderBy('nilai', 'DESC')->get();
+        $nilai_tertinggi = $urutan_nilai->take(3); 
+        $nilai_terendah = $urutan_nilai->reverse()->take(3);
+        return view('nilai.nilai_individu', compact('nilai','sekolah', 'nilai_tertinggi', 'nilai_terendah'));
     }
 
     public function ajaxNilaiSiswa($id)

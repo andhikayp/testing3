@@ -10,6 +10,11 @@
 @endsection
 
 @section('content')
+<style>
+    #nilai {
+        height: 440px;
+    }
+</style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <a class="breadcrumb-item" href="{{ url('/nilai') }}">Sekolah</a>
@@ -20,35 +25,69 @@
     <div class="block-header block-header-default bg-gd-primary">
         <h3 class="block-title text-white text-center">Daftar Nilai {{ $nilai[0]->user->nama }}</h3>
     </div>
-    {{-- <div class="my-50 text-center">
-        <h2 class="font-w700 text-black mb-10">All Wallets</h2>
-        <h3 class="h5 text-muted mb-0">All great, keep it up!</h3>
-    </div> --}}
 </div>
 <div class="row">
-    @foreach($nilai as $nilais)
-    <div class="col-lg-6 col-xl-6">
-        <div class="block block-fx-shadow text-center">
-            <a class="d-block bg-warning font-w600 text-uppercase py-5" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
-                <span class="text-white">{{ $nilais->paket->pelajaran->nama }}</span>
-            </a>
-            <div class="block-content block-content-full">
-                <div class="pt-20 pb-30">
-                    <div class="font-size-sm font-w600 text-uppercase text-muted">Benar | Salah | Essai</div>
-                    <div class="font-size-h3 font-w700">{{ $nilais->jumlah_benar }} || {{ $nilais->jumlah_salah }} || {{ $nilais->jumlah_kosong }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-muted">{{ $nilais->JadwalUjian->waktu_mulai }} - {{ $nilais->JadwalUjian->waktu_selesai }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-muted">Paket {{ $nilais->Paket->nama[-1] }}</div>
+    <div class="col-lg-12">
+        <div class="block">
+            <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#btabs-animated-slideright-home">Statistik</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#btabs-animated-slideright-profile">Nilai</a>
+                </li>
+            </ul>
+            <div class="block-content tab-content overflow-hidden">
+                <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
+                    {{-- diisi disini --}}
+                    <div class="block block-fx-shadow text-center">
+                        <a class="d-block bg-warning font-w600 text-uppercase py-5">
+                            <span class="text-white">Penskoran tanpa koreksi</span>
+                        </a>
+                        <div class="block-content block-content-full">
+                            <div id="nilai"></div>
+                        </div>
+                    </div>
+                    <div class="block block-fx-shadow text-center">
+                        <a class="d-block bg-warning font-w600 text-uppercase py-5">
+                            <span class="text-white">Penskoran ada koreksi jawaban</span>
+                        </a>
+                        <div class="block-content block-content-full">
+                            <div id="nilai_jawaban"></div>
+                        </div>
+                    </div>
                 </div>
-                <a class="btn btn-secondary" href="{{ url('/nilai/soal', ['mapel'=>$nilais->id, 'id'=>$nilai[0]->user->id]) }}">
-                    <i class="fa fa-send mr-5"></i> Analisis Soal
-                </a>
-                <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
-                    <i class="fa fa-qrcode mr-5"></i> Nilai
-                </a>
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
+                    {{-- diisi disini --}}
+                    <div class="row">
+                        @foreach($nilai as $nilais)
+                        <div class="col-lg-6 col-xl-6">
+                            <div class="block block-fx-shadow text-center">
+                                <a class="d-block bg-warning font-w600 text-uppercase py-5" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
+                                    <span class="text-white">{{ $nilais->paket->pelajaran->nama }}</span>
+                                </a>
+                                <div class="block-content block-content-full">
+                                    <div class="pt-20 pb-30">
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Benar | Salah | Essai</div>
+                                        <div class="font-size-h3 font-w700">{{ $nilais->jumlah_benar }} || {{ $nilais->jumlah_salah }} || {{ $nilais->jumlah_kosong }}</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">{{ $nilais->JadwalUjian->waktu_mulai }} - {{ $nilais->JadwalUjian->waktu_selesai }}</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Paket {{ $nilais->Paket->nama[-1] }}</div>
+                                    </div>
+                                    <a class="btn btn-secondary" href="{{ url('/nilai/soal', ['mapel'=>$nilais->id, 'id'=>$nilai[0]->user->id]) }}">
+                                        <i class="fa fa-send mr-5"></i> Analisis Soal
+                                    </a>
+                                    <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
+                                        <i class="fa fa-qrcode mr-5"></i> Nilai
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    @endforeach
 </div>
 @foreach($nilai as $nilais)
 <div class="modal fade" id="modal-crypto-wallet-{{ $nilais->id }}" tabindex="-1" role="dialog" aria-labelledby="modal-crypto-wallet-btc" style="display: none;" aria-hidden="true">
@@ -134,7 +173,99 @@
 
 @section('moreJS')
     <script>
-        
+        $.getJSON('{{ url('/ajax/grafik/nilai_siswa')}}/{{ $nilai[0]->user_id }}').done(function(result) {
+            renderDataGrid(result);
+        });
+        function renderDataGrid(gridDataSource) {
+            console.log(gridDataSource.data)
+            var tanpa_koreksi = $("#nilai").dxChart({
+                rotated: true,
+                dataSource: gridDataSource.data, 
+                series: {
+                    argumentField: "mata_pelajaran",
+                    valueField: "nilai_tanpa_koreksi",
+                    name: "Nilai",
+                    type: "bar",
+                    color: '#ffaa66'
+                },
+                valueAxis: {
+                    title: {
+                        text: "Nilai skala 0-100"
+                    },
+                    position: "bottom",
+                    min:0,
+                    max: 100,
+                    valueType: "numeric",
+                    allowDecimals : false,
+                },
+                argumentAxis: {
+                    title: {
+                        text: 'Mata Pelajaran'
+                    },
+                    position: "left",
+                    label: {
+                        overlappingBehavior: "rotate",
+                        rotationAngle: 90
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    location: "edge",
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.seriesName + " : " + arg.valueText
+                        };
+                    }
+                },
+                export: {
+                    enabled: true
+                },
+            });
+
+            var tanpa_koreksi = $("#nilai_jawaban").dxChart({
+                rotated: true,
+                dataSource: gridDataSource.data, 
+                series: {
+                    argumentField: "mata_pelajaran",
+                    valueField: "nilai_dengan_koreksi",
+                    name: "Nilai",
+                    type: "bar",
+                    color: '#ffaa66'
+                },
+                valueAxis: {
+                    title: {
+                        text: "Nilai skala 0-100"
+                    },
+                    position: "bottom",
+                    min:0,
+                    max: 100,
+                    valueType: "numeric",
+                    allowDecimals : false,
+                },
+                argumentAxis: {
+                    title: {
+                        text: 'Mata Pelajaran'
+                    },
+                    position: "left",
+                    label: {
+                        overlappingBehavior: "rotate",
+                        rotationAngle: 90
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    location: "edge",
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.seriesName + " : " + arg.valueText
+                        };
+                    }
+                },
+                export: {
+                    enabled: true
+                },
+            });
+        }
     </script>
     <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
 

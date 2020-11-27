@@ -7,6 +7,7 @@ use App\Models\Sekolah;
 use App\Models\UjianSiswa;
 use App\Models\Soal;
 use Debugbar;
+use DataTables;
 
 class NilaiController extends Controller
 {
@@ -25,6 +26,17 @@ class NilaiController extends Controller
     {
     	$nilai = UjianSiswa::where('user_id', $id)->get();
         return view('nilai.nilai_individu', compact('nilai','sekolah'));
+    }
+
+    public function ajaxNilaiSiswa($id)
+    {
+        $nilai = UjianSiswa::select('id','jumlah_benar', 'jumlah_salah', 'jumlah_kosong', 'paket_id', 'user_id')->where('user_id', $id)->get();
+        foreach ($nilai as $nilais) {
+            $nilais->mata_pelajaran = $nilais->paket->pelajaran->nama;
+            $nilais->nilai_tanpa_koreksi = round($nilais->jumlah_benar/($nilais->jumlah_benar+$nilais->jumlah_salah+$nilais->jumlah_kosong-5)*100, 2);
+            $nilais->nilai_dengan_koreksi = round(($nilais->jumlah_benar-($nilais->jumlah_salah/(5-1)))/($nilais->jumlah_benar+$nilais->jumlah_salah+$nilais->jumlah_kosong-5)*100 ,2);
+        }
+        return Datatables::of($nilai)->make(true);
     }
 
     public function soal_individu($mapel_id, $id)

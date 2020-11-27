@@ -43,7 +43,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/nilai/{id}', 'NilaiController@nilai');
 	Route::get('/nilai/{sekolah}/{id}', 'NilaiController@nilai_individu');
 	Route::get('/nilai/soal/{mapel}/{id}', 'NilaiController@soal_individu');
-	
+	Route::get('/ajax/grafik/nilai_siswa/{id}', 'NilaiController@ajaxNilaiSiswa');
 
 	Route::middleware(['admin'])->group(function () {
 

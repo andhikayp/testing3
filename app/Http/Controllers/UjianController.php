@@ -7,6 +7,7 @@ use DB;
 use DataTables;
 use Carbon\Carbon;
 use App\Models\JadwalUjian;
+use App\Models\UjianSiswa;
 
 class UjianController extends Controller
 {
@@ -36,5 +37,11 @@ class UjianController extends Controller
     {
     	$ujianTanggal = JadwalUjian::whereDate('waktu_mulai', $id)->get(); 
         return Datatables::of($ujianTanggal)->make(true);
+    }
+
+    public function ajaxCountUjian()
+    {
+        $count_ujian = UjianSiswa::count();
+        return response()->json($count_ujian);
     }
 }

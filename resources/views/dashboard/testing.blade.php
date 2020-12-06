@@ -16,10 +16,10 @@
             <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
                 <div class="block-content block-content-full clearfix">
                     <div class="float-left mt-10 d-none d-sm-block">
-                        <i class="fas fa-book fa-3x text-primary"></i>
+                        <i class="fas fa-archway fa-3x text-primary"></i>
                     </div>
-                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($pelajaran, 0, ',', '.') }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Pelajaran</div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($kota, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Kota/Kabupaten</div>
                 </div>
             </a>
         </div>
@@ -40,8 +40,8 @@
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="fas fa-user-graduate fa-3x text-primary"></i>
                     </div>
-                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="15">{{ number_format($user[5]->total, 0, ',', '.') }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">{{ $user[5]->level }}</div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="15">{{ number_format($user[0]->total, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">{{ $user[0]->level }}</div>
                 </div>
             </a>
         </div>
@@ -52,21 +52,68 @@
                     <div class="float-left mt-10 d-none d-sm-block">
                         <i class="fas fa-chalkboard-teacher fa-3x text-primary"></i>
                     </div>
-                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="4252">{{ number_format($user[4]->total, 0, ',', '.') }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">{{ $user[4]->level }}</div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="4252">{{ number_format($user[1]->total, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">{{ $user[1]->level }}</div>
                 </div>
             </a>
         </div>
         <!-- END Row #1 -->
     </div>
+    <div class="row js-appear-enabled animated fadeIn" data-toggle="appear">
+        <div class="col-6 col-xl-3">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-book fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($kurikulum, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Kurikulum</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-xl-3">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-book-reader fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($pelajaran, 0, ',', '.') }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Pelajaran</div>
+                </div>
+            </a>
+        </div>
+        <div class="col-6 col-xl-6">
+            <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                <div class="block-content block-content-full clearfix">
+                    <div class="float-left mt-10 d-none d-sm-block">
+                        <i class="fas fa-align-justify fa-3x text-primary"></i>
+                    </div>
+                    <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500" id="count_ujian"></div>
+                    <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Ujian Siswa</div>
+                </div>
+            </a>
+        </div>
+    </div>
     <div class="demo-container">
         <div id="chart"></div>
-    </div>
+    </div>  
     <div class="demo-container">
         <div id="employees"></div>
     </div>
 @endsection
 @section('moreJS')
+<script>
+    $(document).ready(function () {
+        console.log('tes')
+        $.getJSON('{{ url('/count_ujian')}}', function(result) {
+            getCountUjian(result);
+        });
+    });
+    function getCountUjian(result){
+        var div = document.getElementById('count_ujian');
+        div.innerHTML += result;
+    }
+</script>
 <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
 <script>
     var dataSource = [{

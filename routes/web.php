@@ -30,6 +30,8 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ujian', 'UjianController@index');
 	Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
 	Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
+	Route::get('/count_ujian', 'UjianController@ajaxCountUjian');
+	
 	
 	//soal
 	Route::get('/soal', 'SoalController@index');

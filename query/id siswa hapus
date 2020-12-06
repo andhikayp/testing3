@@ -1057,3 +1057,67 @@ ok
 sekolah_id:  1a9a483c-3e7e-11ea-bf72-dc7196bc523b
 jumlah:  152
 ok
+
+cur_thread.execute("SELECT * FROM paket u WHERE u.id='38988ee5-5783-11ea-b304-86cbb67d2138' ")
+pakets = cur_thread.fetchall()
+for paket in pakets:
+    sql = "SELECT * FROM soal where paket_id='%s'" % (paket['id'])
+    soal = pd.read_sql(sql, con=db_thread)
+    soal = soal.set_index('id')
+    sql = "select * from ujian_siswa where paket_id='%s' and status=10" % (paket['id'])
+    cur_thread.execute(sql)
+    ujian_siswas = cur_thread.fetchall()
+    print(len(ujian_siswas))
+#     for ujian_siswa in ujian_siswas:
+# #         print("ujian siswa id: ", ujian_siswa['id'])
+#         soals = json.loads(ujian_siswa["random_soal"])
+#         jawaban_posisi = json.loads(ujian_siswa["random_jawaban"])
+#         jawabans = json.loads(ujian_siswa["jawaban_siswa"])
+#         for key, soal_id in enumerate(soals):
+#             siswa_id_benar = json.loads(soal.loc[soal_id, 'siswa_id_benar'])
+#             if (soal.loc[soal_id, 'tipe_soal'] == 'pilihan_ganda'):    
+#                 intochar={'1':"a",'2':"b",'3':"c",'4':"d",'5':"e"}
+#                 arr_random= {
+#                     "a" : intochar[jawaban_posisi[key][0]],
+#                     "b" : intochar[jawaban_posisi[key][1]],
+#                     "c" : intochar[jawaban_posisi[key][2]],
+#                     "d" : intochar[jawaban_posisi[key][3]],
+#                     "e" : intochar[jawaban_posisi[key][4]],
+#                 }
+#                 if(jawabans[key] ==" "):
+#                     jawaban_benar=0
+#                 else:
+#                     if (arr_random[jawabans[key].lower()] == soal.loc[soal_id, 'kunci_jawaban'].lower()): 
+#                         jawaban_benar=1
+#                         siswa_id_benar.append(ujian_siswa['id'])
+#                         s = json.dumps(siswa_id_benar)
+#                         soal.loc[soal_id, 'siswa_id_benar'] = s
+#                     else : jawaban_benar=0
+#                     if(arr_random[jawabans[key].lower()] == 'a'):
+#                         soal.loc[soal_id, 'jawaban_a'] += 1 
+#                     elif(arr_random[jawabans[key].lower()] == 'b'):
+#                         soal.loc[soal_id, 'jawaban_b'] += 1
+#                     elif(arr_random[jawabans[key].lower()] == 'c'): 
+#                         soal.loc[soal_id, 'jawaban_c'] += 1
+#                     elif(arr_random[jawabans[key].lower()] == 'd'):
+#                         soal.loc[soal_id, 'jawaban_d'] += 1
+#                     elif(arr_random[jawabans[key].lower()] == 'e'):
+#                         soal.loc[soal_id, 'jawaban_e'] += 1
+#                 soal.loc[soal_id, 'jumlah_benar_siswa'] += jawaban_benar                
+#                 soal.loc[soal_id, 'jumlah_siswa'] += 1
+    print("GO!")
+    for index, row in soal.iterrows():
+#         sql = "update soal set jawaban_a=%d, jawaban_b=%d, jawaban_c=%d, jawaban_d=%d, jawaban_e=%d, siswa_id_benar='%s', jumlah_benar_siswa=%d, jumlah_siswa=%d where id='%s'" %(row['jawaban_a'], row['jawaban_b'], row['jawaban_c'], row['jawaban_d'], row['jawaban_e'], row['siswa_id_benar'], row['jumlah_benar_siswa'], row['jumlah_siswa'], index)
+        sql = "update soal set jawaban_a=0, jawaban_b=0, jawaban_c=0, jawaban_d=0, jawaban_e=0, siswa_id_benar='[]', jumlah_benar_siswa=0, jumlah_siswa=0 where id='%s'" %(index)
+        print(cur_thread.execute(sql))
+#     sql = "update ujian_siswa set status=10 where paket_id='%s' and (status=2 or status=3 or status=4 or status=5)" % (paket['id'])
+    sql = "update ujian_siswa set status=2 where paket_id='%s' and status=10" % (paket['id'])
+    print(cur_thread.execute(sql))
+#     sql = "update paket set status=1 where id='%s'" % (paket['id'])#     
+    sql = "update paket set status=0 where id='%s'" % (paket['id'])
+
+
+    print(cur_thread.execute(sql))
+    db_thread.commit()
+    print("~DONE~ paket:", paket['nama'])
+    break

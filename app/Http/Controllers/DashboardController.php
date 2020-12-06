@@ -9,6 +9,7 @@ use App\Models\Paket;
 use App\Models\Sekolah;
 use App\Models\UjianSiswa;
 use App\Models\Pelajaran;
+use App\Models\KabKota;
 use DB;
 
 class DashboardController extends Controller
@@ -21,7 +22,8 @@ class DashboardController extends Controller
                 ->get();
         $sekolah = Sekolah::count();
         $pelajaran = Pelajaran::count();
-        
+        $kurikulum = Pelajaran::distinct('kurikulum')->count('kurikulum');
+        $kota = KabKota::count();
     	if (Auth::user()->level == "admin") {
             
     	} 
@@ -31,6 +33,6 @@ class DashboardController extends Controller
     	elseif (Auth::user()->level == "proktor" || Auth::user()->level == "guru") {
     		
     	}
-	    return view('dashboard.testing', compact('user','sekolah','pelajaran'));
+	    return view('dashboard.testing', compact('user','sekolah','pelajaran', 'kurikulum', 'kota'));
     }
 }

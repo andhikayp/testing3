@@ -22,7 +22,7 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $users = User::where('username', $request->input('username'))->get();
-        // $tes = Hash::make($request->input('username'));
+        // $tes = Hash::make('fawwaz');
         foreach ($users as $user) 
         {
             if(Hash::check($request->input('password'),$user->password)) {

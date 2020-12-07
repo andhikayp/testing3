@@ -33,6 +33,18 @@ class UjianController extends Controller
         	->make(true);
     }
 
+    public function jsonUjian()
+    {
+        $ujian = DB::table('jadwal_ujian')
+            ->select(DB::raw('DATE(waktu_mulai) as date'), DB::raw('count(*) as pelaksanaan'))
+            ->groupBy(DB::raw('DATE(waktu_mulai)'))
+            ->get();
+        foreach ($ujian as $u) {
+            $u->tanggal = \Carbon\Carbon::parse($u->date)->locale('id')->isoFormat('dddd, D MMMM Y');
+        }
+        return response()->json($ujian);
+    }
+
     public function ajaxUjianTanggal($id)
     {
     	$ujianTanggal = JadwalUjian::whereDate('waktu_mulai', $id)->get(); 

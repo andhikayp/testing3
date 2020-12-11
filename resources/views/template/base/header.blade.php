@@ -89,6 +89,10 @@
         <div class="content-header-section">
             <!-- User Dropdown -->
             <div class="btn-group" role="group">
+                <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown">
+                    <a id="waktu" href="#"><span class="d-none d-sm-inline-block" id="date-widget"></span> |
+                    <span id="clock-widget"></span></a>  
+                </button>
                 <button type="button" class="btn btn-rounded btn-dual-secondary" id="page-header-user-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <i class="fa fa-user d-sm-none"></i>
                     <span class="d-none d-sm-inline-block">{{ Auth::user()->nama }}</span>

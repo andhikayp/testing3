@@ -103,8 +103,7 @@
 @endsection
 @section('moreJS')
 <script>
-    $(document).ready(function () {
-        console.log('tes')
+    $(window).on('load', function () {
         $.getJSON('{{ url('/count_ujian')}}', function(result) {
             getCountUjian(result);
         });
@@ -114,6 +113,7 @@
         div.innerHTML += result;
     }
 </script>
+
 <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
 <script>
     var dataSource = [{

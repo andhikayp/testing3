@@ -248,6 +248,25 @@
         <script src="{{ asset('codebase/src/assets/js/plugins/chartjs/Chart.bundle.min.js')}}"></script>
         <!-- Page JS Code -->
         <script src="{{ asset('codebase/src/assets/js/pages/be_pages_dashboard.min.js')}}"></script>
+        <script type="text/javascript">
+            $(window).on('load', function(){
+                var ServerInitTimestamp = new Date();
+                var LocalInitTimestamp = new Date();
+                var jarak = LocalInitTimestamp - ServerInitTimestamp;
+                var bulan = new Array("Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "Nopember", "Desember");
+                function jam() {
+                    var tanggal = new Date(new Date() - jarak);
+                    document.getElementById("clock-widget").innerHTML = ("0" + tanggal.getHours()).slice(-2) + ":" + ("0" + tanggal.getMinutes()).slice(-2) + ":" + ("0" + tanggal.getSeconds()).slice(-2);
+                        document.getElementById("date-widget").innerHTML = tanggal.getDate() + " " + bulan[tanggal.getMonth()] + " " + tanggal.getFullYear();
+                    setTimeout(function () {
+                        jam();
+                    }, 1000);
+                }
+                window.setTimeout(function () {
+                    jam();
+                }, 1000);
+            });
+        </script>
         @yield('moreJS')
     </body>
 </html>

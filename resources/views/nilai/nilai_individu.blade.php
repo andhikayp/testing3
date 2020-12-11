@@ -116,6 +116,49 @@
                                 </div>
                             </div>
                         </div>
+
+
+                        <div class="col-sm-12">
+                            <div class="block block-fx-shadow text-center">
+                                <div class="block-header block-header-default">
+                                    <h3 class="block-title">Statistik Nilai</h3>
+                                </div>
+                                <div class="block-content">
+                                    <table class="table table-vcenter">
+                                        <thead>
+                                            <tr>
+                                                <th>Rata-rata</th>
+                                                <th>Nilai Min</th>
+                                                <th>Nilai Maks</th>
+                                                <th>Range</th>
+                                                <th>Modus</th>
+                                                <th>Standar Deviasi</th>
+                                                <th>Varian</th>
+                                                <th>Q1</th>
+                                                <th>Q2</th>
+                                                <th>Q3</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @php $i=0 @endphp
+
+                                            <tr>
+                                                <td>{{ round($statistik['mean'],2) }}</td>
+                                                <td>{{ round($statistik['min'],2) }}</td>
+                                                <td>{{ round($statistik['max'],2) }}</td>
+                                                <td>{{ round($statistik['range'],2) }}</td>
+                                                <td>{{ round($statistik['mean'],2) }}</td>
+                                                <td>{{ round($statistik['standar_deviasi'],2) }}</td>
+                                                <td>{{ round($statistik['varian'],2) }}</td>
+                                                <td>{{ round($statistik['q1'],2) }}</td>
+                                                <td>{{ round($statistik['q2'],2) }}</td>
+                                                <td>{{ round($statistik['q3'],2) }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
@@ -204,20 +247,6 @@
                                     {{ ($nilais->jumlah_benar-($nilais->jumlah_salah/(5-1)))/($nilais->jumlah_benar+$nilais->jumlah_salah+$nilais->jumlah_kosong-5)*100 }}
                                 </td>
                             </tr>
-                            {{-- <tr>
-                                <td class="text-center">
-                                    3
-                                </td>
-                                <td>
-                                    <strong>Penskoran dengan butir beda bobot</strong><br>
-                                    <span class="text-muted">Memberikan bobot berbeda untuk setiap soal</span>
-                                </td>
-                                <td class="text-right text-danger font-w600">
-                                    Skala 0-100
-                                </td>
-                                <td class="d-none d-sm-table-cell text-right text-success font-w600">
-                                </td>
-                            </tr> --}}
                         </tbody>
                     </table>
                 </div>

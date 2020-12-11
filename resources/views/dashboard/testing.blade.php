@@ -110,7 +110,10 @@
     });
     function getCountUjian(result){
         var div = document.getElementById('count_ujian');
-        div.innerHTML += result;
+        var reverse = result.toString().split('').reverse().join(''),
+        ribuan  = reverse.match(/\d{1,3}/g);
+        ribuan  = ribuan.join('.').split('').reverse().join('');
+        div.innerHTML += ribuan;
     }
 </script>
 

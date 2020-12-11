@@ -51,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 	//peringkat
 	Route::get('/peringkat', 'PeringkatController@index');
 	Route::get('/ajax/peringkat_kota/{id}', 'PeringkatController@ajax_peringkat_kota');
+	Route::get('/ajax/peringkat_sekolah/{id}', 'PeringkatController@ajax_peringkat_sekolah');
 	
 
 	Route::middleware(['admin'])->group(function () {

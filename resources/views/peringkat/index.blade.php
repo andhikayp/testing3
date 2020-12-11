@@ -31,7 +31,7 @@
                     <a class="nav-link active" href="#btabs-animated-slideright-home">Peringkat Kota & Kabupaten</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#btabs-animated-slideright-profile">Peringkat Sekolah</a>
+                    <a class="nav-link" href="#btabs-animated-slideright-sekolah" id="peringkat_sekolah">Peringkat Sekolah</a>
                 </li>
 
                 <li class="nav-item">
@@ -51,9 +51,8 @@
                             <div id="nilai"></div>
                         </div>
                     </div>
-
                     <div class="block-content">
-                        <h4>
+                        <h4 class="font-w400">
                             Peringkat Kota/Kabupaten
                         </h4>
                         <div class="table-responsive">
@@ -84,7 +83,7 @@
                     </div>
 
                     <div class="block-content">
-                        <h4>
+                        <h4 class="font-w400">
                             Peringkat Kota/Kabupaten Kurikulum 2013
                         </h4>
                         <div class="table-responsive">
@@ -115,7 +114,7 @@
                     </div>
 
                     <div class="block-content">
-                        <h4>
+                        <h4 class="font-w400">
                             Peringkat Kota/Kabupaten Kurikulum 2006
                         </h4>
                         <div class="table-responsive">
@@ -144,21 +143,23 @@
                             </table>
                         </div>
                     </div>
-
                 </div>
-                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
-                    {{-- <h4 class="font-w400">Profile Content</h4>
-                    <p>Content slides in to the right..</p> --}}
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Tanggal</th>
-                                    <th>Pelaksanaan</th>
-                                </tr>
-                            </thead>
-                        </table>
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-sekolah" role="tabpanel">
+                    <div class="block-content">
+                        <h4 class="font-w400">
+                            Peringkat Sekolah
+                        </h4>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_sekolah_2013-table">
+                                <thead>
+                                    <tr>
+                                        <th>Peringkat</th>
+                                        <th>Sekolah</th>
+                                        <th>Nilai rata-rata</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
@@ -181,6 +182,24 @@
 @endsection
 @section('moreJS')
     <script>
+        function get_ranking_sekolah(elem) {
+            var id = $(elem).attr("id");
+            alert(id);
+        }
+        $('#peringkat_sekolah').on('click', function(e){
+            $('#peringkat_sekolah_2013-table').DataTable( {
+                "ajax": "{{ url('/ajax/peringkat_sekolah/all')}}",
+                "autoWidth": true,
+                "ordering": false,
+                "columns": [
+                    { "data": "no" },
+                    { "data": "nama" },
+                    { "data": "nilai_rata_rata" },
+                ]
+            } );
+        });
+
+
         $(document).ready(function(){
             $('#peringkat_kota-table').DataTable({
                 "autoWidth": true,
@@ -194,7 +213,10 @@
                 "autoWidth": true,
                 "ordering": false,
             });
-
+            $('#peringkat_sekolah-table').DataTable({
+                "autoWidth": true,
+                "ordering": false,
+            });
         });
 
         $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {

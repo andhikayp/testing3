@@ -48,6 +48,11 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/nilai/soal/{mapel}/{id}', 'NilaiController@soal_individu');
 	Route::get('/ajax/grafik/nilai_siswa/{id}', 'NilaiController@ajaxNilaiSiswa');
 
+	//peringkat
+	Route::get('/peringkat', 'PeringkatController@index');
+	Route::get('/ajax/peringkat_kota/{id}', 'PeringkatController@ajax_peringkat_kota');
+	
+
 	Route::middleware(['admin'])->group(function () {
 
 	});

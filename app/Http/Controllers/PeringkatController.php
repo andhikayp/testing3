@@ -30,18 +30,24 @@ class PeringkatController extends Controller
 			$kode_kota = '__'.$kota->kd_rayon.'%';
 			if($id == 'all') $kota->sekolah = Sekolah::where('kode','LIKE',$kode_kota)->get();
 			else $kota->sekolah = Sekolah::where('kode','LIKE',$kode_kota)->where('kurikulum', $id)->get();
-
+			$kota->jumlah_sekolah = count($kota->sekolah);
+			
 			if(count($kota->sekolah) > 0) {
 				$jumlah_rata_rata = 0;
 	        	foreach($kota->sekolah as $sekolah) {
 	        		$jumlah_rata_rata += $sekolah->nilai_rata_rata;
 	        	}
-	        	$kota->rata_rata = round($jumlah_rata_rata/$kota->sekolah->count()*100, 2);
+	        	$kota->nilai_rata_rata = round($jumlah_rata_rata/$kota->sekolah->count()*100, 2);
 			} else {
-				$kota->rata_rata = 0;
+				$kota->nilai_rata_rata = 0;
 			}
 		}
-		return $kotas->sortByDesc('rata_rata');
+		$no = 1;
+		$kotas =  $kotas->sortByDesc('nilai_rata_rata');
+		foreach ($kotas as $kota) {
+			$kota->no = $no++;
+		}
+		return $kotas;
 	}
 
 	public function peringkat_sekolah($id){

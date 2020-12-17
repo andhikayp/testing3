@@ -10,6 +10,8 @@ use Carbon\Carbon;
 use App\Models\Sekolah;
 use App\Models\User;
 use App\Models\JadwalUjian;
+use App\Models\UjianSiswa;
+use App\Models\Paket;
 
 
 class PeringkatController extends Controller
@@ -75,4 +77,27 @@ class PeringkatController extends Controller
         return Datatables::of($ranking)->make(true);
 
 	}
+
+	public function get_rank_siswa($limit)
+	{
+		$ranking = User::orderByDesc('nilai_rata_rata')->limit($limit)->get();
+		$no = 1;
+		foreach ($ranking as $r) {
+			$r->no = $no++;
+			$r->nama_sekolah = $r->sekolah->nama;
+		}
+        return Datatables::of($ranking)->make(true);
+	}
+
+	public function get_rank_pelajaran($kurikulum, $pelajaran_id){
+		$paket = Paket::select('id')->where('pelajaran_id', $pelajaran_id)->get();
+		dd($paket);
+		$ranking = UjianSiswa::select('*')->whereIn('paket_id', function($query)
+				    {
+				        
+				    });
+	}
+	// $query->select('id')
+	// 			              ->from('paket')
+	// 			              ->whereRaw('.user_id = users.id');
 }

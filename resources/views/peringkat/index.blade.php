@@ -33,7 +33,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-sekolah" id="peringkat_sekolah">Peringkat Sekolah</a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-siswa" id="peringkat_siswa">Peringkat Siswa</a>
                 </li>
@@ -111,9 +110,61 @@
                     </div>
                 </div>
 
-{{--                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
+                    <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" id="rata_rata_siswa">Semua</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="tiap_pelajaran">Tiap Pelajaran</a>
+                        </li>
+                    </ul>
+                    <div class="block-content">
+                        <h4 class="font-w400" id='dinamis_siswa_teks'>
+                            100 Besar Nilai Rata-rata Terbaik
+                        </h4>
+                        <div class="table-responsive" id="dinamis_siswa_table">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas_rata2-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nama</th>
+                                        <th>NISN</th>
+                                        <th>Sekolah</th>
+                                        <th>Nilai Rata-rata</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- <div class="tab-pane fade fade-right" id="btabs-animated-slideright-pelajaran" role="tabpanel">
+                    <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#btabs-animated-slideright-pelajaran" id="tiap_pelajaran">Tiap Pelajaran</a>
+                        </li>
+                    </ul>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <select class="form-control" id="example-select" name="example-select">
+                                <option value="0">Please select</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <select class="form-control" id="example-select" name="example-select">
+                                <option value="0">Please select</option>
+                                <option value="1">Option #1</option>
+                                <option value="2">Option #2</option>
+                                <option value="3">Option #3</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
+                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table">
                             <thead>
                                 <tr>
                                     <th></th>
@@ -123,7 +174,8 @@
                             </thead>
                         </table>
                     </div>
-                </div> --}}
+                </div>
+ --}}
             </div>
         </div>
     </div>
@@ -134,7 +186,8 @@
         var table = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table"><thead><tr><th>Peringkat</th><th>Kota / Kabupaten</th><th>Jumlah Sekolah</th><th>Nilai rata_rata</th></tr></thead></table>';
 
         $('#kota_all').on('click', function(e){
-            getRankSekolah()            
+            console.log('yes')
+            getRankKota()            
         });
 
         $('#peringkat_kota').on('click', function(e){
@@ -270,6 +323,35 @@
                 ]
             });
         });
+
+        $('#peringkat_siswa').on('click', function(e){
+            console.log('yes')
+            getRankSiswa()
+        });
+
+        $('#rata_rata_siswa').on('click', function(e){
+            getRankSiswa()
+        });
+
+        var table_peringkat_siswa = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas_rata2-table"><thead><tr><th></th><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Nilai Rata-rata</th></tr></thead></table>';
+
+        function getRankSiswa(){
+            $('#dinamis_siswa_table').empty();
+            $('#dinamis_siswa_table').append(table_peringkat_siswa);
+            $('#dinamis_siswa_teks').html('100 Besar Nilai Rata-rata Terbaik');
+            $('#siswas_rata2-table').DataTable( {
+                "ajax": "{{ url('/ajax/get_rank_siswa/100')}}",
+                "autoWidth": true,
+                "ordering": false,
+                "columns": [
+                    { "data": "no" },
+                    { "data": "nama" },
+                    { "data": "nisn" },
+                    { "data": "nama_sekolah" },
+                    { "data": "nilai_rata_rata" },
+                ]
+            });
+        }
 
         $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {
             renderDataGrid(result);

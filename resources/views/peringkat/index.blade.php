@@ -99,18 +99,18 @@
                         </div>
                     </div>
                 </div>
-
+{{-- SISWA --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
+                            <a class="nav-link active rata_rata_siswa" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item tiap_pelajaran">
                             <a class="nav-link" href="#btabs-animated-slideright-pelajaran">Tiap Pelajaran</a>
                         </li>
                     </ul>
-                    <div class="block-content">
-                        <div class="col-4">
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">
                             <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
                                 <option value="All">Semua</option>
                                 <option value="2013">Kurikulum 2013</option>
@@ -137,18 +137,18 @@
                         </div>
                     </div>
                 </div>
-
+{{-- PELAJARAN --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-pelajaran" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" href="#btabs-animated-slideright-siswa" id="">Semua</a>
+                            <a class="nav-link rata_rata_siswa" href="#btabs-animated-slideright-siswa" id="">Semua</a>
                         </li>
                         <li class="nav-item active">
-                            <a class="nav-link" href="#btabs-animated-slideright-pelajaran" id="tiap_pelajaran">Tiap Pelajaran</a>
+                            <a class="nav-link tiap_pelajaran" href="#btabs-animated-slideright-pelajaran" id="tiap_pelajaran">Tiap Pelajaran</a>
                         </li>
                     </ul>
-                    <div class="block-content">
-                        <div class="col-md-4">
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">
                             <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction2(this)" style="width: 100%">
                                 @foreach($mapel as $m)
                                     <option value="{{ $m->id }}" data-mapel=" {{ $m->nama }}" data-kurikulum=" {{ $m->kurikulum }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
@@ -158,20 +158,10 @@
                     </div>
                     <div class="block-content">
                         <h4 class="font-w400" id='dinamis_siswa_individu_teks'>
-                            30 Besar Nilai Mata Pelajaran
+                            
                         </h4>
                         <div class="table-responsive" id="dinamis_siswa_individu_table">
-                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table">
-                                <thead>
-                                    <tr>
-                                        <th></th>
-                                        <th>Nama</th>
-                                        <th>NISN</th>
-                                        <th>Sekolah</th>
-                                        <th>Nilai</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                            
                         </div>
                     </div>
                 </div>

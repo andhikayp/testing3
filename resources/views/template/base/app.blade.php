@@ -36,6 +36,9 @@
         <link rel="stylesheet" type="text/css" href="{{ asset('css/devextreme/dx.common.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('fontawesome-free-5.15.1-web/css/all.css') }}" />
 
+        {{-- select2 --}}
+        <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}" />
+
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">   
         {{-- <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.22/css/jquery.dataTables.min.css"> --}}
@@ -267,6 +270,7 @@
                 }, 1000);
             });
         </script>
+        <script src="{{ asset('bower_components/select2/dist/js/select2.min.js') }}"></script>
         @yield('moreJS')
     </body>
 </html>

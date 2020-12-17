@@ -10,6 +10,7 @@
 @endsection
 
 @section('content')
+{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> --}}
 <style>
     td.details-control {
         background: url('{{ asset('img/details_open.png') }}') no-repeat center center;
@@ -121,7 +122,7 @@
                     </ul>
                     <div class="block-content">
                         <div class="col-4">
-                            <select class="form-control" id="example-select" name="example-select" onchange="myFunction(this)">
+                            <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
                                 <option value="All">Semua</option>
                                 <option value="2013">Kurikulum 2013</option>
                                 <option value="2006">Kurikulum 2006</option>
@@ -195,7 +196,6 @@
         var table = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table"><thead><tr><th>Peringkat</th><th>Kota / Kabupaten</th><th>Jumlah Sekolah</th><th>Nilai rata_rata</th></tr></thead></table>';
 
         $('#kota_all').on('click', function(e){
-            console.log('yes')
             getRankKota()            
         });
 
@@ -334,7 +334,6 @@
         });
 
         $('#peringkat_siswa').on('click', function(e){
-            console.log('yes')
             getRankSiswa('all')
         });
 
@@ -345,6 +344,7 @@
         var table_peringkat_siswa = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas_rata2-table"><thead><tr><th></th><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Nilai Rata-rata</th></tr></thead></table>';
 
         function getRankSiswa(kurikulum){
+            kurikulum = kurikulum.toLowerCase()
             $('#dinamis_siswa_table').empty();
             $('#dinamis_siswa_table').append(table_peringkat_siswa);
             if(kurikulum == 'all') {
@@ -371,56 +371,60 @@
             getRankSiswa(value)
         }
 
-        $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {
-            renderDataGrid(result);
+        // $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {
+        //     renderDataGrid(result);
+        // });
+
+        // function renderDataGrid(gridDataSource) {
+        //     console.log(gridDataSource.data)
+        //     var tanpa_koreksi = $("#nilai").dxChart({
+        //         rotated: true,
+        //         dataSource: gridDataSource.data, 
+        //         series: {
+        //             argumentField: "nama",
+        //             valueField: "nilai_rata_rata",
+        //             name: "Rata-rata nilai",
+        //             type: "bar",
+        //             color: '#ffaa66'
+        //         },
+        //         valueAxis: {
+        //             title: {
+        //                 text: "Nilai skala 0-100"
+        //             },
+        //             position: "bottom",
+        //             min:0,
+        //             max: 100,
+        //             valueType: "numeric",
+        //             allowDecimals : false,
+        //         },
+        //         argumentAxis: {
+        //             title: {
+        //                 text: 'Kota/Kabupaten'
+        //             },
+        //             inverted: true,
+        //             position: "left",
+        //             label: {
+        //                 overlappingBehavior: "rotate",
+        //                 rotationAngle: 90
+        //             }
+        //         },
+        //         tooltip: {
+        //             enabled: true,
+        //             location: "edge",
+        //             customizeTooltip: function (arg) {
+        //                 return {
+        //                     text: arg.seriesName + " : " + arg.valueText
+        //                 };
+        //             }
+        //         },
+        //         export: {
+        //             enabled: true
+        //         },
+        //     });
+        // }
+        $('.js-example-basic-single').select2({
+            width: 'resolve'
         });
-        function renderDataGrid(gridDataSource) {
-            console.log(gridDataSource.data)
-            var tanpa_koreksi = $("#nilai").dxChart({
-                rotated: true,
-                dataSource: gridDataSource.data, 
-                series: {
-                    argumentField: "nama",
-                    valueField: "nilai_rata_rata",
-                    name: "Rata-rata nilai",
-                    type: "bar",
-                    color: '#ffaa66'
-                },
-                valueAxis: {
-                    title: {
-                        text: "Nilai skala 0-100"
-                    },
-                    position: "bottom",
-                    min:0,
-                    max: 100,
-                    valueType: "numeric",
-                    allowDecimals : false,
-                },
-                argumentAxis: {
-                    title: {
-                        text: 'Kota/Kabupaten'
-                    },
-                    inverted: true,
-                    position: "left",
-                    label: {
-                        overlappingBehavior: "rotate",
-                        rotationAngle: 90
-                    }
-                },
-                tooltip: {
-                    enabled: true,
-                    location: "edge",
-                    customizeTooltip: function (arg) {
-                        return {
-                            text: arg.seriesName + " : " + arg.valueText
-                        };
-                    }
-                },
-                export: {
-                    enabled: true
-                },
-            });
-        }
     </script>
     <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     

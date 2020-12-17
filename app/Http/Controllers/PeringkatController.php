@@ -78,9 +78,15 @@ class PeringkatController extends Controller
 
 	}
 
-	public function get_rank_siswa($limit)
+	public function get_rank_siswa($limit, $kurikulum)
 	{
-		$ranking = User::orderByDesc('nilai_rata_rata')->limit($limit)->get();
+		if($kurikulum == 'all') {
+			$ranking = User::orderByDesc('nilai_rata_rata')->limit($limit)->get();
+		} else {
+			$ranking = User::whereIn('sekolah_id', function($query) use ($kurikulum) {
+				$query->select('id')->from(with(new Sekolah)->getTable())->where('kurikulum', $kurikulum);
+			})->orderByDesc('nilai_rata_rata')->limit($limit)->get();
+		}
 		$no = 1;
 		foreach ($ranking as $r) {
 			$r->no = $no++;
@@ -97,6 +103,7 @@ class PeringkatController extends Controller
 				        
 				    });
 	}
+
 	// $query->select('id')
 	// 			              ->from('paket')
 	// 			              ->whereRaw('.user_id = users.id');

@@ -120,6 +120,15 @@
                         </li>
                     </ul>
                     <div class="block-content">
+                        <div class="col-4">
+                            <select class="form-control" id="example-select" name="example-select" onchange="myFunction(this)">
+                                <option value="All">Semua</option>
+                                <option value="2013">Kurikulum 2013</option>
+                                <option value="2006">Kurikulum 2006</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="block-content">
                         <h4 class="font-w400" id='dinamis_siswa_teks'>
                             100 Besar Nilai Rata-rata Terbaik
                         </h4>
@@ -326,21 +335,25 @@
 
         $('#peringkat_siswa').on('click', function(e){
             console.log('yes')
-            getRankSiswa()
+            getRankSiswa('all')
         });
 
         $('#rata_rata_siswa').on('click', function(e){
-            getRankSiswa()
+            getRankSiswa('all')
         });
 
         var table_peringkat_siswa = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas_rata2-table"><thead><tr><th></th><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Nilai Rata-rata</th></tr></thead></table>';
 
-        function getRankSiswa(){
+        function getRankSiswa(kurikulum){
             $('#dinamis_siswa_table').empty();
             $('#dinamis_siswa_table').append(table_peringkat_siswa);
-            $('#dinamis_siswa_teks').html('100 Besar Nilai Rata-rata Terbaik');
+            if(kurikulum == 'all') {
+                $('#dinamis_siswa_teks').html('100 Besar Nilai Rata-rata Terbaik');
+            } else {
+                $('#dinamis_siswa_teks').html('100 Besar Nilai Rata-rata Terbaik Kurikulum ' + kurikulum);
+            }
             $('#siswas_rata2-table').DataTable( {
-                "ajax": "{{ url('/ajax/get_rank_siswa/100')}}",
+                "ajax": "{{ url('/ajax/get_rank_siswa/100/')}}/"+kurikulum,
                 "autoWidth": true,
                 "ordering": false,
                 "columns": [
@@ -351,6 +364,11 @@
                     { "data": "nilai_rata_rata" },
                 ]
             });
+        }
+
+        function myFunction(selectObject) {
+            var value = selectObject.value;  
+            getRankSiswa(value)
         }
 
         $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {

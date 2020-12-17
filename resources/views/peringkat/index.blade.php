@@ -37,9 +37,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-siswa" id="peringkat_siswa">Peringkat Siswa</a>
                 </li>
-                {{-- <li class="nav-item ml-auto">
-                    <a class="nav-link" href="#btabs-animated-slideright-settings"><i class="si si-settings"></i></a>
-                </li> --}}
             </ul>
             <div class="block-content tab-content overflow-hidden">
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
@@ -54,14 +51,6 @@
                             <a class="nav-link" href="#" id="kota_2006">Kurikulum 2006</a>
                         </li>
                     </ul>
-{{--                     <div class="block block-fx-shadow text-center">
-                        <a class="d-block bg-warning font-w600 text-uppercase py-5">
-                            <span class="text-white">Statistik Nilai Kota & Kabupaten</span>
-                        </a>
-                        <div class="block-content block-content-full">
-                            <div id="nilai"></div>
-                        </div>
-                    </div> --}}
                     <div class="block-content">
                         <h4 class="font-w400" id='dinamis_kota_teks'>
                             Peringkat Kota/Kabupaten
@@ -114,10 +103,10 @@
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#" id="rata_rata_siswa">Semua</a>
+                            <a class="nav-link active" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" id="tiap_pelajaran">Tiap Pelajaran</a>
+                            <a class="nav-link" href="#btabs-animated-slideright-pelajaran">Tiap Pelajaran</a>
                         </li>
                     </ul>
                     <div class="block-content">
@@ -149,43 +138,44 @@
                     </div>
                 </div>
 
-                {{-- <div class="tab-pane fade fade-right" id="btabs-animated-slideright-pelajaran" role="tabpanel">
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-pelajaran" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
+                            <a class="nav-link" href="#btabs-animated-slideright-siswa" id="">Semua</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#btabs-animated-slideright-pelajaran" id="tiap_pelajaran">Tiap Pelajaran</a>
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#btabs-animated-slideright-pelajaran" id="tiap_pelajaran">Tiap Pelajaran</a>
                         </li>
                     </ul>
-                    <div class="row">
+                    <div class="block-content">
                         <div class="col-md-4">
-                            <select class="form-control" id="example-select" name="example-select">
-                                <option value="0">Please select</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4">
-                            <select class="form-control" id="example-select" name="example-select">
-                                <option value="0">Please select</option>
-                                <option value="1">Option #1</option>
-                                <option value="2">Option #2</option>
-                                <option value="3">Option #3</option>
+                            <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction2(this)" style="width: 100%">
+                                @foreach($mapel as $m)
+                                    <option value="{{ $m->id }}" data-mapel=" {{ $m->nama }}" data-kurikulum=" {{ $m->kurikulum }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table">
-                            <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Tanggal</th>
-                                    <th>Pelaksanaan</th>
-                                </tr>
-                            </thead>
-                        </table>
+                    <div class="block-content">
+                        <h4 class="font-w400" id='dinamis_siswa_individu_teks'>
+                            30 Besar Nilai Mata Pelajaran
+                        </h4>
+                        <div class="table-responsive" id="dinamis_siswa_individu_table">
+                            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nama</th>
+                                        <th>NISN</th>
+                                        <th>Sekolah</th>
+                                        <th>Nilai</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
                     </div>
                 </div>
- --}}
+
             </div>
         </div>
     </div>
@@ -367,8 +357,41 @@
         }
 
         function myFunction(selectObject) {
-            var value = selectObject.value;  
+            var value = selectObject.value;
             getRankSiswa(value)
+        }
+
+        var table_peringkat_siswa_individu = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table"><thead><tr><th></th><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Nilai</th></tr></thead></table>';
+
+        function getRankSiswaIndividu(id, kurikulum, mapel){
+            console.log(id)
+            $('#dinamis_siswa_individu_table').empty();
+            $('#dinamis_siswa_individu_table').append(table_peringkat_siswa_individu);
+            $('#dinamis_siswa_individu_teks').html('30 Besar Nilai Mata Pelajaran ' + mapel + ' Kurikulum' + kurikulum);
+
+            $('#siswas-table').DataTable( {
+                "processing": true,
+                "ajax": "{{ url('/ajax/get_rank_siswa_individu/')}}/"+id,
+                "autoWidth": true,
+                "ordering": false,
+                "columns": [
+                    { "data": "no" },
+                    { "data": "nama" },
+                    { "data": "nisn" },
+                    { "data": "nama_sekolah" },
+                    { "data": "nilai_rata_rata" },
+                ]
+            });
+        }
+
+        function myFunction2(selectObject) {
+            var value = selectObject.value;  
+
+            var opt = selectObject.options[selectObject.selectedIndex];
+            var kurikulum = opt.dataset.kurikulum
+            var mapel = opt.dataset.mapel
+
+            getRankSiswaIndividu(value, kurikulum, mapel)
         }
 
         // $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {

@@ -93,6 +93,7 @@ class PeringkatController extends Controller
 		foreach ($ranking as $r) {
 			$r->no = $no++;
 			$r->nama_sekolah = $r->sekolah->nama;
+			$r->nilai_rata_rata = $r->nilai_rata_rata * 100;
 		}
         return Datatables::of($ranking)->make(true);
 	}
@@ -105,8 +106,9 @@ class PeringkatController extends Controller
 		foreach ($ranking as $r) {
 			$r->no = $no++;
 			$r->nama = $r->user->nama;
+			$r->nisn = $r->user->nisn;
 			$r->nama_sekolah = $r->user->sekolah->nama;
-			$r->nilai_rata_rata = $r->jumlah_benar / ($r->jumlah_benar + $r->jumlah_kosong + $r->jumlah_salah - 5);
+			$r->nilai_rata_rata = round($r->jumlah_benar / ($r->jumlah_benar + $r->jumlah_kosong + $r->jumlah_salah - 5) * 100, 2);
 		}
         return Datatables::of($ranking)->make(true);
 	}

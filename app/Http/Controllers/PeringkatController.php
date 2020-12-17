@@ -12,6 +12,7 @@ use App\Models\User;
 use App\Models\JadwalUjian;
 use App\Models\UjianSiswa;
 use App\Models\Paket;
+use App\Models\Pelajaran;
 
 
 class PeringkatController extends Controller
@@ -23,7 +24,8 @@ class PeringkatController extends Controller
 		$ranking_sekolah = $this->peringkat_sekolah('all');
 		$ranking_sekolah_2013 = $this->peringkat_sekolah('2013');
 		$ranking_sekolah_2006 = $this->peringkat_sekolah('2006');
-        return view('peringkat.index', compact('ranking', 'ranking_2013', 'ranking_2006', 'ranking_sekolah', 'ranking_sekolah_2013', 'ranking_sekolah_2006'));
+		$mapel = Pelajaran::all()->sortBy('kurikulum');
+        return view('peringkat.index', compact('ranking', 'ranking_2013', 'ranking_2006', 'ranking_sekolah', 'ranking_sekolah_2013', 'ranking_sekolah_2006', 'mapel'));
 	}
 
 	public function peringkat_kota($id){
@@ -95,16 +97,17 @@ class PeringkatController extends Controller
         return Datatables::of($ranking)->make(true);
 	}
 
-	public function get_rank_pelajaran($kurikulum, $pelajaran_id){
-		$paket = Paket::select('id')->where('pelajaran_id', $pelajaran_id)->get();
-		dd($paket);
-		$ranking = UjianSiswa::select('*')->whereIn('paket_id', function($query)
-				    {
-				        
-				    });
+	public function get_rank_pelajaran($pelajaran_id){
+		$ranking = UjianSiswa::select('id', 'user_id', 'jumlah_benar', 'jumlah_salah', 'jumlah_kosong', 'paket_id')->whereIn('paket_id', function($query) use ($pelajaran_id) {
+			$query->select('id')->from(with(new Paket)->getTable())->where('pelajaran_id', $pelajaran_id);    	
+		})->orderByDesc('jumlah_benar')->limit(30)->get();
+		$no = 1;
+		foreach ($ranking as $r) {
+			$r->no = $no++;
+			$r->nama = $r->user->nama;
+			$r->nama_sekolah = $r->user->sekolah->nama;
+			$r->nilai_rata_rata = $r->jumlah_benar / ($r->jumlah_benar + $r->jumlah_kosong + $r->jumlah_salah - 5);
+		}
+        return Datatables::of($ranking)->make(true);
 	}
-
-	// $query->select('id')
-	// 			              ->from('paket')
-	// 			              ->whereRaw('.user_id = users.id');
 }

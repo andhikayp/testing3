@@ -53,7 +53,8 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/peringkat_kota/{id}', 'PeringkatController@ajax_peringkat_kota');
 	Route::get('/ajax/peringkat_sekolah/{id}', 'PeringkatController@ajax_peringkat_sekolah');
 	Route::get('/ajax/get_rank_siswa/{id}/{kurikulum}', 'PeringkatController@get_rank_siswa');
-	Route::get('/ajax/get_rank_pelajaran/{kurikulum}/{pelajaran_id}', 'PeringkatController@get_rank_pelajaran');
+	Route::get('/ajax/get_rank_siswa_individu/{pelajaran_id}', 'PeringkatController@get_rank_pelajaran');
+
 	
 	Route::middleware(['admin'])->group(function () {
 

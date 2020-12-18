@@ -43,10 +43,13 @@ Route::middleware(['auth'])->group(function () {
 
 	//nilai
 	Route::get('/nilai', 'NilaiController@index');
+	Route::get('/nilai/capaian_nasional', 'NilaiController@capaian_nasional');
 	Route::get('/nilai/{id}', 'NilaiController@nilai');
 	Route::get('/nilai/{sekolah}/{id}', 'NilaiController@nilai_individu');
 	Route::get('/nilai/soal/{mapel}/{id}', 'NilaiController@soal_individu');
 	Route::get('/ajax/grafik/nilai_siswa/{id}', 'NilaiController@ajaxNilaiSiswa');
+	Route::get('/ajax/rata2_paket/{pelajaran_id}', 'NilaiController@ajax_rata2_paket');
+	Route::get('/ajax/pelajaran/{kurikulum_id}', 'NilaiController@ajax_get_pelajaran');
 
 	//peringkat
 	Route::get('/peringkat', 'PeringkatController@index');

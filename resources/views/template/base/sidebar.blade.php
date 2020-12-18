@@ -90,7 +90,7 @@
                             <a href="{{ url('nilai') }}">Cakupan Wilayah dan Satuan Pendidikan</a>
                         </li>
                         <li>
-                            <a href="">Tiles</a>
+                            <a href="{{ url('nilai/capaian_nasional') }}">Capaian Nilai Rata-rata Tiap Paket</a>
                         </li>
                         <li>
                             <a href="be_blocks_draggable.html">Draggable</a>

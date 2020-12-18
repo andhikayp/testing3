@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Sekolah;
 use App\Models\UjianSiswa;
 use App\Models\Soal;
+use App\Models\Pelajaran;
+use App\Models\Paket;
 use Debugbar;
 use DataTables;
 use DB;
@@ -144,5 +146,30 @@ class NilaiController extends Controller
         }
         Debugbar::error($all_soal);
         return view('nilai.soal_individu', compact('ujian_siswa','all_soal'));
+    }
+
+    public function capaian_nasional(){
+        return view('nilai.capaian_nasional');
+    }
+
+    public function ajax_get_pelajaran($kurikulum){
+        if($kurikulum == 'all'){
+            $pelajaran = Pelajaran::all()->get();
+        } else {
+            $pelajaran = Pelajaran::where('kurikulum', $kurikulum)->get();
+        }
+        return response()->json($pelajaran);
+    }
+
+    public function ajax_rata2_paket($pelajaran_id) {
+        $paket = Paket::where('pelajaran_id', $pelajaran_id)->get();
+        $sum = 0;
+        foreach($paket as $p){
+            $p->nilai_rata_rata = round($p->nilai_rata_rata*100, 2);
+            $p->nama = str_replace('_', ' ', $p->nama);
+            $p->nama_baru = substr(strstr($p->nama," "), 1);
+            $sum += $p->nilai_rata_rata;
+        }
+        return response()->json($paket);
     }
 }

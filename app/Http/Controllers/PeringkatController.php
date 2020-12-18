@@ -82,22 +82,32 @@ class PeringkatController extends Controller
 		$ranking = $this->peringkat_sekolah($kurikulum);
 		$distribusi = array();
 
-		for($i=10; $i > 0; $i--){
-			$distribusi[$i]['nama'] = 'Nilai ' . strval(($i*10)-10) . ' - ' . strval($i*10);
+		for($i=20; $i > 0; $i--){
+			$distribusi[$i]['nama'] = 'Nilai ' . strval(($i*5)-5) . ' - ' . strval($i*5);
 			$distribusi[$i]['jumlah'] = 0;
 		}
 
 		foreach($ranking as $r) {
-			if($r->nilai_rata_rata < 10) $distribusi[1]['jumlah']++;
-			elseif($r->nilai_rata_rata < 20) $distribusi[2]['jumlah']++;
-			elseif($r->nilai_rata_rata < 30) $distribusi[3]['jumlah']++;
-			elseif($r->nilai_rata_rata < 40) $distribusi[4]['jumlah']++;
-			elseif($r->nilai_rata_rata < 50) $distribusi[5]['jumlah']++;
-			elseif($r->nilai_rata_rata < 60) $distribusi[6]['jumlah']++;
-			elseif($r->nilai_rata_rata < 70) $distribusi[7]['jumlah']++;
-			elseif($r->nilai_rata_rata < 80) $distribusi[8]['jumlah']++;
-			elseif($r->nilai_rata_rata < 90) $distribusi[9]['jumlah']++;
-			elseif($r->nilai_rata_rata < 100) $distribusi[10]['jumlah']++;
+			if($r->nilai_rata_rata < 5) $distribusi[1]['jumlah']++;
+			elseif($r->nilai_rata_rata < 10) $distribusi[2]['jumlah']++;
+			elseif($r->nilai_rata_rata < 15) $distribusi[3]['jumlah']++;
+			elseif($r->nilai_rata_rata < 20) $distribusi[4]['jumlah']++;
+			elseif($r->nilai_rata_rata < 25) $distribusi[5]['jumlah']++;
+			elseif($r->nilai_rata_rata < 30) $distribusi[6]['jumlah']++;
+			elseif($r->nilai_rata_rata < 35) $distribusi[7]['jumlah']++;
+			elseif($r->nilai_rata_rata < 40) $distribusi[8]['jumlah']++;
+			elseif($r->nilai_rata_rata < 45) $distribusi[9]['jumlah']++;
+			elseif($r->nilai_rata_rata < 50) $distribusi[10]['jumlah']++;
+			elseif($r->nilai_rata_rata < 55) $distribusi[11]['jumlah']++;
+			elseif($r->nilai_rata_rata < 60) $distribusi[12]['jumlah']++;
+			elseif($r->nilai_rata_rata < 65) $distribusi[13]['jumlah']++;
+			elseif($r->nilai_rata_rata < 70) $distribusi[14]['jumlah']++;
+			elseif($r->nilai_rata_rata < 75) $distribusi[15]['jumlah']++;
+			elseif($r->nilai_rata_rata < 80) $distribusi[16]['jumlah']++;
+			elseif($r->nilai_rata_rata < 85) $distribusi[17]['jumlah']++;
+			elseif($r->nilai_rata_rata < 90) $distribusi[18]['jumlah']++;
+			elseif($r->nilai_rata_rata < 95) $distribusi[19]['jumlah']++;
+			elseif($r->nilai_rata_rata < 100) $distribusi[20]['jumlah']++;
 		}
         return Datatables::of($distribusi)->make(true);
 	}

@@ -56,7 +56,7 @@
 
                     <div class="block">
                         <h4 class="font-w400" id='dinamis_siswa_teks'>
-                            Sebaran Nilai Rata-rata tiap Sekolah
+                            Distribusi Sebaran Nilai Rata-rata tiap Sekolah
                         </h4>
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-6">
@@ -180,7 +180,6 @@
         function renderDataGrid2(gridDataSource) {
             console.log(gridDataSource.data)
             var tanpa_koreksi = $("#sekolah").dxChart({
-                rotated: true,
                 dataSource: gridDataSource.data, 
                 series: {
                     argumentField: "nama",
@@ -191,7 +190,7 @@
                 },
                 valueAxis: {
                     title: {
-                        text: "Nilai skala 0-100"
+                        text: "Jumlah Sekolah"
                     },
                     position: "bottom",
                     visualRange: [0, null],
@@ -200,7 +199,7 @@
                 },
                 argumentAxis: {
                     title: {
-                        text: 'Kota/Kabupaten'
+                        text: 'Rentang Nilai'
                     },
                     inverted: true,
                     position: "left",
@@ -214,7 +213,7 @@
                     location: "edge",
                     customizeTooltip: function (arg) {
                         return {
-                            text: arg.seriesName + " : " + arg.valueText
+                            text: "Jumlah Sekolah: " + arg.valueText
                         };
                     }
                 },

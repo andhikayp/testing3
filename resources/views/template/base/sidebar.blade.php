@@ -84,7 +84,21 @@
                     <a href="{{ url('dashboard') }}"><i class="si si-cup"></i><span class="sidebar-mini-hide">Dashboard</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('nilai') }}"><i class="si si-badge"></i><span class="sidebar-mini-hide">Statistik Nilai</span></a>
+                    <a class="nav-submenu" data-toggle="nav-submenu" href="#"><i class="si si-badge"></i><span class="sidebar-mini-hide">Statistik Nilai</span></a>
+                    <ul>
+                        <li>
+                            <a href="{{ url('nilai') }}">Cakupan Wilayah dan Satuan Pendidikan</a>
+                        </li>
+                        <li>
+                            <a href="">Tiles</a>
+                        </li>
+                        <li>
+                            <a href="be_blocks_draggable.html">Draggable</a>
+                        </li>
+                        <li>
+                            <a href="be_blocks_api.html">API</a>
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     <a href="{{ url('peringkat') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat Sekolah</span></a>

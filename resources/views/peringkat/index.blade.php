@@ -10,7 +10,6 @@
 @endsection
 
 @section('content')
-{{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" /> --}}
 <style>
     td.details-control {
         background: url('{{ asset('img/details_open.png') }}') no-repeat center center;
@@ -39,6 +38,7 @@
                 </li>
             </ul>
             <div class="block-content tab-content overflow-hidden">
+{{-- KOTA --}}
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                         <li class="nav-item">
@@ -69,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-
+{{-- SEKOLAH --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-sekolah" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                         <li class="nav-item">
@@ -384,57 +384,6 @@
             getRankSiswaIndividu(value, kurikulum, mapel)
         }
 
-        // $.getJSON('{{ url('/ajax/peringkat_kota/all')}}').done(function(result) {
-        //     renderDataGrid(result);
-        // });
-
-        // function renderDataGrid(gridDataSource) {
-        //     console.log(gridDataSource.data)
-        //     var tanpa_koreksi = $("#nilai").dxChart({
-        //         rotated: true,
-        //         dataSource: gridDataSource.data, 
-        //         series: {
-        //             argumentField: "nama",
-        //             valueField: "nilai_rata_rata",
-        //             name: "Rata-rata nilai",
-        //             type: "bar",
-        //             color: '#ffaa66'
-        //         },
-        //         valueAxis: {
-        //             title: {
-        //                 text: "Nilai skala 0-100"
-        //             },
-        //             position: "bottom",
-        //             min:0,
-        //             max: 100,
-        //             valueType: "numeric",
-        //             allowDecimals : false,
-        //         },
-        //         argumentAxis: {
-        //             title: {
-        //                 text: 'Kota/Kabupaten'
-        //             },
-        //             inverted: true,
-        //             position: "left",
-        //             label: {
-        //                 overlappingBehavior: "rotate",
-        //                 rotationAngle: 90
-        //             }
-        //         },
-        //         tooltip: {
-        //             enabled: true,
-        //             location: "edge",
-        //             customizeTooltip: function (arg) {
-        //                 return {
-        //                     text: arg.seriesName + " : " + arg.valueText
-        //                 };
-        //             }
-        //         },
-        //         export: {
-        //             enabled: true
-        //         },
-        //     });
-        // }
         $('.js-example-basic-single').select2({
             width: 'resolve'
         });

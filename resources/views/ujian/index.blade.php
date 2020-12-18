@@ -33,24 +33,14 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-profile">Ujian</a>
                 </li>
-                {{-- <li class="nav-item ml-auto">
-                    <a class="nav-link" href="#btabs-animated-slideright-settings"><i class="si si-settings"></i></a>
-                </li> --}}
             </ul>
             <div class="block-content tab-content overflow-hidden">
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
-                    {{-- <h4 class="font-w400">Home Content</h4>
-                    <p>Content slides in to the right..</p> --}}
-                    {{-- <div class="demo-container">
-                        <div id="chart"></div>
-                    </div> --}}
                     <div class="block-content block-content-full">
                         <div id="nilai"></div>
                     </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
-                    {{-- <h4 class="font-w400">Profile Content</h4>
-                    <p>Content slides in to the right..</p> --}}
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
                             <thead>
@@ -63,10 +53,6 @@
                         </table>
                     </div>
                 </div>
-                {{-- <div class="tab-pane fade fade-right" id="btabs-animated-slideright-settings" role="tabpanel">
-                    <h4 class="font-w400">Settings Content</h4>
-                    <p>Content slides in to the right..</p>
-                </div> --}}
             </div>
         </div>
     </div>

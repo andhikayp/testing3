@@ -21,30 +21,126 @@
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <span class="breadcrumb-item active">Sekolah</span>
+    <span class="breadcrumb-item active">Statistik Nilai</span>
 </nav>
-<div class="block">
-    <div class="block-header block-header-default bg-gd-primary">
-        <h3 class="block-title text-white">Sekolah</h3>
-    </div>
-    <div class="block-content">
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Kode Rayon</th>
-                        <th>Kota / Kabupaten</th>
-                    </tr>
-                </thead>
-            </table>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="block">
+            <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#btabs-animated-slideright-home">Statistik Jawa Timur</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#btabs-animated-slideright-detail-sekolah">Detail</a>
+                </li>
+            </ul>
+            <div class="block-content tab-content overflow-hidden">
+                <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
+                    <div class="row" style="margin-top: 10px;">
+                        <div class="col-6">
+                            <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
+                                <option value="All">Semua</option>
+                                <option value="2013">Kurikulum 2013</option>
+                                <option value="2006">Kurikulum 2006</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="block-content block-content-full">
+                        <div id="nilai"></div>
+                    </div>
+                </div>
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail-sekolah" role="tabpanel">
+                    <div class="block">
+                        <div class="block-header block-header-default bg-gd-primary">
+                            <h3 class="block-title text-white">Sekolah</h3>
+                        </div>
+                        <div class="block-content">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Kode Rayon</th>
+                                            <th>Kota / Kabupaten</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
+
 @endsection
 
 @section('moreJS')
     <script>
+        getStatJawaTimur('all')
+
+        function myFunction(selectObject) {
+            var value = selectObject.value;
+            value = value.toLowerCase()
+            getStatJawaTimur(value)
+        }
+
+        function getStatJawaTimur(kurikulum) {
+            $.getJSON('{{ url('/ajax/peringkat_kota/')}}'+'/'+kurikulum).done(function(result) {
+                renderDataGrid(result);
+            });
+        }
+
+        function renderDataGrid(gridDataSource) {
+            console.log(gridDataSource.data)
+            var tanpa_koreksi = $("#nilai").dxChart({
+                rotated: true,
+                dataSource: gridDataSource.data, 
+                series: {
+                    argumentField: "nama",
+                    valueField: "nilai_rata_rata",
+                    name: "Rata-rata nilai",
+                    type: "bar",
+                    color: '#ffaa66'
+                },
+                valueAxis: {
+                    title: {
+                        text: "Nilai skala 0-100"
+                    },
+                    position: "bottom",
+                    min:0,
+                    max: 100,
+                    valueType: "numeric",
+                    allowDecimals : false,
+                },
+                argumentAxis: {
+                    title: {
+                        text: 'Kota/Kabupaten'
+                    },
+                    inverted: true,
+                    position: "left",
+                    label: {
+                        overlappingBehavior: "rotate",
+                        rotationAngle: 90
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    location: "edge",
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.seriesName + " : " + arg.valueText
+                        };
+                    }
+                },
+                export: {
+                    enabled: true
+                },
+            });
+        }
+
         function format ( d ) {
             return '<table class="table details-table" id="posts-'+d.kd_rayon+'">'+
                 '<thead>'+
@@ -118,6 +214,8 @@
         });
 
     </script>
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
+
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

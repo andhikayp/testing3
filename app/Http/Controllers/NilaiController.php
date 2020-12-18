@@ -149,7 +149,8 @@ class NilaiController extends Controller
     }
 
     public function capaian_nasional(){
-        return view('nilai.capaian_nasional');
+        $mapel = Pelajaran::all()->sortBy('kurikulum');
+        return view('nilai.capaian_nasional', compact('mapel'));
     }
 
     public function ajax_get_pelajaran($kurikulum){
@@ -168,8 +169,15 @@ class NilaiController extends Controller
             $p->nilai_rata_rata = round($p->nilai_rata_rata*100, 2);
             $p->nama = str_replace('_', ' ', $p->nama);
             $p->nama_baru = substr(strstr($p->nama," "), 1);
+            $p->count_siswa = UjianSiswa::where('paket_id', $p->id)->count();
+            if($p->nilai_rata_rata) {
+                $p->keterangan = "Diujikan";
+            } else {
+                $p->keterangan = "Tidak Diujikan";
+            }
             $sum += $p->nilai_rata_rata;
         }
-        return response()->json($paket);
+        return Datatables::of($paket)->make(true);
+        // return response()->json($paket);
     }
 }

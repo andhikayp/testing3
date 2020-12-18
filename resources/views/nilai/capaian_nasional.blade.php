@@ -29,7 +29,7 @@
         <div class="block">
             <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#btabs-animated-slideright-home">Capaian Nilai Rata-rata Tiap Paket</a>
+                    <a class="nav-link active" href="#btabs-animated-slideright-home">Statistik</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-detail-sekolah">Detail</a>
@@ -58,6 +58,40 @@
                         </div>
                     </div>
                 </div>
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail-sekolah" role="tabpanel">
+                    <div class="block">
+                        <h4 class="font-w400" id='dinamis_siswa_teks'>
+                            Capaian Nilai Rata-rata Tiap Paket
+                        </h4>
+                        <div class="row" style="margin-top: 50px;">
+                            <div class="col-6">
+                                <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction2(this)" style="width: 100%">
+                                    <option disabled selected>Pilih Kurikulum</option>
+                                    @foreach($mapel as $m)
+                                        <option value="{{ $m->id }}" data-mapel=" {{ $m->nama }}" data-kurikulum=" {{ $m->kurikulum }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="block-content">
+                            <h4 class="font-w400" id='dinamis_kota_teks'>
+                            </h4>
+                            <div class="table-responsive" id="dinamis_table">
+                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Paket</th>
+                                            <th>Rata-rata</th>
+                                            <th>Jumlah Siswa</th>
+                                            <th>Keterangan</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -67,6 +101,44 @@
 
 @section('moreJS')
     <script>
+        var table = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">'+
+                        '<thead>'+
+                            '<tr>'+
+                                '<th>Paket</th>'+
+                                '<th>Rata-rata</th>'+
+                                '<th>Jumlah Siswa</th>'+
+                                '<th>Keterangan</th>'+
+                            '</tr>'+
+                        '</thead>'+
+                    '</table>';
+
+        function myFunction2(selectObject) {
+            var value = selectObject.value;  
+
+            var opt = selectObject.options[selectObject.selectedIndex];
+            var kurikulum = opt.dataset.kurikulum
+            var mapel = opt.dataset.mapel
+            // console.log(value, kurikulum, mapel)
+            getPaketDetail(value, kurikulum, mapel)
+        }
+
+        function getPaketDetail(value, kurikulum, mapel){
+            $('#dinamis_table').empty();
+            $('#dinamis_table').append(table);
+
+            $('#peringkat_kota-table').DataTable( {
+                "ajax": "{{ url('/ajax/rata2_paket/')}}"+"/"+value,
+                "autoWidth": true,
+                "ordering": false,
+                "columns": [
+                    { "data": "nama_baru" },
+                    { "data": "nilai_rata_rata" },
+                    { "data": "count_siswa" },
+                    { "data": "keterangan" },
+                ]
+            });           
+        }
+
         function myFunction(selectObject) {
             var value = selectObject.value;
             // console.log(value)
@@ -96,11 +168,11 @@
             });
 
             function renderDataGrid2(gridDataSource) {
-                // console.log(gridDataSource[0].pelajaran_id)
-                var sekolah_id = "#sekolah_" + gridDataSource[0].pelajaran_id
+                // console.log(gridDataSource.data[0].pelajaran_id)
+                var sekolah_id = "#sekolah_" + gridDataSource.data[0].pelajaran_id
                 $(sekolah_id).dxChart({
                     rotated: true,
-                    dataSource: gridDataSource, 
+                    dataSource: gridDataSource.data, 
                     series: {
                         argumentField: "nama_baru",
                         valueField: "nilai_rata_rata",
@@ -154,8 +226,14 @@
                     '<div id="sekolah_'+d.id+'"></div>'+
                 '</div>'+
             '</div>';
-
         }
+
+
+    </script>
+    <script type="text/javascript">
+        $('.js-example-basic-single').select2({
+            width: 'resolve'
+        });
     </script>
     <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
 

@@ -36,18 +36,42 @@
             </ul>
             <div class="block-content tab-content overflow-hidden">
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
-                    <div class="row" style="margin-top: 10px;">
-                        <div class="col-6">
-                            <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
-                                <option value="All">Semua</option>
-                                <option value="2013">Kurikulum 2013</option>
-                                <option value="2006">Kurikulum 2006</option>
-                            </select>
+                    <div class="block">
+                        <h4 class="font-w400" id='dinamis_siswa_teks'>
+                            Nilai Rata-rata tiap Kota & Kabupaten
+                        </h4>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-6">
+                                <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
+                                    <option value="All">Semua</option>
+                                    <option value="2013">Kurikulum 2013</option>
+                                    <option value="2006">Kurikulum 2006</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <div id="nilai"></div>
                         </div>
                     </div>
-                    <div class="block-content block-content-full">
-                        <div id="nilai"></div>
+
+                    <div class="block">
+                        <h4 class="font-w400" id='dinamis_siswa_teks'>
+                            Sebaran Nilai Rata-rata tiap Sekolah
+                        </h4>
+                        <div class="row" style="margin-top: 10px;">
+                            <div class="col-6">
+                                <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction2(this)" style="width: 100%">
+                                    <option value="All">Semua</option>
+                                    <option value="2013">Kurikulum 2013</option>
+                                    <option value="2006">Kurikulum 2006</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="block-content block-content-full">
+                            <div id="sekolah"></div>
+                        </div>
                     </div>
+
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail-sekolah" role="tabpanel">
                     <div class="block">
@@ -80,6 +104,7 @@
 @section('moreJS')
     <script>
         getStatJawaTimur('all')
+        getStatJawaTimurSekolah('all')
 
         function myFunction(selectObject) {
             var value = selectObject.value;
@@ -110,8 +135,7 @@
                         text: "Nilai skala 0-100"
                     },
                     position: "bottom",
-                    min:0,
-                    max: 100,
+                    visualRange: [0, 100],
                     valueType: "numeric",
                     allowDecimals : false,
                 },
@@ -140,6 +164,66 @@
                 },
             });
         }
+
+        function myFunction2(selectObject) {
+            var value = selectObject.value;
+            value = value.toLowerCase()
+            getStatJawaTimurSekolah(value)
+        }
+
+        function getStatJawaTimurSekolah(kurikulum) {
+            $.getJSON('{{ url('/ajax/sebaran_peringkat_sekolah/')}}'+'/'+kurikulum).done(function(result) {
+                renderDataGrid2(result);
+            });
+        }
+
+        function renderDataGrid2(gridDataSource) {
+            console.log(gridDataSource.data)
+            var tanpa_koreksi = $("#sekolah").dxChart({
+                rotated: true,
+                dataSource: gridDataSource.data, 
+                series: {
+                    argumentField: "nama",
+                    valueField: "jumlah",
+                    name: "nama",
+                    type: "bar",
+                    color: '#ffaa66'
+                },
+                valueAxis: {
+                    title: {
+                        text: "Nilai skala 0-100"
+                    },
+                    position: "bottom",
+                    visualRange: [0, null],
+                    valueType: "numeric",
+                    allowDecimals : false,
+                },
+                argumentAxis: {
+                    title: {
+                        text: 'Kota/Kabupaten'
+                    },
+                    inverted: true,
+                    position: "left",
+                    label: {
+                        overlappingBehavior: "rotate",
+                        rotationAngle: 90
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    location: "edge",
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.seriesName + " : " + arg.valueText
+                        };
+                    }
+                },
+                export: {
+                    enabled: true
+                },
+            });
+        }
+
 
         function format ( d ) {
             return '<table class="table details-table" id="posts-'+d.kd_rayon+'">'+

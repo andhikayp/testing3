@@ -14,7 +14,6 @@ use App\Models\UjianSiswa;
 use App\Models\Paket;
 use App\Models\Pelajaran;
 
-
 class PeringkatController extends Controller
 {
 	public function index() {
@@ -77,7 +76,30 @@ class PeringkatController extends Controller
 	public function ajax_peringkat_sekolah($id){
 		$ranking = $this->peringkat_sekolah($id);
         return Datatables::of($ranking)->make(true);
+	}
 
+	public function ajax_sebaran_peringkat_sekolah($kurikulum) {
+		$ranking = $this->peringkat_sekolah($kurikulum);
+		$distribusi = array();
+
+		for($i=10; $i > 0; $i--){
+			$distribusi[$i]['nama'] = 'Nilai ' . strval(($i*10)-10) . ' - ' . strval($i*10);
+			$distribusi[$i]['jumlah'] = 0;
+		}
+
+		foreach($ranking as $r) {
+			if($r->nilai_rata_rata < 10) $distribusi[1]['jumlah']++;
+			elseif($r->nilai_rata_rata < 20) $distribusi[2]['jumlah']++;
+			elseif($r->nilai_rata_rata < 30) $distribusi[3]['jumlah']++;
+			elseif($r->nilai_rata_rata < 40) $distribusi[4]['jumlah']++;
+			elseif($r->nilai_rata_rata < 50) $distribusi[5]['jumlah']++;
+			elseif($r->nilai_rata_rata < 60) $distribusi[6]['jumlah']++;
+			elseif($r->nilai_rata_rata < 70) $distribusi[7]['jumlah']++;
+			elseif($r->nilai_rata_rata < 80) $distribusi[8]['jumlah']++;
+			elseif($r->nilai_rata_rata < 90) $distribusi[9]['jumlah']++;
+			elseif($r->nilai_rata_rata < 100) $distribusi[10]['jumlah']++;
+		}
+        return Datatables::of($distribusi)->make(true);
 	}
 
 	public function get_rank_siswa($limit, $kurikulum)

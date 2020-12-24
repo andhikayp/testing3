@@ -36,8 +36,8 @@ class SoalController extends Controller
     public function paket($id)
     {
         $paket = Paket::find($id);
-    	$soal = Soal::where('paket_id', $id)->orderBy('tipe_soal','desc')->get();
-        return view('ujian.soal', compact('paket'));
+    	$all_soal = Soal::where('paket_id', $id)->where('tipe_soal','pilihan_ganda')->orderBy('tipe_soal','desc')->get();
+        return view('ujian.soal', compact('all_soal', 'paket'));
     }
 
     public function ajaxSoal($id)

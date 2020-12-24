@@ -29,21 +29,152 @@
         <h3 class="block-title text-white">Soal Paket {{ str_replace('_', ' ', $paket->nama) }}</h3>
     </div>
     <div class="block-content">
-        <div class="table-responsive">
+        <div class="table-responsive">  
             <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
                 <thead>
                     <tr>
-                        <th>No</th>
-                        <th>Soal</th>
-                        <th>Pilihan A</th>
-                        <th>Pilihan B</th>
-                        <th>Pilihan C</th>
-                        <th>Pilihan D</th>
-                        <th>Pilihan E</th>
-                        <th>Kunci Jawaban</th>
-                        <th>Tipe Soal</th>
+                        <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
+                        <th rowspan="2" style="text-align: center; vertical-align: middle;">Soal</th>
+                        <th colspan="4" style="text-align: center; vertical-align: middle;">Statistik Butir</th>
+
+                        <th colspan="2" style="text-align: center; vertical-align: middle;">Statistik Pilihan Jawaban</th>
+                        <th rowspan="2" style="text-align: center; vertical-align: middle;">Keterangan</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center; vertical-align: middle;">Kunci Jawaban</th>
+                        <th style="text-align: center; vertical-align: middle;">
+                            <a href="#" data-toggle="tooltip" title="Pengukuran seberapa besar derajat kesukaran suatu soal.">Tingkat Kesukaran</a>
+                        </th>
+                        <th style="text-align: center; vertical-align: middle;">
+                            <a href="#" data-toggle="tooltip" title="Pengukuran sejauh mana suatu butir soal mampu membedakan peserta didik yang sudah menguasai kompetensi dengan peserta didik yang belum menguasai kompetensi.">Daya Pembeda</a>
+                        </th>
+                        <th>Reliabilitas</th>
+                        <th>Pilihan</th>
+                        <th>Fungsi Pengecoh</th>
                     </tr>
                 </thead>
+                <tbody>
+                    @php 
+                        $no=1;
+                    @endphp
+                    @foreach($all_soal as $soal)
+                    <tr>
+                        <td class="" rowspan="5">{{ $no++ }}</td>
+                        <td class="" rowspan="5">
+                            {!! $soal->deskripsi !!}
+                            <div class="row" style="margin-top: -10px;">
+                                <div class="col-1">A).</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_a !!}</div>
+                            </div>
+                            <div class="row" style="margin-top: -20px;">
+                                <div class="col-1">B).</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_b !!}</div>
+                            </div>
+                            <div class="row" style="margin-top: -20px;">
+                                <div class="col-1">C).</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_c !!}</div>
+                            </div>
+                            <div class="row" style="margin-top: -20px;">
+                                <div class="col-1">D).</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_d !!}</div>
+                            </div>
+                            <div class="row" style="margin-top: -20px;">
+                                <div class="col-1">E).</div>
+                                <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_e !!}</div>
+                            </div>
+                        </td>
+                        <td class="text-center" rowspan="5" style="font-weight: bold;">
+                            {{ strtoupper($soal->kunci_jawaban) }}
+                        </td>
+                        {{-- <td class="text-center" style="font-weight: bold;">
+                            {{ number_format((float)$soal->analisis->tingkat_kesulitan, 2, '.', '') }}% <br>
+                            @if($soal->analisis->tingkat_kesulitan > 0.70)
+                                (Sulit)
+                            @elseif($soal->analisis->tingkat_kesulitan > 0.3)
+                                (Sedang)
+                            @else
+                                (Mudah)
+                            @endif
+                        </td> --}}
+                        <td class="text-center" rowspan="5" style="font-weight: bold;">
+                            {{ number_format((float)$soal->analisis->tingkat_kesukaran, 4, '.', '') }} <br>
+                            @if($soal->analisis->tingkat_kesukaran > 0.70)
+                                (Mudah)
+                            @elseif($soal->analisis->tingkat_kesukaran > 0.3)
+                                (Sedang)
+                            @else
+                                (Sulit)
+                            @endif
+                        </td>
+
+                        <td class="text-center" rowspan="5" style="font-weight: bold;">
+                            @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
+                                @php
+                                    $daya_pembeda = ($soal->analisis->salah_bawah-$soal->analisis->salah_atas)/($soal->jumlah_siswa*0.27);
+                                @endphp
+                                {{ number_format((float)($daya_pembeda), 4, '.', '') }} <br>
+                                @if($daya_pembeda > 0.4)
+                                    (Sangat baik)
+                                @elseif($daya_pembeda > 0.3)
+                                    (Cukup baik)
+                                @elseif($daya_pembeda > 0.2)
+                                    (Revisi)
+                                @else
+                                    (Ditolak)
+                                @endif
+                            @endif
+                        </td>
+                        <td rowspan="5">0</td>
+                        <td class="text-center" @if($soal->kunci_jawaban=="a") style="font-weight: bold;" @endif>
+                            Pilihan A
+                        </td>
+                        <td>
+                            @if($soal->jumlah_siswa > 0)
+                                {{ number_format((float)( $soal->jawaban_a/$soal->jumlah_siswa), 4, '.', '')  }}
+                            @endif
+                        </td>
+                        <td rowspan="5">Keterangan</td>
+                    </tr>
+                    <tr>
+                        <td class="text-center"  @if($soal->kunci_jawaban=="b") style="font-weight: bold;" @endif>
+                            Pilihan B
+                        </td>
+                        <td>
+                            @if($soal->jumlah_siswa > 0)
+                                {{ number_format((float)( $soal->jawaban_b/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                            @endif
+                    </tr>
+                    <tr>
+                        <td class="text-center"  @if($soal->kunci_jawaban=="c") style="font-weight: bold;" @endif>
+                            Pilihan C
+                        </td>
+                        <td>
+                            @if($soal->jumlah_siswa > 0)
+                                {{ number_format((float)( $soal->jawaban_c/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                            @endif
+                    </tr>
+                    <tr>
+                        <td class="text-center"  @if($soal->kunci_jawaban=="d") style="font-weight: bold;" @endif>
+                            Pilihan D
+                        </td>
+                        <td>
+                            @if($soal->jumlah_siswa > 0)
+                                {{ number_format((float)( $soal->jawaban_d/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                            @endif
+                    </tr>
+                    <tr>
+                        <td class="text-center"  @if($soal->kunci_jawaban=="e") style="font-weight: bold;" @endif>
+                            Pilihan E
+                        </td>
+                        <td>
+                            @if($soal->jumlah_siswa > 0)
+                                {{ number_format((float)( $soal->jawaban_e/$soal->jumlah_siswa), 4, '.', '')  }}
+                            @endif
+                        </td>
+                    </tr>
+
+                    @endforeach
+                </tbody>
             </table>
         </div>
     </div>
@@ -52,35 +183,12 @@
 
 @section('moreJS')
     <script>
-        $(function(){
-            var table = $('#users-table').DataTable({
-                "processing": true,
-                "serverSide": true,
-                "searchDelay": 1000,
-                "autoWidth": false,
-                "ajax":{
-                    "url": "{{ url('ajax/datatables/soal')}}/{{$paket->id}}",
-                    "dataType": "json",
-                    "type": "GET",
-                },
-                "columns": [
-                    { 
-                        data: null,
-                        sortable: false, 
-                        render: function (data, type, row, meta) {
-                            return meta.row + meta.settings._iDisplayStart + 1;
-                        }  
-                    },
-                    { data: 'deskripsi'},
-                    { data: 'pilihan_a'},
-                    { data: 'pilihan_b'},
-                    { data: 'pilihan_c'},
-                    { data: 'pilihan_d'},
-                    { data: 'pilihan_e'},
-                    { data: 'kunci_jawaban'},
-                    { data: 'tipe_soal'},
-                ],
+        $(document).ready(function(){
+            $('#users-table').DataTable({
+                "autoWidth": true,
+                "ordering": true,
             });
+            $('[data-toggle="tooltip"]').tooltip();
         });
     </script>
     <!-- Page JS Plugins -->

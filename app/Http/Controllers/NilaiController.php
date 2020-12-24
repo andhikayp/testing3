@@ -116,6 +116,7 @@ class NilaiController extends Controller
 
     public function soal_individu($mapel_id, $id)
     {
+        ini_set('memory_limit', '-1');
         $ujian_siswa = UjianSiswa::where('id', $mapel_id)->first();
         $random_soal = json_decode($ujian_siswa->random_soal);
         $jawaban_posisi = json_decode($ujian_siswa->random_jawaban);

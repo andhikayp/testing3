@@ -35,7 +35,7 @@
                     <tr>
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">Soal</th>
-                        <th colspan="4" style="text-align: center; vertical-align: middle;">Statistik Butir</th>
+                        <th colspan="3" style="text-align: center; vertical-align: middle;">Statistik Butir</th>
 
                         <th colspan="2" style="text-align: center; vertical-align: middle;">Statistik Pilihan Jawaban</th>
                         <th rowspan="2" style="text-align: center; vertical-align: middle;">Keterangan</th>
@@ -48,7 +48,6 @@
                         <th style="text-align: center; vertical-align: middle;">
                             <a href="#" data-toggle="tooltip" title="Pengukuran sejauh mana suatu butir soal mampu membedakan peserta didik yang sudah menguasai kompetensi dengan peserta didik yang belum menguasai kompetensi.">Daya Pembeda</a>
                         </th>
-                        <th>Reliabilitas</th>
                         <th>Pilihan</th>
                         <th>Fungsi Pengecoh</th>
                     </tr>
@@ -124,7 +123,6 @@
                                 @endif
                             @endif
                         </td>
-                        <td rowspan="5">0</td>
                         <td class="text-center" @if($soal->kunci_jawaban=="a") style="font-weight: bold;" @endif>
                             Pilihan A
                         </td>
@@ -133,7 +131,17 @@
                                 {{ number_format((float)( $soal->jawaban_a/$soal->jumlah_siswa), 4, '.', '')  }}
                             @endif
                         </td>
-                        <td rowspan="5">Keterangan</td>
+                        <td rowspan="5">
+                            @if($daya_pembeda<0.2)
+                                <button type="button" class="btn btn-danger">Soal Ditolak!</button>     
+                            @elseif($daya_pembeda>0.4)
+                                <button type="button" class="btn btn-success">
+                                    Soal Diterima!
+                                </button>   
+                            @else
+                                <button type="button" class="btn btn-warning">Soal Direvisi!</button>     
+                            @endif
+                        </td>
                     </tr>
                     <tr>
                         <td class="text-center"  @if($soal->kunci_jawaban=="b") style="font-weight: bold;" @endif>

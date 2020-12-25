@@ -21,11 +21,11 @@
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <span class="breadcrumb-item active">Soal</span>
+    <span class="breadcrumb-item active">Analisis Butir Soal</span>
 </nav>
 <div class="block">
     <div class="block-header block-header-default bg-gd-primary">
-        <h3 class="block-title text-white">Soal</h3>
+        <h3 class="block-title text-white">Mata Pelajaran</h3>
     </div>
     <div class="block-content">
         <div class="table-responsive">

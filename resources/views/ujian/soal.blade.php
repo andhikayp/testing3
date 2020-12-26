@@ -34,9 +34,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-detail" id="peringkat_sekolah">Detail Pilihan Ganda</a>
                 </li>
-{{--                 <li class="nav-item">
-                    <a class="nav-link" href="#btabs-animated-slideright-siswa" id="peringkat_siswa">Peringkat Siswa</a>
-                </li>--}}            
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="{{ url('/soal/cetak', $paket->id) }}" target="_blank"><i class="si si-settings"></i></a>
+                </li>
             </ul>
             <div class="block-content tab-content overflow-hidden">
 {{-- STATISTIK --}}

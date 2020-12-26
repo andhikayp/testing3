@@ -36,14 +36,14 @@ class SoalController extends Controller
     public function paket($id)
     {
         $paket = Paket::find($id);
-    	$soal_pilgan = Soal::where('paket_id', $id)->where('tipe_soal','pilihan_ganda')->orderBy('tipe_soal','desc')->get();
-        $soal_essai = Soal::where('paket_id', $id)->where('tipe_soal','essai')->get();
+    	$soal_pilgan = Soal::where('paket_id', $id)->where('tipe_soal','pilihan_ganda')->orderBy('created_at', 'asc')->get();
+        $soal_essai = Soal::where('paket_id', $id)->where('tipe_soal','essai')->orderBy('created_at', 'asc')->get();
         return view('ujian.soal', compact('soal_pilgan', 'soal_essai', 'paket'));
     }
 
     public function ajaxSoal($id)
     {
-    	$soal = Soal::select('deskripsi', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'pilihan_e', 'kunci_jawaban', 'tipe_soal')->where('paket_id', $id)->orderBy('tipe_soal','desc')->get();
+    	$soal = Soal::select('deskripsi', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'pilihan_e', 'kunci_jawaban', 'tipe_soal')->where('paket_id', $id)->orderBy('tipe_soal','desc')->orderBy('created_at', 'asc')->get();
         return Datatables::of($soal)
         	->rawColumns(['deskripsi', 'pilihan_a', 'pilihan_b', 'pilihan_c', 'pilihan_d', 'pilihan_e', 'kunci_jawaban', 'tipe_soal'])
         	->make(true);
@@ -61,7 +61,7 @@ class SoalController extends Controller
     }
 
     public function getTingkatKesukaran($paket_id){
-        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->get();
+        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->orderBy('created_at', 'asc')->get();
         $distribusi_tingkat_kesukaran = $this->initDistribusiTingkatKesukaran();
         foreach($soals as $soal) {
             if($soal->analisis->tingkat_kesukaran > 0.7) $distribusi_tingkat_kesukaran[2]['jumlah'] += 1;
@@ -85,7 +85,7 @@ class SoalController extends Controller
     }
 
     public function getDayaPembeda($paket_id){
-        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->get();
+        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->orderBy('created_at', 'asc')->get();
         $distribusi_daya_pembeda = $this->initDistribusiDayaPembeda();
         foreach($soals as $soal) {
             if($soal->analisis->daya_pembeda > 0.4) $distribusi_daya_pembeda[0]['jumlah'] += 1;
@@ -113,7 +113,7 @@ class SoalController extends Controller
     }
 
     public function getFungsiPengecoh($paket_id){
-        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->get();
+        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->orderBy('created_at', 'asc')->get();
         $no = 1;
         foreach ($soals as $soal) {
             $soal->no_soal = "Soal ".$no++;
@@ -150,5 +150,22 @@ class SoalController extends Controller
             elseif($soal->jumlah_pengecoh == 5) $distribusi[5]['jumlah']++;        
         }
         return Datatables::of($distribusi)->make(true);
+    }
+
+    public function cetak($paket_id){
+        $packet = Paket::find($paket_id);
+        try {
+            $soals_pilgan = Soal::where('paket_id',$paket_id)->where('tipe_soal', 'pilihan_ganda')->orderBy('created_at', 'asc')->get()
+            ->toArray();
+            $soals_essay = Soal::where('paket_id',$paket_id)->where('tipe_soal', 'essai')->orderBy('created_at', 'asc')->get()
+                    ->toArray();
+        } catch (Exception $e) {
+            Log::info('Error message: ' . $e->getMessage());
+            return;
+        }
+        
+        $arr_soals = array_merge($soals_pilgan, $soals_essay);
+    
+        return view('soal.cetak', ['soals' => $arr_soals, 'packet' => $packet]);        
     }
 }

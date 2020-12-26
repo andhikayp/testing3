@@ -36,6 +36,7 @@ Route::middleware(['auth'])->group(function () {
 	
 	//soal
 	Route::get('/soal', 'SoalController@index');
+	Route::get('/soal/cetak/{id}', 'SoalController@cetak');
 	Route::get('/ajax/datatables/pelajaran','SoalController@ajaxPelajaran');
 	Route::get('/ajax/datatables/paket/{id}','SoalController@ajaxPaket');
 	Route::get('/paket/{id}', 'SoalController@paket');

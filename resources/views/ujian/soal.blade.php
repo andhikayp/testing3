@@ -32,7 +32,7 @@
                     <a class="nav-link active" href="#btabs-animated-slideright-statistik" id="peringkat_kota">Statistik</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#btabs-animated-slideright-detail" id="peringkat_sekolah">Detail</a>
+                    <a class="nav-link" href="#btabs-animated-slideright-detail" id="peringkat_sekolah">Detail Pilihan Ganda</a>
                 </li>
 {{--                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-siswa" id="peringkat_siswa">Peringkat Siswa</a>
@@ -70,6 +70,16 @@
                             <div class="col-md-6 col-xl-6">
                                 <div class="block">
                                     <div class="block-content" id="daya_pembeda"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xl-12">
+                                <div class="block">
+                                    <div class="block-content" id="fungsi_pengecoh"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xl-12">
+                                <div class="block">
+                                    <div class="block-content" id="fungsi_pengecoh_all"></div>
                                 </div>
                             </div>
                         </div>
@@ -184,6 +194,7 @@
                                                         @endif
                                                     @endif
                                                 </td>
+
                                                 <td class="text-center" @if($soal->kunci_jawaban=="a") style="font-weight: bold;" @endif>
                                                     Pilihan A
                                                 </td>
@@ -280,7 +291,7 @@
             renderDataGrid(result);
         });
         function renderDataGrid(gridDataSource) {
-            var jenis_kelamin = $("#tingkat_kesukaran").dxPieChart({
+            var tingkat_kesukaran = $("#tingkat_kesukaran").dxPieChart({
                 adaptiveLayout: {
                     width: 300
                 },
@@ -318,7 +329,7 @@
                 }]
             }).dxPieChart("instance");
 
-            var jurusan = $("#daya_pembeda").dxPieChart({
+            var daya_pembeda = $("#daya_pembeda").dxPieChart({
                 adaptiveLayout: {
                     width: 300
                 },
@@ -341,6 +352,87 @@
                 type: 'doughnut',
                 series: [{
                     argumentField: "tipe",
+                    valueField: "jumlah",
+                    label: {
+                        visible: true,
+                        customizeText: function(arg) {
+                            return arg.argumentText+': ' + arg.originalValue + ' Soal'+
+                                "<br>(" + arg.percentText + ")";
+                        },
+                        connector: {
+                            visible: true,
+                            width: 1
+                        }
+                    }
+                }]
+            }).dxPieChart("instance");
+
+            var fungsi_pengecoh = $("#fungsi_pengecoh").dxChart({
+                dataSource: gridDataSource.fungsi_pengecoh, 
+                title: "Fungsi Pengecoh",
+                series: {
+                    argumentField: "no_soal",
+                    valueField: "jumlah_pengecoh",
+                    name: "Jumlah pengecoh <br>berfungsi dengan baik",
+                    type: "bar",
+                    color: '#ffaa66'
+                },
+                valueAxis: {
+                    title: {
+                        text: "Jumlah Pilihan Jawaban"
+                    },
+                    position: "bottom",
+                    visualRange: [0, null],
+                    valueType: "numeric",
+                    allowDecimals : false,
+                },
+                argumentAxis: {
+                    title: {
+                        text: 'Soal Pilihan Ganda'
+                    },
+                    position: "left",
+                    label: {
+                        overlappingBehavior: "rotate",
+                        rotationAngle: 90
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    location: "edge",
+                    customizeTooltip: function (arg) {
+                        return {
+                            text: arg.valueText + " pilihan jawaban berfungsi dengan baik"
+                        };
+                    }
+                },
+                export: {
+                    enabled: true
+                },
+            });
+
+            var daya_pembeda = $("#fungsi_pengecoh_all").dxPieChart({
+                adaptiveLayout: {
+                    width: 300
+                },
+                palette: "ocean",
+                dataSource: gridDataSource.fungsi_pengecoh_all.original.data,
+                title: "Fungsi Pengecoh",
+                margin: {
+                    bottom: 0
+                },
+                legend: {
+                    visible: true
+                },
+                animation: {
+                    enabled: true
+                },
+                resolveLabelOverlapping: "none",
+                "export": {
+                    enabled: true
+                },
+                type: 'doughnut',
+                series: [{
+                    argumentField: "nama",
                     valueField: "jumlah",
                     label: {
                         visible: true,

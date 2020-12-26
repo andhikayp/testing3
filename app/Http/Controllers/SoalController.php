@@ -96,14 +96,59 @@ class SoalController extends Controller
         return $distribusi_daya_pembeda;
     }
 
-    public function getFungsiPengecoh(){
-        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->get();
+    public function getPengecohJawaban($jumlah, $jawaban, $jumlah_siswa){
+        $fungsi_pengecoh = $jawaban / $jumlah_siswa;
+        if($fungsi_pengecoh > 0.05) $jumlah+=1;
+        return $jumlah;
+    }
 
+    public function getCountPengecoh($soal){
+        $jumlah = 0;
+        $jumlah = $this->getPengecohJawaban($jumlah, $soal->jawaban_a, $soal->jumlah_siswa);
+        $jumlah = $this->getPengecohJawaban($jumlah, $soal->jawaban_b, $soal->jumlah_siswa);
+        $jumlah = $this->getPengecohJawaban($jumlah, $soal->jawaban_c, $soal->jumlah_siswa);
+        $jumlah = $this->getPengecohJawaban($jumlah, $soal->jawaban_d, $soal->jumlah_siswa);
+        $jumlah = $this->getPengecohJawaban($jumlah, $soal->jawaban_e, $soal->jumlah_siswa);
+        return $jumlah;
+    }
+
+    public function getFungsiPengecoh($paket_id){
+        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->get();
+        $no = 1;
+        foreach ($soals as $soal) {
+            $soal->no_soal = "Soal ".$no++;
+            $soal->jumlah_pengecoh = $this->getCountPengecoh($soal);
+        }
+        return $soals;
     }
 
     public function getAnalisisButirSoal($paket_id){
+        $hasil['fungsi_pengecoh_all'] = $this->getCountFungsiPengecohAll($paket_id);
         $hasil['tingkat_kesukaran'] = $this->getTingkatKesukaran($paket_id);
         $hasil['daya_pembeda'] = $this->getDayaPembeda($paket_id);
+        $hasil['fungsi_pengecoh'] = $this->getFungsiPengecoh($paket_id);
         return response()->json($hasil);
+    }
+
+    public function initDistribusiFungsiPengecoh(){
+        $distribusi = array();
+        for($i=1; $i <= 5; $i++){
+            $distribusi[$i]['nama'] = $i.' pilihan jawaban';
+            $distribusi[$i]['jumlah'] = 0;
+        }
+        return $distribusi;
+    }
+
+    public function getCountFungsiPengecohAll($paket_id) {
+        $soals = $this->getFungsiPengecoh($paket_id);
+        $distribusi = $this->initDistribusiFungsiPengecoh();
+        foreach ($soals as $soal) {
+            if($soal->jumlah_pengecoh == 1) $distribusi[1]['jumlah']++;
+            elseif($soal->jumlah_pengecoh == 2) $distribusi[2]['jumlah']++;
+            elseif($soal->jumlah_pengecoh == 3) $distribusi[3]['jumlah']++;
+            elseif($soal->jumlah_pengecoh == 4) $distribusi[4]['jumlah']++;
+            elseif($soal->jumlah_pengecoh == 5) $distribusi[5]['jumlah']++;        
+        }
+        return Datatables::of($distribusi)->make(true);
     }
 }

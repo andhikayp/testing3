@@ -35,7 +35,7 @@
                     <a class="nav-link" href="#btabs-animated-slideright-detail" id="peringkat_sekolah">Detail Pilihan Ganda</a>
                 </li>
                 <li class="nav-item ml-auto">
-                    <a class="nav-link" href="{{ url('/soal/cetak', $paket->id) }}" target="_blank"><i class="si si-settings"></i></a>
+                    <a class="nav-link" href="" onclick="cetak_soal()"><i class="fa fa-print"><span class="ml-1">Cetak Soal</span></i></a>
                 </li>
             </ul>
             <div class="block-content tab-content overflow-hidden">
@@ -285,6 +285,10 @@
             });
             $('[data-toggle="tooltip"]').tooltip();
         });
+
+        function cetak_soal(){
+            window.open('{{ url('/soal/cetak', $paket->id) }}', '_blank');
+        }
     </script>
     <script>
         $.getJSON('{{ url('/ajax/grafik/soal/analisis_butir_soal')}}/{{ $paket->id }}').done(function(result) {

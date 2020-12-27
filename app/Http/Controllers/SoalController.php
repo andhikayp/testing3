@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pelajaran;
 use App\Models\Paket;
 use App\Models\Soal;
+use App\Models\UjianSiswa;
 use DB;
 use DataTables;
 
@@ -13,7 +14,28 @@ class SoalController extends Controller
 {
     public function index()
     {
-        return view('soal.index');
+        $count_pelajaran = $this->getCountPelajaran();
+        foreach($count_pelajaran as $c) {
+            $paket =  $this->getKurikulumPaket($c->kurikulum);
+            $c->paket_count = count($paket);
+            $c->paket_digunakan = 0;
+            $c->paket_tidak_digunakan = 0;
+            foreach($paket as $p){
+                if (UjianSiswa::where('paket_id', $p->id)->exists()) {
+                   $c->paket_digunakan +=1;
+                } else {
+                   $c->paket_tidak_digunakan +=1;
+                }
+            }
+        }
+        return view('soal.index', compact('count_pelajaran'));
+    }
+
+    public function getKurikulumPaket($kurikulum){
+        $count_paket = Paket::whereIn('pelajaran_id', function($query) use ($kurikulum){
+            $query->select('id')->from(with(new Pelajaran)->getTable())->where('kurikulum', $kurikulum);
+        })->get();
+        return $count_paket;
     }
 
     public function ajaxPelajaran()
@@ -179,5 +201,10 @@ class SoalController extends Controller
             $soal->jumlah_pengecoh = $this->getCountPengecoh($soal)/5;
         }
         return response()->json($soals);
+    }
+
+    public function getCountPelajaran(){
+        $pelajaran = Pelajaran::select('kurikulum', DB::raw('count(*) as total'))->groupBy('kurikulum')->get();
+        return $pelajaran;
     }
 }

@@ -38,9 +38,56 @@
 {{-- STATISTIK PAKET--}}
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-statistik" role="tabpanel">
                     <div class="block-content">
-                        <h4 class="font-w400" id='dinamis_kota_teks'>
-                            Statistik Paket
-                        </h4>
+                        <div class="block-content block-content-full">
+                            <h4 class="font-w400 text-center" id='dinamis_kota_teks'>
+                                Statistik
+                            </h4>
+                            <div class="row py-20">
+                                <div class="col-6 text-right border-r">
+                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->total }} Pelajaran</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->total }} Pelajaran</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row py-20">
+                                <div class="col-6 text-right border-r">
+                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_count }} Paket</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_count }} Paket</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row py-20">
+                                <div class="col-6 text-right border-r">
+                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_digunakan }} Paket Diujikan</div>
+                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_tidak_digunakan }} Paket Tidak Diujikan</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_digunakan }} Paket Diujikan</div>
+                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_tidak_digunakan }} Paket Tidak Diujikan</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                         <div class="table-responsive" id="dinamis_table">
                             {{-- table --}}
                         </div>
@@ -53,9 +100,9 @@
                             Detail Paket
                         </h4>
                         <div class="block">
-                            <div class="block-header block-header-default bg-gd-primary">
+                            {{-- <div class="block-header block-header-default bg-gd-primary">
                                 <h3 classπ="block-title text-white">Mata Pelajaran</h3>
-                            </div>
+                            </div> --}}
                             <div class="block-content">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="kurikulums-table">

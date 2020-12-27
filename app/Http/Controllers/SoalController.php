@@ -168,4 +168,16 @@ class SoalController extends Controller
     
         return view('soal.cetak', ['soals' => $arr_soals, 'packet' => $packet]);        
     }
+
+    public function getAllAnalisis($paket_id){
+        $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->orderBy('created_at', 'asc')->get();
+        $no = 1;
+        foreach ($soals as $soal) {
+            $soal->no_soal = "Soal ".$no++;
+            $soal->tingkat_kesukaran = $soal->analisis->tingkat_kesukaran;
+            $soal->daya_pembeda = $soal->analisis->daya_pembeda;
+            $soal->jumlah_pengecoh = $this->getCountPengecoh($soal)/5;
+        }
+        return response()->json($soals);
+    }
 }

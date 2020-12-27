@@ -42,6 +42,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/paket/{id}', 'SoalController@paket');
 	Route::get('/ajax/datatables/soal/{id}','SoalController@ajaxSoal');
 	Route::get('/ajax/grafik/soal/analisis_butir_soal/{paket_id}','SoalController@getAnalisisButirSoal');
+	Route::get('/ajax/grafik/soal/analisis_butir_soal_all/{paket_id}','SoalController@getAllAnalisis');
 
 	//nilai
 	Route::get('/nilai', 'NilaiController@index');

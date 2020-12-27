@@ -18,6 +18,9 @@
     tr.shown td.details-control {
         background: url('{{ asset('img/details_close.png') }}') no-repeat center center;
     }
+    #chart {
+        height: 450px;
+    }
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
@@ -80,6 +83,11 @@
                             <div class="col-md-12 col-xl-12">
                                 <div class="block">
                                     <div class="block-content" id="fungsi_pengecoh_all"></div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 col-xl-12">
+                                <div class="block">
+                                    <div class="block-content" id="chart"></div>
                                 </div>
                             </div>
                         </div>
@@ -414,7 +422,7 @@
                 },
             });
 
-            var daya_pembeda = $("#fungsi_pengecoh_all").dxPieChart({
+            var fungsi_pengecoh_all = $("#fungsi_pengecoh_all").dxPieChart({
                 adaptiveLayout: {
                     width: 300
                 },
@@ -452,6 +460,161 @@
                 }]
             }).dxPieChart("instance");
         }
+    </script>
+    <script type="text/javascript">
+        $.getJSON('{{ url('/ajax/grafik/soal/analisis_butir_soal_all')}}/{{ $paket->id }}').done(function(result) {
+            renderDataGrid2(result);
+        });
+        function renderDataGrid2(gridDataSource) {
+            var all_analisis_butir_soal = $("#chart").dxChart({
+                palette: "vintage",
+                dataSource: gridDataSource,
+                commonSeriesSettings:{
+                    argumentField: "no_soal",
+                    type: "fullstackedbar"
+                },
+                series: [{
+                        valueField: "tingkat_kesukaran",
+                        type: "spline",
+                        name: "Tingkat Kesukaran"
+                    }, {
+                        valueField: "daya_pembeda",
+                        type: "spline",
+                        name: "Daya Pembeda",
+                        color: "#5ec435"
+                    }, {
+                        // axis: "total",
+                        type: "spline",
+                        valueField: "jumlah_pengecoh",
+                        name: "Jumlah Pengecoh",
+                        color: "#008fd8"
+                    }
+                ],
+                valueAxis: [{
+                    grid: {
+                        visible: true
+                    },
+                    visualRange: [-1,1],
+                }, {
+                    name: "total",
+                    position: "right",
+                    grid: {
+                        visible: true
+                    },
+                    title: {
+                        text: "Rentang nilai [-1,1]"
+                    }
+                }],
+                argumentAxis: {
+                    title: {
+                        text: 'Soal Pilihan Ganda'
+                    },
+                    position: "left",
+                    label: {
+                        overlappingBehavior: "rotate",
+                        rotationAngle: 90
+                    }
+                },
+                tooltip: {
+                    enabled: true,
+                    shared: true,
+                    format: {
+                        type: "largeNumber",
+                        precision: 4
+                    },
+                    customizeTooltip: function (arg) {
+                        var items = arg.valueText.split("\n"),
+                            color = arg.point.getColor();
+                        $.each(items, function(index, item) {
+                            if(item.indexOf(arg.seriesName) === 0) {
+                                items[index] = $("<span>")
+                                                .text(item)
+                                                .addClass("active")
+                                                .css("color", color)
+                                                .prop("outerHTML");
+                            }
+                        });
+                        return { text: items.join("\n") };
+                    }
+                },
+                legend: {
+                    verticalAlignment: "bottom",
+                    horizontalAlignment: "center"
+                },
+                "export": {
+                    enabled: true
+                },
+                title: {
+                    text: "Korelasi tingkat kesukaran, daya pembeda, dan fungsi pengecoh"
+                }
+            });
+        }
+    </script>
+    <script>
+        var dataSource = [{
+            year: "1750",
+            africa: 106000000,
+            asia: 502000000,
+            europe: 163000000,
+            latinamerica: 16000000,
+            northamerica: 2000000,
+            oceania: 2000000,
+            total: 791000000
+        }, {
+            year: "1800",
+            africa: 107000000,
+            asia: 635000000,
+            europe: 203000000,
+            latinamerica: 24000000,
+            northamerica: 7000000,
+            oceania: 2000000,
+            total: 978000000
+        }, {
+            year: "1850",
+            africa: 111000000,
+            asia: 809000000,
+            europe: 276000000,
+            latinamerica: 38000000,
+            northamerica: 26000000,
+            oceania: 2000000,
+            total: 1262000000
+        }, {
+            year: "1900",
+            africa: 133000000,
+            asia: 947000000,
+            europe: 408000000,
+            latinamerica: 74000000,
+            northamerica: 82000000,
+            oceania: 6000000,
+            total: 1650000000
+        }, {
+            year: "1950",
+            africa: 229895000,
+            asia: 1403388000,
+            europe: 547287000,
+            latinamerica: 167368000,
+            northamerica: 171614000,
+            oceania: 12675000,
+            total: 2532227000
+        }, {
+            year: "2000",
+            africa: 811101000,
+            asia: 3719044000,
+            europe: 726777000,
+            latinamerica: 521419000,
+            northamerica: 313289000,
+            oceania: 31130000,
+            total: 6122770000
+        }, {
+            year: "2050",
+            africa: 2191599000,
+            asia: 5142220000,
+            europe: 719257000,
+            latinamerica: 750956000,
+            northamerica: 446862000,
+            oceania: 55223000,
+            total: 9306128000
+        }];
     </script>
     <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <!-- Page JS Plugins -->

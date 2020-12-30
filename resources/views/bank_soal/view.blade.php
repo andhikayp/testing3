@@ -161,7 +161,7 @@
                 "searchDelay": 1000,
                 "autoWidth": false,
                 "ajax":{
-                    "url": "{{ url('ajax/bank_soal/terima/50')}}",
+                    "url": "{{ url('ajax/bank_soal/terima')}}/{{ $pelajaran->id }}",
                     "dataType": "json",
                     "type": "GET",
                 },
@@ -182,7 +182,7 @@
                 "searchDelay": 1000,
                 "autoWidth": false,
                 "ajax":{
-                    "url": "{{ url('ajax/bank_soal/revisi/50')}}",
+                    "url": "{{ url('ajax/bank_soal/revisi')}}/{{ $pelajaran->id }}",
                     "dataType": "json",
                     "type": "GET",
                 },
@@ -203,7 +203,7 @@
                 "searchDelay": 1000,
                 "autoWidth": false,
                 "ajax":{
-                    "url": "{{ url('ajax/bank_soal/tolak/50')}}",
+                    "url": "{{ url('ajax/bank_soal/tolak')}}/{{ $pelajaran->id }}",
                     "dataType": "json",
                     "type": "GET",
                 },

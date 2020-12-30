@@ -134,6 +134,7 @@
                 '<thead>'+
                     '<tr>'+
                         '<th>Paket</th>'+
+                        '<th>Keterangan</th>'+
                         '<th></th>'+
                     '</tr>'+
                 '</thead>'+
@@ -188,6 +189,7 @@
                     ajax: "{{ url('ajax/datatables/paket')}}/"+data.id,
                     columns: [
                         { data: 'nama', name: 'nama' },
+                        { data: 'keterangan', name: 'keterangan' },
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ]
                 })

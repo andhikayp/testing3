@@ -47,6 +47,13 @@ class SoalController extends Controller
     public function ajaxPaket($pelajaran)
     {
         $paket = Paket::where('pelajaran_id', $pelajaran)->get();
+        foreach($paket as $p){
+            if (UjianSiswa::where('paket_id', $p->id)->exists()) {
+               $p->keterangan = "Diujikan";
+            } else {
+               $p->keterangan = "Tidak Diujikan";
+            }
+        }
         return Datatables::of($paket)
         	->addColumn('action', function ($user) {
                 return '<a href="'.url('paket', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75 float-right">Lihat Detail</button></a>';

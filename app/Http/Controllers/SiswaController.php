@@ -34,6 +34,9 @@ class SiswaController extends Controller
                 ->rawColumns(['action'])
             	->make(true);
         } elseif ($param == 'siswa') {
+            foreach($sekolah as $s){
+                $s->jumlah_siswa = User::where('level', 'siswa')->where('sekolah_id', $s->id)->count();
+            }
             return Datatables::of($sekolah)
                 ->addColumn('action', function ($user) {
                     return '<a href="'.url('siswa', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';

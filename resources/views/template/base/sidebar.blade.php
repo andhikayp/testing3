@@ -1,4 +1,4 @@
-<!-- Sidebar -->
+Sidebar -->
 <!--
     Helper classes
 
@@ -92,12 +92,12 @@
                         <li>
                             <a href="{{ url('nilai/capaian_nasional') }}">Capaian Nilai Rata-rata Tiap Paket</a>
                         </li>
-                        <li>
+{{--                         <li>
                             <a href="be_blocks_draggable.html">Draggable</a>
                         </li>
                         <li>
                             <a href="be_blocks_api.html">API</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </li>
                 <li>
@@ -112,10 +112,13 @@
                 <li>
                     <a href="{{ url('ujian') }}"><i class="si si-note"></i><span class="sidebar-mini-hide">Detail Ujian</span></a>
                 </li>
+                <li>
+                    <a href="{{ url('bank_soal') }}"><i class="fas fa-atlas"></i><span class="sidebar-mini-hide">Bank Soal</span></a>
+                </li>
             </ul>
         </div>
         <!-- END Side Navigation -->
     </div>
     <!-- Sidebar Content -->
 </nav>
-<!-- END Sidebar -->
+<!-- END Sidebar

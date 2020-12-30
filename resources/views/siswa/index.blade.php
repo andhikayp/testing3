@@ -21,7 +21,8 @@
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <span class="breadcrumb-item active">Sekolah</span>
+    <span class="breadcrumb-item active">Siswa</span>
+    <span class="breadcrumb-item active">Pilih Sekolah</span>
 </nav>
 <div class="block">
     <div class="block-header block-header-default bg-gd-primary">
@@ -53,6 +54,7 @@
                         '<th>Alamat</th>'+
                         '<th>Kode</th>'+
                         '<th>Kurikulum</th>'+
+                        '<th>Jumlah Siswa</th>'+
                         '<th></th>'+
                     '</tr>'+
                 '</thead>'+
@@ -111,6 +113,7 @@
                         { data: 'alamat', name: 'alamat' },
                         { data: 'kode', name: 'kode' },
                         { data: 'kurikulum', name: 'kurikulum' },
+                        { data: 'jumlah_siswa', name: 'jumlah_siswa' },
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ]
                 })

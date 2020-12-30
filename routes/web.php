@@ -63,7 +63,12 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/get_rank_siswa/{id}/{kurikulum}', 'PeringkatController@get_rank_siswa');
 	Route::get('/ajax/get_rank_siswa_individu/{pelajaran_id}', 'PeringkatController@get_rank_pelajaran');
 
-	
+	//bank_soal
+	Route::get('/bank_soal', 'BankSoalController@index');
+	Route::get('/ajax/datatables/pelajaran/action','SoalController@ajaxPelajaranWithAction');
+	Route::get('/bank_soal/{pelajaran_id}', 'BankSoalController@view_bank_soal');
+	Route::get('/ajax/bank_soal/{ket}/{pelajaran_id}', 'BankSoalController@ajax_bank_soal');
+
 	Route::middleware(['admin'])->group(function () {
 
 	});

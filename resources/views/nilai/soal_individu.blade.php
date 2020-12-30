@@ -87,9 +87,9 @@
                         </td>
                         <td class="text-center" style="font-weight: bold;">
                             {{ number_format((float)$soal->analisis->tingkat_kesulitan*100, 2, '.', '') }}% <br>
-                            @if($soal->analisis->tingkat_kesulitan > 0.73)
+                            @if($soal->analisis->tingkat_kesulitan > 0.7)
                                 (Sukar)
-                            @elseif($soal->analisis->tingkat_kesulitan > 0.28)
+                            @elseif($soal->analisis->tingkat_kesulitan > 0.3)
                                 (Sedang)
                             @else
                                 (Mudah)

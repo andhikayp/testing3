@@ -176,7 +176,7 @@
                                                 </td> --}}
                                                 <td class="text-center" rowspan="5" style="font-weight: bold;">
                                                     {{ number_format((float)$soal->analisis->tingkat_kesukaran, 4, '.', '') }} <br>
-                                                    @if($soal->analisis->tingkat_kesukaran > 0.70)
+                                                    @if($soal->analisis->tingkat_kesukaran > 0.7)
                                                         (Mudah)
                                                     @elseif($soal->analisis->tingkat_kesukaran > 0.3)
                                                         (Sedang)
@@ -214,7 +214,7 @@
                                                 <td rowspan="5">
                                                     @if($daya_pembeda<0.2)
                                                         <button type="button" class="btn btn-danger">Soal Ditolak!</button>     
-                                                    @elseif($daya_pembeda>0.4)
+                                                    @elseif($daya_pembeda>0.3)
                                                         <button type="button" class="btn btn-success">
                                                             Soal Diterima!
                                                         </button>   

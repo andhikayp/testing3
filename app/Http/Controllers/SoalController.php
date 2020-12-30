@@ -38,11 +38,22 @@ class SoalController extends Controller
         return $count_paket;
     }
 
-    public function ajaxPelajaran()
-    {
+    public function ajaxPelajaran() {
     	$pelajaran = Pelajaran::all();
         return Datatables::of($pelajaran)->make(true);
-    }  
+    } 
+
+    public function ajaxPelajaranWithAction()
+    {
+        $pelajaran = Pelajaran::all();
+        return Datatables::of($pelajaran)
+            ->addColumn('action', function ($pelajaran) {
+                return '<a href="'.url('bank_soal', $pelajaran->id).'"><button type="button text-center" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
+    } 
+
 
     public function ajaxPaket($pelajaran)
     {

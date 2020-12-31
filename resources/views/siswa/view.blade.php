@@ -26,7 +26,9 @@
 
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <a class="breadcrumb-item" href="{{ url('/siswa') }}">Sekolah</a>
+    @if(Auth()->user()->level == 'admin')
+        <a class="breadcrumb-item" href="{{ url('/siswa') }}">Sekolah</a>
+    @endif
     <span class="breadcrumb-item active">Data Siswa</span>
 </nav>
 <div class="row">

@@ -49,6 +49,9 @@ class SiswaController extends Controller
     public function siswa($id)
     {
         $sekolah = Sekolah::where('id',$id)->first();
+        if(Auth()->user()->level != 'admin' and Auth()->user()->sekolah->id != $id) {
+            return redirect('/dashboard');
+        }
         return view('siswa.view', compact('sekolah'));
     }
 

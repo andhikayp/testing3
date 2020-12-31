@@ -107,14 +107,20 @@ Sidebar -->
                     <a href="{{ url('soal') }}"><i class="si si-puzzle"></i><span class="sidebar-mini-hide">Analisis Butir Soal</span></a>
                 </li>
                 <li>
-                    <a href="{{ url('siswa') }}"><i class="si si-user"></i><span class="sidebar-mini-hide">Data Siswa</span></a>
+                    @if(Auth()->user()->level == "admin")
+                        <a href="{{ url('siswa') }}"><i class="si si-user"></i><span class="sidebar-mini-hide">Data Siswa</span></a>
+                    @elseif(Auth()->user()->level == "proktor")
+                        <a href="{{ url('siswa', Auth()->user()->sekolah->id) }}"><i class="si si-user"></i><span class="sidebar-mini-hide">Data Siswa</span></a>
+                    @endif
                 </li>
                 <li>
                     <a href="{{ url('ujian') }}"><i class="si si-note"></i><span class="sidebar-mini-hide">Detail Ujian</span></a>
                 </li>
+                @if(Auth()->user()->level == "admin")
                 <li>
                     <a href="{{ url('bank_soal') }}"><i class="fas fa-atlas"></i><span class="sidebar-mini-hide">Bank Soal</span></a>
                 </li>
+                @endif
             </ul>
         </div>
         <!-- END Side Navigation -->

@@ -73,6 +73,14 @@ Route::middleware(['auth'])->group(function () {
 		
 	});
 	Route::middleware(['sekolah'])->group(function () {
+		//siswa
+		Route::get('/siswa', 'SiswaController@index');
+		Route::get('/ajax/datatables/siswa', 'SiswaController@ajaxIndex');
+		Route::get('/ajax/datatables/sekolah/{param}/{id}', 'SiswaController@ajaxSekolah');
+		Route::get('/ajax/datatables/siswa/{param}/{id}', 'SiswaController@ajaxSiswa');
+		Route::get('/siswa/{id}', 'SiswaController@siswa');
+		Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
+
 		//ujian
 		Route::get('/ujian', 'UjianController@index');
 		Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');

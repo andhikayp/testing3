@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Pelajaran;
 use App\Models\Paket;
 use App\Models\Soal;
+use App\Models\User;
 use App\Models\UjianSiswa;
 use DB;
 use DataTables;
@@ -14,21 +15,36 @@ class SoalController extends Controller
 {
     public function index()
     {
-        $count_pelajaran = $this->getCountPelajaran();
-        foreach($count_pelajaran as $c) {
-            $paket =  $this->getKurikulumPaket($c->kurikulum);
-            $c->paket_count = count($paket);
-            $c->paket_digunakan = 0;
-            $c->paket_tidak_digunakan = 0;
-            foreach($paket as $p){
-                if (UjianSiswa::where('paket_id', $p->id)->exists()) {
-                   $c->paket_digunakan +=1;
-                } else {
-                   $c->paket_tidak_digunakan +=1;
+        if(Auth()->user()->level == 'admin'){
+            $count_pelajaran = $this->getCountPelajaran();
+            foreach($count_pelajaran as $c) {
+                $paket =  $this->getKurikulumPaket($c->kurikulum);
+                $c->paket_count = count($paket);
+                $c->paket_digunakan = 0;
+                $c->paket_tidak_digunakan = 0;
+                foreach($paket as $p){
+                    if (UjianSiswa::where('paket_id', $p->id)->exists()) {
+                       $c->paket_digunakan +=1;
+                    } else {
+                       $c->paket_tidak_digunakan +=1;
+                    }
                 }
             }
+            return view('soal.index', compact('count_pelajaran'));
+        } else{
+            $paket =  $this->getPaketSekolahId(Auth()->user()->sekolah->id);
+            $pelajaran = $this->getPelajaranId();
+            return view('soal.index', compact('paket', 'pelajaran'));
         }
-        return view('soal.index', compact('count_pelajaran'));
+    }
+
+    public function getPaketSekolahId($sekolah_id){
+        $pelajaran = Paket::select('*')->whereIn('id', function($query) use ($sekolah_id){
+            $query->select('paket_id')->from(with(new UjianSiswa)->getTable())->whereIn('user_id', function($query2) use ($sekolah_id){
+                $query2->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
+            })->distinct('paket_id')->get();
+        })->get();
+        return $pelajaran;
     }
 
     public function getKurikulumPaket($kurikulum){
@@ -39,7 +55,12 @@ class SoalController extends Controller
     }
 
     public function ajaxPelajaran() {
-    	$pelajaran = Pelajaran::all();
+        if(Auth()->user()->level == 'admin') {
+            $pelajaran = Pelajaran::all();
+        } else {
+            $pelajaran_id = $this->getPelajaranId();
+            $pelajaran = Pelajaran::whereIn('id', $pelajaran_id)->get();
+        }
         return Datatables::of($pelajaran)->make(true);
     } 
 
@@ -58,11 +79,15 @@ class SoalController extends Controller
     public function ajaxPaket($pelajaran)
     {
         $paket = Paket::where('pelajaran_id', $pelajaran)->get();
-        foreach($paket as $p){
+        foreach($paket as $k => $p){
             if (UjianSiswa::where('paket_id', $p->id)->exists()) {
-               $p->keterangan = "Diujikan";
+                $p->keterangan = "Diujikan";
             } else {
-               $p->keterangan = "Tidak Diujikan";
+                if(Auth()->user()->level != 'admin') {
+                    unset($paket[$k]);
+                } else {
+                    $p->keterangan = "Tidak Diujikan";
+                }
             }
         }
         return Datatables::of($paket)
@@ -225,4 +250,15 @@ class SoalController extends Controller
         $pelajaran = Pelajaran::select('kurikulum', DB::raw('count(*) as total'))->groupBy('kurikulum')->get();
         return $pelajaran;
     }
+
+    public function getPelajaranId(){
+        $sekolah_id = Auth()->user()->sekolah_id;
+        $pelajaran = Paket::select('pelajaran_id')->whereIn('id', function($query) use ($sekolah_id){
+            $query->select('paket_id')->from(with(new UjianSiswa)->getTable())->whereIn('user_id', function($query2) use ($sekolah_id){
+                $query2->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
+            })->distinct('paket_id')->get();
+        })->distinct('pelajaran_id')->get();
+        return $pelajaran;
+    }
+
 }

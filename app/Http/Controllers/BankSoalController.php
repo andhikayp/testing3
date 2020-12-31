@@ -21,7 +21,7 @@ class BankSoalController extends Controller
     	foreach($soals as $k => $val){
     		if($ket == "terima"){
     			if($val->analisis->daya_pembeda < 0.3) { 
-    			    unset($soals[$k]); 
+    			    unset($soals[$k]);
     			} 
     		} else if($ket == "revisi"){
     			if($val->analisis->daya_pembeda > 0.3 and $val->analisis->daya_pembeda < 0.2) { 

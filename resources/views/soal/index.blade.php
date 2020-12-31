@@ -42,51 +42,68 @@
                             <h4 class="font-w400 text-center" id='dinamis_kota_teks'>
                                 Statistik
                             </h4>
-                            <div class="row py-20">
-                                <div class="col-6 text-right border-r">
-                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
-                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->total }} Pelajaran</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                            @if(Auth()->user()->level == 'admin')
+                                <div class="row py-20">
+                                    <div class="col-6 text-right border-r">
+                                        <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                            <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->total }} Pelajaran</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                            <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->total }} Pelajaran</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
-                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->total }} Pelajaran</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                <div class="row py-20">
+                                    <div class="col-6 text-right border-r">
+                                        <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                            <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_count }} Paket</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                            <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_count }} Paket</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row py-20">
-                                <div class="col-6 text-right border-r">
-                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
-                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_count }} Paket</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                <div class="row py-20">
+                                    <div class="col-6 text-right border-r">
+                                        <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                            <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_digunakan }} Paket Diujikan</div>
+                                            <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_tidak_digunakan }} Paket Tidak Diujikan</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                            <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_digunakan }} Paket Diujikan</div>
+                                            <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_tidak_digunakan }} Paket Tidak Diujikan</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="col-6">
-                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
-                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_count }} Paket</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
+                            @else
+                                <div class="row py-20">
+                                    <div class="col-6 text-right border-r">
+                                        <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                            <div class="font-size-h3 font-w600 text-info">{{ count($pelajaran) }} Pelajaran</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ Auth()->user()->sekolah->kurikulum }}</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                            <div class="font-size-h3 font-w600 text-success">{{ count($paket) }} Paket</div>
+                                            <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ Auth()->user()->sekolah->kurikulum }}</div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row py-20">
-                                <div class="col-6 text-right border-r">
-                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
-                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_digunakan }} Paket Diujikan</div>
-                                        <div class="font-size-h3 font-w600 text-info">{{ $count_pelajaran[0]->paket_tidak_digunakan }} Paket Tidak Diujikan</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{  $count_pelajaran[0]->kurikulum }}</div>
-                                    </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
-                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_digunakan }} Paket Diujikan</div>
-                                        <div class="font-size-h3 font-w600 text-success">{{ $count_pelajaran[1]->paket_tidak_digunakan }} Paket Tidak Diujikan</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Kurikulum {{ $count_pelajaran[1]->kurikulum }}</div>
-                                    </div>
-                                </div>
-                            </div>
-
+ 
+                            @endif
                         </div>
                         <div class="table-responsive" id="dinamis_table">
                             {{-- table --}}

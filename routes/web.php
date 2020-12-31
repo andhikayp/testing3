@@ -18,31 +18,35 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/dashboard', 'DashboardController@index');
 	Route::get('/logout', 'AuthController@logout');
 
+	//siswa
+	Route::get('/ajax/datatables/siswa/{param}/{id}', 'SiswaController@ajaxSiswa');
+	Route::get('/siswa/{id}', 'SiswaController@siswa');
+	Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
+
+	//ujian
+	Route::get('/ujian', 'UjianController@index');
+	Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
+	Route::get('/json/ujian', 'UjianController@jsonUjian');
+	Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
+
+	//soal
+	Route::get('/soal', 'SoalController@index');
+	Route::get('/soal/cetak/{id}', 'SoalController@cetak');
+	Route::get('/ajax/datatables/pelajaran','SoalController@ajaxPelajaran');
+	Route::get('/ajax/datatables/paket/{id}','SoalController@ajaxPaket');
+	Route::get('/paket/{id}', 'SoalController@paket');
+	Route::get('/ajax/datatables/soal/{id}','SoalController@ajaxSoal');
+	Route::get('/ajax/grafik/soal/analisis_butir_soal/{paket_id}','SoalController@getAnalisisButirSoal');
+	Route::get('/ajax/grafik/soal/analisis_butir_soal_all/{paket_id}','SoalController@getAllAnalisis');
+
 	Route::middleware(['admin'])->group(function () {
 		//siswa
 		Route::get('/siswa', 'SiswaController@index');
 		Route::get('/ajax/datatables/siswa', 'SiswaController@ajaxIndex');
 		Route::get('/ajax/datatables/sekolah/{param}/{id}', 'SiswaController@ajaxSekolah');
-		Route::get('/ajax/datatables/siswa/{param}/{id}', 'SiswaController@ajaxSiswa');
-		Route::get('/siswa/{id}', 'SiswaController@siswa');
-		Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
 
-		//ujian
-		Route::get('/ujian', 'UjianController@index');
-		Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
-		Route::get('/json/ujian', 'UjianController@jsonUjian');
-		Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
+		//dashboard
 		Route::get('/count_ujian', 'UjianController@ajaxCountUjian');
-		
-		//soal
-		Route::get('/soal', 'SoalController@index');
-		Route::get('/soal/cetak/{id}', 'SoalController@cetak');
-		Route::get('/ajax/datatables/pelajaran','SoalController@ajaxPelajaran');
-		Route::get('/ajax/datatables/paket/{id}','SoalController@ajaxPaket');
-		Route::get('/paket/{id}', 'SoalController@paket');
-		Route::get('/ajax/datatables/soal/{id}','SoalController@ajaxSoal');
-		Route::get('/ajax/grafik/soal/analisis_butir_soal/{paket_id}','SoalController@getAnalisisButirSoal');
-		Route::get('/ajax/grafik/soal/analisis_butir_soal_all/{paket_id}','SoalController@getAllAnalisis');
 
 		//nilai
 		Route::get('/nilai', 'NilaiController@index');
@@ -72,20 +76,8 @@ Route::middleware(['auth'])->group(function () {
 	Route::middleware(['siswa'])->group(function () {
 		
 	});
-	Route::middleware(['sekolah'])->group(function () {
-		//siswa
-		Route::get('/siswa', 'SiswaController@index');
-		Route::get('/ajax/datatables/siswa', 'SiswaController@ajaxIndex');
-		Route::get('/ajax/datatables/sekolah/{param}/{id}', 'SiswaController@ajaxSekolah');
-		Route::get('/ajax/datatables/siswa/{param}/{id}', 'SiswaController@ajaxSiswa');
-		Route::get('/siswa/{id}', 'SiswaController@siswa');
-		Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
+	Route::middleware(['admin', 'sekolah'])->group(function () {
 
-		//ujian
-		Route::get('/ujian', 'UjianController@index');
-		Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
-		Route::get('/json/ujian', 'UjianController@jsonUjian');
-		Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
 	});
 });
 

@@ -142,7 +142,7 @@
                     { data: 'tanggal'},
                     { data: 'pelaksanaan'},
                 ],
-                "order": [[1, "asc"]]
+                "order": false,
             });
             $('#users-table tbody').on('click', 'td.details-control', function () {
                 var tr = $(this).closest('tr');

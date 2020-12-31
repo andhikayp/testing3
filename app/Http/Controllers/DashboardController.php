@@ -25,7 +25,7 @@ class DashboardController extends Controller
             $pelajaran = Pelajaran::count();
             $kurikulum = Pelajaran::distinct('kurikulum')->count('kurikulum');
             $kota = KabKota::count();
-            return view('dashboard.testing', compact('user','sekolah','pelajaran', 'kurikulum', 'kota'));
+            return view('dashboard.index', compact('user','sekolah','pelajaran', 'kurikulum', 'kota'));
     	} 
     	elseif (Auth::user()->level == "siswa") {
     		
@@ -41,7 +41,7 @@ class DashboardController extends Controller
                     $query2->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
                 })->distinct('paket_id')->get();
             })->distinct('pelajaran_id')->get()->count();
-            return view('dashboard.testing', compact('user','ujian','pelajaran'));
+            return view('dashboard.index', compact('user','ujian','pelajaran'));
     	}
     }
 }

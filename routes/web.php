@@ -73,7 +73,11 @@ Route::middleware(['auth'])->group(function () {
 		
 	});
 	Route::middleware(['sekolah'])->group(function () {
-		
+		//ujian
+		Route::get('/ujian', 'UjianController@index');
+		Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
+		Route::get('/json/ujian', 'UjianController@jsonUjian');
+		Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
 	});
 });
 

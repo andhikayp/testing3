@@ -21,8 +21,8 @@
         </div>
     </div>
     <div class="content">
+        @if(Auth()->user()->level == 'admin')
         <div class="row js-appear-enabled animated fadeIn" data-toggle="appear">
-            <!-- Row #1 -->
             <div class="col-6 col-xl-3">
                 <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
                     <div class="block-content block-content-full clearfix">
@@ -56,7 +56,6 @@
                     </div>
                 </a>
             </div>
-            {{-- user --}}
             <div class="col-6 col-xl-3">
                 <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
                     <div class="block-content block-content-full clearfix">
@@ -68,7 +67,6 @@
                     </div>
                 </a>
             </div>
-            <!-- END Row #1 -->
         </div>
         <div class="row js-appear-enabled animated fadeIn" data-toggle="appear">
             <div class="col-6 col-xl-3">
@@ -105,6 +103,57 @@
                 </a>
             </div>
         </div>
+        @elseif(Auth()->user()->level == 'proktor')
+        <div class="content content-full text-center">
+            <h1 class="h2 font-w700 mb-10">Selamat datang, {{ Auth()->user()->sekolah->nama }}!</h1>
+        </div>
+        <div class="row js-appear-enabled animated fadeIn" data-toggle="appear">
+            <div class="col-6 col-xl-3">
+                <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="float-left mt-10 d-none d-sm-block">
+                            <i class="fas fa-book fa-3x text-primary"></i>
+                        </div>
+                        <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Kurikulum</div>
+                        <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ Auth()->user()->sekolah->kurikulum }}</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-xl-3">
+                <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="float-left mt-10 d-none d-sm-block">
+                            <i class="fas fa-book-reader fa-3x text-primary"></i>
+                        </div>
+                        <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($pelajaran, 0, ',', '.') }}</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Pelajaran</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-xl-3">
+                <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="float-left mt-10 d-none d-sm-block">
+                            <i class="fas fa-book-reader fa-3x text-primary"></i>
+                        </div>
+                        <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($user, 0, ',', '.') }}</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Siswa</div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-xl-3">
+                <a class="block block-link-rotate block-transparent text-right bg-primary-lighter" href="javascript:void(0)">
+                    <div class="block-content block-content-full clearfix">
+                        <div class="float-left mt-10 d-none d-sm-block">
+                            <i class="fas fa-align-justify fa-3x text-primary"></i>
+                        </div>
+                        <div class="font-size-h3 font-w600 text-primary-darker js-count-to-enabled" data-toggle="countTo" data-speed="1000" data-to="1500">{{ number_format($ujian, 0, ',', '.') }}</div>
+                        <div class="font-size-sm font-w600 text-uppercase text-primary-dark">Ujian Siswa</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+        @endif
     </div>
 @endsection
 @section('moreJS')

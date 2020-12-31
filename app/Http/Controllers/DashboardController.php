@@ -31,23 +31,17 @@ class DashboardController extends Controller
     		
     	}
     	elseif (Auth::user()->level == "proktor" || Auth::user()->level == "guru") {
-    		// dd(Auth()->user());
             $sekolah_id = Auth()->user()->sekolah_id;
             $user = User::where('level', 'siswa')->where('sekolah_id', $sekolah_id)->count();
             $ujian = UjianSiswa::whereIn('user_id', function($query) use ($sekolah_id){
                 $query->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
             })->count();
-
-            $ujian_id = UjianSiswa::select('paket_id')->whereIn('user_id', function($query) use ($sekolah_id){
-                $query->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
-            })->distinct('paket_id')->get();
-
-            $pelajaran = Pelajaran::whereIn('id', function($query) use ($sekolah_id){
-                $query->select('id')->from(with(new UjianSiswa)->getTable());
-            })->count();
-
-            // $ujian = UjianSiswa::where('level', 'siswa')->where('sekolah_id', Auth()->user()->sekolah_id)->count();
-            dd($ujian_id);
+            $pelajaran = Paket::select('pelajaran_id')->whereIn('id', function($query) use ($sekolah_id){
+                $query->select('paket_id')->from(with(new UjianSiswa)->getTable())->whereIn('user_id', function($query2) use ($sekolah_id){
+                    $query2->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
+                })->distinct('paket_id')->get();
+            })->distinct('pelajaran_id')->get()->count();
+            return view('dashboard.testing', compact('user','ujian','pelajaran'));
     	}
     }
 }

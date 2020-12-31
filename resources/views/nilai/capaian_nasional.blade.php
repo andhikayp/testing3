@@ -66,7 +66,7 @@
                         <div class="row" style="margin-top: 50px;">
                             <div class="col-6">
                                 <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction2(this)" style="width: 100%">
-                                    <option disabled selected>Pilih Kurikulum</option>
+                                    <option disabled selected>Pilih Mata Pelajaran</option>
                                     @foreach($mapel as $m)
                                         <option value="{{ $m->id }}" data-mapel=" {{ $m->nama }}" data-kurikulum=" {{ $m->kurikulum }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
                                     @endforeach
@@ -76,19 +76,37 @@
                         <div class="block-content">
                             <h4 class="font-w400" id='dinamis_kota_teks'>
                             </h4>
-                            <div class="table-responsive" id="dinamis_table">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">
-                                    <thead>
-                                        <tr>
-                                            <th>Paket</th>
-                                            <th>Rata-rata</th>
-                                            <th>Jumlah Siswa</th>
-                                            <th>Keterangan</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                </table>
-                            </div>
+                            @if(Auth()->user()->level == 'admin')
+                                <div class="table-responsive" id="dinamis_table">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Paket</th>
+                                                <th>Rata-rata</th>
+                                                <th>Jumlah Siswa</th>
+                                                <th>Keterangan</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            @elseif(Auth()->user()->level == 'proktor')
+                                <div class="table-responsive" id="dinamis_table">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">
+                                        <thead>
+                                            <tr>
+                                                <th>Paket</th>
+                                                <th>Jumlah Siswa Sekolah</th>
+                                                <th>Rata-rata Sekolah</th>
+                                                <th>Jumlah Siswa Semua</th>    
+                                                <th>Rata-rata Semua</th>
+                                                <th>Keterangan</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -104,10 +122,19 @@
         var table = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">'+
                         '<thead>'+
                             '<tr>'+
+                            @if(Auth()->user()->level == 'admin')
                                 '<th>Paket</th>'+
                                 '<th>Rata-rata</th>'+
                                 '<th>Jumlah Siswa</th>'+
                                 '<th>Keterangan</th>'+
+                            @else
+                                '<th>Paket</th>'+
+                                '<th>Jumlah Siswa Sekolah</th>'+
+                                '<th>Rata-rata Sekolah</th>'+
+                                '<th>Jumlah Siswa Semua</th>'+   
+                                '<th>Rata-rata Semua</th>'+
+                                '<th>Keterangan</th>'+
+                            @endif
                             '</tr>'+
                         '</thead>'+
                     '</table>';
@@ -131,10 +158,19 @@
                 "autoWidth": true,
                 "ordering": false,
                 "columns": [
+                @if(Auth()->user()->level == 'admin')
                     { "data": "nama_baru" },
                     { "data": "nilai_rata_rata" },
                     { "data": "count_siswa" },
                     { "data": "keterangan" },
+                @else
+                    { "data": "nama_baru" },
+                    { "data": "count_siswa_sekolah" },
+                    { "data": "rata2_sekolah" },
+                    { "data": "count_siswa" },
+                    { "data": "nilai_rata_rata" },
+                    { "data": "keterangan" },
+                @endif
                 ]
             });           
         }

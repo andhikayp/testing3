@@ -39,6 +39,25 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/grafik/soal/analisis_butir_soal/{paket_id}','SoalController@getAnalisisButirSoal');
 	Route::get('/ajax/grafik/soal/analisis_butir_soal_all/{paket_id}','SoalController@getAllAnalisis');
 
+	//peringkat
+	Route::get('/peringkat', 'PeringkatController@index');
+	Route::get('/ajax/peringkat_kota/{id}', 'PeringkatController@ajax_peringkat_kota');
+	Route::get('/ajax/peringkat_sekolah/{id}', 'PeringkatController@ajax_peringkat_sekolah');
+	Route::get('/ajax/sebaran_peringkat_sekolah/{id}', 'PeringkatController@ajax_sebaran_peringkat_sekolah');
+	Route::get('/ajax/get_rank_siswa/{id}/{kurikulum}', 'PeringkatController@get_rank_siswa');
+	Route::get('/ajax/get_rank_siswa_individu/{pelajaran_id}', 'PeringkatController@get_rank_pelajaran');
+
+	//nilai
+	Route::get('/nilai', 'NilaiController@index');
+	Route::get('/nilai/capaian_nasional', 'NilaiController@capaian_nasional');
+	Route::get('/nilai/{id}', 'NilaiController@nilai');
+	Route::get('/nilai/{sekolah}/{id}', 'NilaiController@nilai_individu');
+	Route::get('/nilai/soal/{mapel}/{id}', 'NilaiController@soal_individu');
+	Route::get('/ajax/grafik/nilai_siswa/{id}', 'NilaiController@ajaxNilaiSiswa');
+	Route::get('/ajax/rata2_paket/{pelajaran_id}', 'NilaiController@ajax_rata2_paket');
+	Route::get('/ajax/pelajaran/{kurikulum_id}', 'NilaiController@ajax_get_pelajaran');
+	Route::get('/ajax/get_detail_paket/{pelajaran_id}', 'NilaiController@ajax_get_detail_paket');
+
 	Route::middleware(['admin'])->group(function () {
 		//siswa
 		Route::get('/siswa', 'SiswaController@index');
@@ -47,25 +66,6 @@ Route::middleware(['auth'])->group(function () {
 
 		//dashboard
 		Route::get('/count_ujian', 'UjianController@ajaxCountUjian');
-
-		//nilai
-		Route::get('/nilai', 'NilaiController@index');
-		Route::get('/nilai/capaian_nasional', 'NilaiController@capaian_nasional');
-		Route::get('/nilai/{id}', 'NilaiController@nilai');
-		Route::get('/nilai/{sekolah}/{id}', 'NilaiController@nilai_individu');
-		Route::get('/nilai/soal/{mapel}/{id}', 'NilaiController@soal_individu');
-		Route::get('/ajax/grafik/nilai_siswa/{id}', 'NilaiController@ajaxNilaiSiswa');
-		Route::get('/ajax/rata2_paket/{pelajaran_id}', 'NilaiController@ajax_rata2_paket');
-		Route::get('/ajax/pelajaran/{kurikulum_id}', 'NilaiController@ajax_get_pelajaran');
-		Route::get('/ajax/get_detail_paket/{pelajaran_id}', 'NilaiController@ajax_get_detail_paket');
-
-		//peringkat
-		Route::get('/peringkat', 'PeringkatController@index');
-		Route::get('/ajax/peringkat_kota/{id}', 'PeringkatController@ajax_peringkat_kota');
-		Route::get('/ajax/peringkat_sekolah/{id}', 'PeringkatController@ajax_peringkat_sekolah');
-		Route::get('/ajax/sebaran_peringkat_sekolah/{id}', 'PeringkatController@ajax_sebaran_peringkat_sekolah');
-		Route::get('/ajax/get_rank_siswa/{id}/{kurikulum}', 'PeringkatController@get_rank_siswa');
-		Route::get('/ajax/get_rank_siswa_individu/{pelajaran_id}', 'PeringkatController@get_rank_pelajaran');
 
 		//bank_soal
 		Route::get('/bank_soal', 'BankSoalController@index');

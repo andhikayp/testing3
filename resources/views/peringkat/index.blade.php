@@ -41,15 +41,21 @@
 {{-- KOTA --}}
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#" id="kota_all">Semua</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="kota_2013">Kurikulum 2013</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" id="kota_2006">Kurikulum 2006</a>
-                        </li>
+                        @if(Auth()->user()->level == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" id="kota_all">Semua</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="kota_2013">Kurikulum 2013</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" id="kota_2006">Kurikulum 2006</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#" id="kota_{{ Auth()->user()->sekolah->kurikulum }}">Kurikulum {{ Auth()->user()->sekolah->kurikulum }}</a>
+                            </li>
+                        @endif
                     </ul>
                     <div class="block-content">
                         <h4 class="font-w400" id='dinamis_kota_teks'>

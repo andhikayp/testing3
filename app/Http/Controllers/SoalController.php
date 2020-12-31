@@ -64,8 +64,7 @@ class SoalController extends Controller
         return Datatables::of($pelajaran)->make(true);
     } 
 
-    public function ajaxPelajaranWithAction()
-    {
+    public function ajaxPelajaranWithAction(){
         $pelajaran = Pelajaran::all();
         return Datatables::of($pelajaran)
             ->addColumn('action', function ($pelajaran) {
@@ -73,11 +72,9 @@ class SoalController extends Controller
             })
             ->rawColumns(['action'])
             ->make(true);
-    } 
+    }
 
-
-    public function ajaxPaket($pelajaran)
-    {
+    public function ajaxPaket($pelajaran){
         $paket = Paket::where('pelajaran_id', $pelajaran)->get();
         foreach($paket as $k => $p){
             if (UjianSiswa::where('paket_id', $p->id)->exists()) {

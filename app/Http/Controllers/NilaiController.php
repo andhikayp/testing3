@@ -8,6 +8,7 @@ use App\Models\UjianSiswa;
 use App\Models\Soal;
 use App\Models\Pelajaran;
 use App\Models\Paket;
+use App\Models\User;
 use Debugbar;
 use DataTables;
 use DB;
@@ -150,7 +151,17 @@ class NilaiController extends Controller
     }
 
     public function capaian_nasional(){
-        $mapel = Pelajaran::all()->sortBy('kurikulum');
+        if(Auth()->user()->level == 'admin') {
+            $mapel = Pelajaran::all()->sortBy('kurikulum');
+        } else {
+            $sekolah_id = Auth()->user()->sekolah_id;
+            $pelajaran_id = Paket::select('pelajaran_id')->whereIn('id', function($query) use ($sekolah_id){
+                $query->select('paket_id')->from(with(new UjianSiswa)->getTable())->whereIn('user_id', function($query2) use ($sekolah_id){
+                    $query2->select('id')->from(with(new User)->getTable())->where('sekolah_id', $sekolah_id);
+                })->distinct('paket_id')->get();
+            })->distinct('pelajaran_id')->get();
+            $mapel = Pelajaran::whereIn('id', $pelajaran_id)->get();
+        }
         return view('nilai.capaian_nasional', compact('mapel'));
     }
 
@@ -166,19 +177,32 @@ class NilaiController extends Controller
     public function ajax_rata2_paket($pelajaran_id) {
         $paket = Paket::where('pelajaran_id', $pelajaran_id)->get();
         $sum = 0;
-        foreach($paket as $p){
+        foreach($paket as $k => $p){
+            if($p->nilai_rata_rata) {
+                $p->keterangan = "Diujikan";
+            } else {
+                if(Auth()->user()->level != 'admin') {
+                    unset($paket[$k]);
+                } else {
+                    $p->keterangan = "Tidak Diujikan";
+                }
+            }
             $p->nilai_rata_rata = round($p->nilai_rata_rata*100, 2);
             $p->nama = str_replace('_', ' ', $p->nama);
             $p->nama_baru = substr(strstr($p->nama," "), 1);
             $p->count_siswa = UjianSiswa::where('paket_id', $p->id)->count();
-            if($p->nilai_rata_rata) {
-                $p->keterangan = "Diujikan";
-            } else {
-                $p->keterangan = "Tidak Diujikan";
+            if(Auth()->user()->level != 'admin') {
+                $user_id = User::select('id')->where('sekolah_id', Auth()->user()->sekolah->id)->get();
+                $p->count_siswa_sekolah = UjianSiswa::where('paket_id', $p->id)->whereIn('user_id', $user_id)->count();
+                $p->jumlah_benar = UjianSiswa::where('paket_id', $p->id)->whereIn('user_id', $user_id)->sum('jumlah_benar');
+                $p->jumlah_salah = UjianSiswa::where('paket_id', $p->id)->whereIn('user_id', $user_id)->sum('jumlah_salah');
+                $p->jumlah_kosong = UjianSiswa::where('paket_id', $p->id)->whereIn('user_id', $user_id)->sum('jumlah_kosong');
+                $penyebut =  $p->jumlah_benar+$p->jumlah_salah+$p->jumlah_kosong-(5*$p->count_siswa_sekolah);
+                if($penyebut == 0) $p->rata2_sekolah = 0;
+                else $p->rata2_sekolah = round(($p->jumlah_benar / $penyebut)*100, 2); 
             }
             $sum += $p->nilai_rata_rata;
         }
         return Datatables::of($paket)->make(true);
-        // return response()->json($paket);
     }
 }

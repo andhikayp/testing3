@@ -184,14 +184,6 @@ class SoalController extends Controller
         return $soals;
     }
 
-    public function getAnalisisButirSoal($paket_id){
-        $hasil['fungsi_pengecoh_all'] = $this->getCountFungsiPengecohAll($paket_id);
-        $hasil['tingkat_kesukaran'] = $this->getTingkatKesukaran($paket_id);
-        $hasil['daya_pembeda'] = $this->getDayaPembeda($paket_id);
-        $hasil['fungsi_pengecoh'] = $this->getFungsiPengecoh($paket_id);
-        return response()->json($hasil);
-    }
-
     public function initDistribusiFungsiPengecoh(){
         $distribusi = array();
         for($i=1; $i <= 5; $i++){
@@ -212,6 +204,19 @@ class SoalController extends Controller
             elseif($soal->jumlah_pengecoh == 5) $distribusi[5]['jumlah']++;        
         }
         return Datatables::of($distribusi)->make(true);
+    }
+
+
+    public function getAnalisisButirSoal($paket_id){
+        $hasil['fungsi_pengecoh_all'] = $this->getCountFungsiPengecohAll($paket_id);
+        $hasil['tingkat_kesukaran'] = $this->getTingkatKesukaran($paket_id);
+        $hasil['daya_pembeda'] = $this->getDayaPembeda($paket_id);
+        $hasil['fungsi_pengecoh'] = $this->getFungsiPengecoh($paket_id);
+        return response()->json([
+            'code' => 200,
+            'message' => "Success",
+            'data' => $hasil
+        ]);
     }
 
     public function cetak($paket_id){
@@ -240,7 +245,11 @@ class SoalController extends Controller
             $soal->daya_pembeda = $soal->analisis->daya_pembeda;
             $soal->jumlah_pengecoh = $this->getCountPengecoh($soal)/5;
         }
-        return response()->json($soals);
+        return response()->json([
+            'code' => 200,
+            'message' => "Success",
+            'data' => $soals
+        ]);
     }
 
     public function getCountPelajaran(){

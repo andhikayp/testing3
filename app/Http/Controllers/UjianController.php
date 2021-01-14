@@ -60,13 +60,17 @@ class UjianController extends Controller
                 ->groupBy(DB::raw('DATE(waktu_mulai)'))
                 ->orderBy('date', 'asc')
                 ->get();
-        }
-    
+        } 
         foreach ($ujian as $u) {
             $u->tanggal = \Carbon\Carbon::parse($u->date)->locale('id')->isoFormat('dddd, D MMMM Y');
         }
-        return response()->json($ujian);
+        return response()->json([
+            'code' => 400,
+            'message' => "Data Kosong",
+            'data' => $ujian
+        ]);
     }
+        // return response()->json($ujian);
 
     public function ajaxUjianTanggal($id)
     {

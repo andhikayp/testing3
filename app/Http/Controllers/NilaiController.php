@@ -171,7 +171,11 @@ class NilaiController extends Controller
         } else {
             $pelajaran = Pelajaran::where('kurikulum', $kurikulum)->get();
         }
-        return response()->json($pelajaran);
+        return response()->json([
+            'code' => 200,
+            'message' => "Success",
+            'data' => $pelajaran
+        ]);
     }
 
     public function ajax_rata2_paket($pelajaran_id) {

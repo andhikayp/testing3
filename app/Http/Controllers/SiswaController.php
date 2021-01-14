@@ -78,12 +78,24 @@ class SiswaController extends Controller
         	->where('level','siswa')
           	->groupBy('jenis_kelamin')
            	->get();
-    	$data['jurusan'] = DB::table('user')
+     	$data['jurusan'] = DB::table('user')
         	->select('jurusan', DB::raw('count(*) as total'))
         	->where('sekolah_id', $id)
         	->where('level','siswa')
           	->groupBy('jurusan')
            	->get();
-        return response()->json($data);
+        if(!$data['jenis_kelamin']->count() and !$data['jurusan']->count()){
+            return response()->json([
+                'code' => 400,
+                'message' => "Data Kosong",
+                'data' => null
+            ]);
+        } else {
+            return response()->json([
+                'code' => 200,
+                'message' => "Success",
+                'data' => $data
+            ]);
+        }
     }
 }

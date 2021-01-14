@@ -90,7 +90,7 @@ Sidebar -->
                             <a href="{{ url('nilai') }}">Cakupan Wilayah dan Satuan Pendidikan</a>
                         </li>
                         <li>
-                            <a href="{{ url('nilai/capaian_nasional') }}">Capaian Nilai Rata-rata Tiap Paket</a>
+                            <a href="{{ url('nilai/capaian_nasional') }}">Rata-rata Tiap Paket</a>
                         </li>
 {{--                         <li>
                             <a href="be_blocks_draggable.html">Draggable</a>

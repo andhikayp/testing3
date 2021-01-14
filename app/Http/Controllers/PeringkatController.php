@@ -53,6 +53,16 @@ class PeringkatController extends Controller
 		return $kotas;
 	}
 
+	public function ajax_peringkat_kota($id){
+		$ranking = $this->peringkat_kota($id);
+	    return Datatables::of($ranking)->make(true);
+	}
+
+	public function ajax_peringkat_sekolah($id){
+		$ranking = $this->peringkat_sekolah($id);
+	    return Datatables::of($ranking)->make(true);
+	}
+
 	public function peringkat_sekolah($id){
 		if($id == 'all') {
 			$sekolah = Sekolah::all();
@@ -66,16 +76,6 @@ class PeringkatController extends Controller
 			$s->nilai_rata_rata = round($s->nilai_rata_rata*100, 2);
 		}
 		return $sekolah;
-	}
-
-	public function ajax_peringkat_kota($id){
-		$ranking = $this->peringkat_kota($id);
-        return Datatables::of($ranking)->make(true);
-	}
-
-	public function ajax_peringkat_sekolah($id){
-		$ranking = $this->peringkat_sekolah($id);
-        return Datatables::of($ranking)->make(true);
 	}
 
 	public function ajax_sebaran_peringkat_sekolah($kurikulum) {
@@ -109,7 +109,7 @@ class PeringkatController extends Controller
 			elseif($r->nilai_rata_rata < 95) $distribusi[19]['jumlah']++;
 			elseif($r->nilai_rata_rata < 100) $distribusi[20]['jumlah']++;
 		}
-        return Datatables::of($distribusi)->make(true);
+	    return Datatables::of($distribusi)->make(true);
 	}
 
 	public function get_rank_siswa($limit, $kurikulum)
@@ -127,7 +127,7 @@ class PeringkatController extends Controller
 			$r->nama_sekolah = $r->sekolah->nama;
 			$r->nilai_rata_rata = round($r->nilai_rata_rata * 100, 2);
 		}
-        return Datatables::of($ranking)->make(true);
+	    return Datatables::of($ranking)->make(true);
 	}
 
 	public function get_rank_pelajaran($pelajaran_id){
@@ -142,6 +142,6 @@ class PeringkatController extends Controller
 			$r->nama_sekolah = $r->user->sekolah->nama;
 			$r->nilai_rata_rata = round($r->jumlah_benar / ($r->jumlah_benar + $r->jumlah_kosong + $r->jumlah_salah - 5) * 100, 2);
 		}
-        return Datatables::of($ranking)->make(true);
+	    return Datatables::of($ranking)->make(true);
 	}
 }

@@ -21,7 +21,7 @@ Route::middleware(['auth'])->group(function () {
 	//siswa
 	Route::get('/ajax/datatables/siswa/{param}/{id}', 'SiswaController@ajaxSiswa');
 	Route::get('/siswa/{id}', 'SiswaController@siswa');
-	Route::get('/ajax/grafik/siswa/{id}', 'SiswaController@ajaxSiswaGrafik');
+	Route::get('/ajax/grafik/siswa/{id_sekolah}', 'SiswaController@ajaxSiswaGrafik');
 
 	//ujian
 	Route::get('/ujian', 'UjianController@index');
@@ -56,7 +56,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/grafik/nilai_siswa/{id}', 'NilaiController@ajaxNilaiSiswa');
 	Route::get('/ajax/rata2_paket/{pelajaran_id}', 'NilaiController@ajax_rata2_paket');
 	Route::get('/ajax/pelajaran/{kurikulum_id}', 'NilaiController@ajax_get_pelajaran');
-	Route::get('/ajax/get_detail_paket/{pelajaran_id}', 'NilaiController@ajax_get_detail_paket');
+	// Route::get('/ajax/get_detail_paket/{pelajaran_id}', 'NilaiController@ajax_get_detail_paket');
 
 	Route::middleware(['admin'])->group(function () {
 		//siswa

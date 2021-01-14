@@ -37,6 +37,7 @@ class BankSoalController extends Controller
     }
 
     public function ajax_bank_soal($ket, $pelajaran_id){
+        ini_set('memory_limit', '-1');
     	if($ket == "terima") {
     		$soals = $this->kriteria($pelajaran_id, "terima");
     	} else if($ket == "revisi") {

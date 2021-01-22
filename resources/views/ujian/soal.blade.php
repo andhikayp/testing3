@@ -115,7 +115,6 @@
                                                 <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
                                                 <th rowspan="2" style="text-align: center; vertical-align: middle;">Soal</th>
                                                 <th colspan="3" style="text-align: center; vertical-align: middle;">Statistik Butir</th>
-
                                                 <th colspan="2" style="text-align: center; vertical-align: middle;">Statistik Pilihan Jawaban</th>
                                                 <th rowspan="2" style="text-align: center; vertical-align: middle;">Keterangan</th>
                                             </tr>

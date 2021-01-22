@@ -68,7 +68,7 @@
                                 <tr>
                                     <th></th>
                                     <th>Tanggal</th>
-                                    <th>Pelaksanaan</th>
+                                    <th>Jumlah Pelaksanaan</th>
                                 </tr>
                             </thead>
                         </table>
@@ -81,6 +81,45 @@
 @endsection
 @section('moreJS')
     <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
+    <script>
+        $(document).on('click', '.button', function (e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            swal({
+                title: "Apakah Anda Yakin Akan Menghapus Jadwal Ujian yang Dipilih?",
+                type: "error",
+                confirmButtonClass: "btn-danger",
+                confirmButtonText: "Ya!",
+                cancelButtonText: "Tidak!",
+                showCancelButton: true,
+            }).then((result) => {
+                if (result.value) {
+                    console.log(id)
+                    $.ajax({
+                        type:'POST',
+                        url:'{{url("/ujian/hapus")}}/',
+                        data:{
+                            "_token": "{{ csrf_token() }}",
+                            "id": id,
+                        },
+                        success:function(data) {
+                            console.log(data)
+                            if (data.success){
+                                swal(
+                                    'Jadwal Ujian',
+                                    'Berhasil Dihapus!',
+                                    "success"
+                                );
+                                setInterval(function(){
+                                    location.reload();
+                                }, 3000);
+                            }
+                        }
+                    });
+                };
+            });
+        });
+    </script>
     <script>
         $.getJSON('{{ url('/json/ujian')}}').done(function(result) {
             renderDataGrid(result);
@@ -136,11 +175,12 @@
                     '<tr>'+
                         '<th>Nama Pelajaran</th>'+
                         '<th>Kurikulum</th>'+
-                        '<th>Pelaksanaan</th>'+
+                        '<th>Kategori Ujian</th>'+
                         '<th>Sesi</th>'+
                         '<th>Waktu Mulai</th>'+
                         '<th>Waktu Selesai</th>'+
                         '<th>Durasi</th>'+
+                        '<th>Aksi</th>'+
                     '</tr>'+
                 '</thead>'+
             '</table>';
@@ -199,7 +239,8 @@
                         { data: 'sesi', name: 'sesi' },
                         { data: 'waktu_mulai', name: 'waktu_mulai' },
                         { data: 'waktu_selesai', name: 'waktu_selesai' },
-                        {data: 'durasi', name: 'durasi', orderable: false, searchable: false},
+                        { data: 'durasi', name: 'durasi', orderable: false, searchable: false },
+                        { data: 'action', name: 'action' },
                     ]
                 })
             }

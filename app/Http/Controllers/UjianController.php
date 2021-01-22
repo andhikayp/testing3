@@ -83,11 +83,28 @@ class UjianController extends Controller
             $ujian->pelaksanaan = $pelaksanaan;
             $ujian->durasi = strval($ujian->durasi)." menit";
         }
-        return Datatables::of($ujianTanggal)->make(true);
+        return Datatables::of($ujianTanggal)
+            ->addColumn('action', function ($ujian) {
+                date_default_timezone_set("Asia/Bangkok");
+                $today = date("Y-m-d H:i:s");
+                if($ujian->waktu_mulai > $today){
+                    return '
+                    <div style="width:165px;">
+                        <a href="" class="button text-center mr-2 btn btn-danger bg-gd-danger min-width-75 float-right" data-id="'.$ujian->id.'">Hapus</a>
+                        <a href="'.url('ujian/edit/', $ujian->id).'"><button type="button" class="delete text-center mr-2 btn btn-warning bg-gd-warning min-width-75 float-right" id="'.$ujian->id.'">Edit</button></a>
+                    </div>';
+                } else{
+                    return '
+                    <div style="width:165px;">
+                        <div class="mr-2 btn btn-success bg-gd-success min-width-75 float-right text-center">Ujian Terlaksana</div>
+                    </div>';
+                }
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
 
-    public function ajaxCountUjian()
-    {
+    public function ajaxCountUjian(){
         $count_ujian = UjianSiswa::count();
         return response()->json($count_ujian);
     }
@@ -103,7 +120,6 @@ class UjianController extends Controller
     }
 
     public function tambahUjian(){
-        $pelajaran = Pelajaran::find(10000);
         $mapel = Pelajaran::all()->sortBy('kurikulum');
         return view('ujian.tambah', compact('mapel'));
     }
@@ -133,5 +149,20 @@ class UjianController extends Controller
         $jadwal->tipe_ujian = "Online";
         $jadwal->save();
         return redirect('/ujian')->with('success', 'Jadwal Pelaksanaan Ujian Berhasil Ditambahkan!');
+    }
+
+    public function editUjian($id){
+        $mapel = Pelajaran::all()->sortBy('kurikulum');
+        $ujian = JadwalUjian::find($id)->first();
+        if($ujian){
+            return view('ujian.edit', compact('mapel', 'ujian'));
+        } else{
+            return redirect()->back()->with('error', 'Jadwal Ujian yang Dipilih Tidak Ditemukan');
+        }
+    }
+
+    public function hapusUjian(Request $r){
+        JadwalUjian::find($r->id)->delete();
+        return response()->json(array('success' => true));
     }
 }

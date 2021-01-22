@@ -60,7 +60,6 @@
                                 <option value="" disabled="" selected="">Pilih Sesi</option>
                                 <option value="1">Sesi 1</option>
                                 <option value="2">Sesi 2</option>
-                                <option value="3">Sesi 3</option>
                             </select>
                         </div>
                     </div>

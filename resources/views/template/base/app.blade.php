@@ -38,6 +38,7 @@
 
         {{-- select2 --}}
         <link rel="stylesheet" type="text/css" href="{{ asset('bower_components/select2/dist/css/select2.min.css') }}" />
+        <link href="{{ asset('bower_components/sweetalert2/dist/sweetalert2.min.css') }}" rel="stylesheet" />
 
         <!-- Page JS Plugins CSS -->
         <link rel="stylesheet" href="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.css') }}">   
@@ -270,6 +271,7 @@
                 }, 1000);
             });
         </script>
+        <script src="{{ asset('bower_components/sweetalert2/dist/sweetalert2.min.js') }}"></script>
         <script src="{{ asset('bower_components/select2/dist/js/select2.min.js') }}"></script>
         @yield('moreJS')
     </body>

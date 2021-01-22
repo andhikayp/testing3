@@ -28,7 +28,9 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ajax/datatables/ujian', 'UjianController@ajaxUjian');
 	Route::get('/json/ujian', 'UjianController@jsonUjian');
 	Route::get('/ujian/tambah', 'UjianController@tambahUjian');
+	Route::get('/ujian/edit/{id}', 'UjianController@editUjian');
 	Route::post('/ujian/save/', 'UjianController@saveUjian');
+	Route::post('/ujian/hapus/', 'UjianController@hapusUjian');
 	Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
 
 	//soal
@@ -75,6 +77,7 @@ Route::middleware(['auth'])->group(function () {
 		Route::get('/bank_soal/{pelajaran_id}', 'BankSoalController@view_bank_soal');
 		Route::get('/ajax/bank_soal/{ket}/{pelajaran_id}', 'BankSoalController@ajax_bank_soal');
 	});
+
 	Route::middleware(['siswa'])->group(function () {
 		
 	});

@@ -18,13 +18,27 @@
     tr.shown td.details-control {
         background: url('{{ asset('img/details_close.png') }}') no-repeat center center;
     }
+    #nilai {
+        height: 550px;
+        width: 100%;
+    }
 </style>
+
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <span class="breadcrumb-item active">Detail Ujian</span>
 </nav>
 <div class="row">
     <div class="col-lg-12">
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error')}}
+            </div>
+        @elseif(session('success'))
+            <div class="alert alert-success">
+                {{ session('success')}}                        
+            </div>
+        @endif
         <div class="block">
             <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                 <li class="nav-item">
@@ -41,6 +55,13 @@
                     </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
+                    <div>
+                        <a href="{{ url('/ujian/tambah/') }}" class="float-right mb-10">
+                            <button class="btn btn-primary min-width-125">
+                                <span><i class="si si-plus mr-2"></i></span><span>Tambah Jadwal Ujian</span>
+                            </button>
+                        </a>
+                    </div>
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
                             <thead>
@@ -59,6 +80,7 @@
 </div>
 @endsection
 @section('moreJS')
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <script>
         $.getJSON('{{ url('/json/ujian')}}').done(function(result) {
             renderDataGrid(result);
@@ -112,7 +134,9 @@
             return '<table class="table details-table" id="posts-'+d.date+'">'+
                 '<thead>'+
                     '<tr>'+
-                        '<th>Nama</th>'+
+                        '<th>Nama Pelajaran</th>'+
+                        '<th>Kurikulum</th>'+
+                        '<th>Pelaksanaan</th>'+
                         '<th>Sesi</th>'+
                         '<th>Waktu Mulai</th>'+
                         '<th>Waktu Selesai</th>'+
@@ -170,6 +194,8 @@
                     ajax: "{{ url('ajax/datatables/ujian')}}/"+data.date,
                     columns: [
                         { data: 'deskripsi', name: 'deskripsi' },
+                        { data: 'kurikulum', name: 'kurikulum' },
+                        { data: 'pelaksanaan', name: 'pelaksanaan' },
                         { data: 'sesi', name: 'sesi' },
                         { data: 'waktu_mulai', name: 'waktu_mulai' },
                         { data: 'waktu_selesai', name: 'waktu_selesai' },
@@ -178,9 +204,7 @@
                 })
             }
         });
-    </script>
-    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
-    
+    </script>    
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

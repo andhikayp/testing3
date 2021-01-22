@@ -156,6 +156,7 @@
                     <div class="row" style="margin-top: 30px;">
                         <div class="col-6">
                             <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction2(this)" style="width: 100%">
+                                <option value="" disabled="" selected="">Pilih Mata Pelajaran</option>
                                 @foreach($mapel as $m)
                                     <option value="{{ $m->id }}" data-mapel=" {{ $m->nama }}" data-kurikulum=" {{ $m->kurikulum }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
                                 @endforeach

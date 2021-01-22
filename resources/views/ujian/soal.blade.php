@@ -285,6 +285,7 @@
 @endsection
 
 @section('moreJS')
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <script>
         $(document).ready(function(){
             $('#users-table').DataTable({
@@ -616,7 +617,6 @@
             total: 9306128000
         }];
     </script>
-    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

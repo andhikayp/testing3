@@ -91,7 +91,7 @@ class UjianController extends Controller
                     return '
                     <div style="width:165px;">
                         <a href="" class="button text-center mr-2 btn btn-danger bg-gd-danger min-width-75 float-right" data-id="'.$ujian->id.'">Hapus</a>
-                        <a href="'.url('ujian/edit/', $ujian->id).'"><button type="button" class="delete text-center mr-2 btn btn-warning bg-gd-warning min-width-75 float-right" id="'.$ujian->id.'">Edit</button></a>
+                        <a href="'.url('ujian/edit', $ujian->id).'"><button type="button" class="text-center mr-2 btn btn-warning bg-gd-warning min-width-75 float-right">Edit</button></a>
                     </div>';
                 } else{
                     return '
@@ -151,11 +151,38 @@ class UjianController extends Controller
         return redirect('/ujian')->with('success', 'Jadwal Pelaksanaan Ujian Berhasil Ditambahkan!');
     }
 
+    public function editSaveUjian(Request $r){
+        $jadwal = JadwalUjian::find($r->id);
+        $pelajaran = Pelajaran::find($r->pelajaran);
+        if(!$pelajaran) {
+            return redirect()->back()->with('error', 'Pelajaran Tidak Ditemukan!');
+        }
+        $jadwal->deskripsi = strtoupper("UMUM|".$pelajaran->nama."|UMUM|".$pelajaran->kurikulum."|".$r->kategori."|".$r->sesi);
+        $jadwal->sesi = $r->sesi;
+        $jadwal->waktu_mulai = date('Y-m-d H:i:s', strtotime("$r->date $r->waktu_mulai"));
+        date_default_timezone_set("Asia/Bangkok");
+        $today = date("Y-m-d H:i:s");
+        if($jadwal->waktu_mulai < $today){
+            return redirect()->back()->with('error', 'Tanggal Pelaksanaan Ujian Telah Berlalu!');
+        }
+        $jadwal->waktu_selesai = date('Y-m-d H:i:s', strtotime($jadwal->waktu_mulai)+($r->durasi*60));
+        $jadwal->durasi = $r->durasi;
+        if($jadwal->sesi > 180) {
+            return redirect()->back()->with('error', 'Waktu Pelaksanaan Ujian Sangat Lama!');
+        }
+        $jadwal->pelajaran_id = $r->pelajaran;
+        $jadwal->save();
+        return redirect('/ujian')->with('success', 'Jadwal Pelaksanaan Ujian Berhasil Diubah!');
+    }
+
     public function editUjian($id){
         $mapel = Pelajaran::all()->sortBy('kurikulum');
-        $ujian = JadwalUjian::find($id)->first();
+        $ujian = JadwalUjian::find($id);
+        $mapel_pilihan = Pelajaran::find($ujian->pelajaran_id);
+        list($kategori, $mata_pelajaran, $peminatan, $kurikulum, $pelaksanaan, $sesi) = explode("|",$ujian->deskripsi);
+        $ujian->pelaksanaan = $pelaksanaan;
         if($ujian){
-            return view('ujian.edit', compact('mapel', 'ujian'));
+            return view('ujian.edit', compact('mapel', 'ujian', 'mapel_pilihan'));
         } else{
             return redirect()->back()->with('error', 'Jadwal Ujian yang Dipilih Tidak Ditemukan');
         }

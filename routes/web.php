@@ -30,6 +30,7 @@ Route::middleware(['auth'])->group(function () {
 	Route::get('/ujian/tambah', 'UjianController@tambahUjian');
 	Route::get('/ujian/edit/{id}', 'UjianController@editUjian');
 	Route::post('/ujian/save/', 'UjianController@saveUjian');
+	Route::post('/ujian/edit/save/', 'UjianController@editSaveUjian');
 	Route::post('/ujian/hapus/', 'UjianController@hapusUjian');
 	Route::get('/ajax/datatables/ujian/{id}', 'UjianController@ajaxUjianTanggal');
 

@@ -58,9 +58,9 @@
                         <div class="col-sm-8">
                             <select class="form-control js-example-basic-single" id="sesi" name="sesi" style="width: 100%" required="">
                                 <option value="" disabled="" selected="">Pilih Sesi</option>
-                                <option value="1">Sesi 1</option>
-                                <option value="2">Sesi 2</option>
-                                <option value="3">Sesi 3</option>
+                                @for ($i = 1; $i < 4; $i++)
+                                    <option value="{{$i}}">Sesi {{$i}}</option>
+                                @endfor
                             </select>
                         </div>
                     </div>

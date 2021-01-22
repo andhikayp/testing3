@@ -13,7 +13,7 @@
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <a class="breadcrumb-item" href="{{ url('/ujian') }}">Detail Ujian</a>
-    <span class="breadcrumb-item active">Tambah Jadwal Ujian</span>
+    <span class="breadcrumb-item active">Edit Jadwal Ujian</span>
 </nav>
 <div class="row">
     <div class="col-md-12">
@@ -27,11 +27,12 @@
                 {{ session('success') }}                        
             </div>
         @endif
-        <form action="{{ url('ujian/save') }}" method="POST">
+        <form action="{{ url('ujian/edit/save') }}" method="POST">
+            <input type="text" hidden="" id="id" name="id" required="" value="{{ $ujian->id }}">
             {{csrf_field()}}
             <div class="block">
                 <div class="block-header block-header-default">
-                    <h3 class="block-title">Tambah Jadwal Ujian</h3>
+                    <h3 class="block-title">Edit Jadwal Ujian</h3>
                     <div class="block-options">
                         <button type="submit" class="btn btn-sm btn-alt-primary">
                             <i class="fa fa-check"></i> Submit
@@ -46,9 +47,11 @@
                         <label class="col-sm-8" for="block-form-username3">Mata Pelajaran</label>
                         <div class="col-sm-8">
                             <select class="form-control js-example-basic-single" id="pelajaran" name="pelajaran" style="width: 100%" required="">
-                                <option value="" disabled="" selected="">Pilih Mata Pelajaran</option>
+                                <option value="{{ $mapel_pilihan->id }}" selected="">{{ $mapel_pilihan->kurikulum }} - {{ $mapel_pilihan->nama }}</option>
                                 @foreach($mapel as $m)
-                                    <option value="{{ $m->id }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
+                                    @if($mapel_pilihan->id != $m->id)
+                                        <option value="{{ $m->id }}">{{ $m->kurikulum }} - {{ $m->nama }}</option>
+                                    @endif
                                 @endforeach
                             </select>
                         </div>
@@ -57,38 +60,47 @@
                         <label class="col-sm-8" for="block-form-password3">Sesi</label>
                         <div class="col-sm-8">
                             <select class="form-control js-example-basic-single" id="sesi" name="sesi" style="width: 100%" required="">
-                                <option value="" disabled="" selected="">Pilih Sesi</option>
-                                <option value="1">Sesi 1</option>
-                                <option value="2">Sesi 2</option>
+                                <option value="{{ $ujian->sesi }}" selected="">Sesi {{ $ujian->sesi }}</option>
+                                @for ($i = 1; $i < 4; $i++)
+                                    @if($ujian->sesi != $i)
+                                        <option value="{{$i}}">Sesi {{$i}}</option>
+                                    @endif
+                                @endfor
                             </select>
                         </div>
                     </div>
                     <div class="form-group row justify-content-center">
                         <label class="col-sm-8" for="block-form-password3">Tanggal Ujian</label>
                         <div class="col-sm-8">
-                            <input type="date" class="form-control" id="date" name="date" required="">
+                            <input type="date" class="form-control" id="date" name="date" required="" value="{{ date('Y-m-d', strtotime("$ujian->waktu_mulai")) }}">
                         </div>
                     </div>
                     <div class="form-group row justify-content-center">
                         <label class="col-sm-8" for="block-form-password3">Waktu Mulai</label>
                         <div class="col-sm-8">
-                            <input type="time" class="form-control" id="waktu_mulai" name="waktu_mulai" required="">
+                            <input type="time" class="form-control" id="waktu_mulai" name="waktu_mulai" required="" value="{{ date('H:i', strtotime("$ujian->waktu_mulai")) }}">
                         </div>
                     </div>
                     <div class="form-group row justify-content-center">
                         <label class="col-sm-8" for="block-form-password3">Durasi (menit)</label>
                         <div class="col-sm-8">
-                            <input type="number" class="form-control" id="durasi" name="durasi" placeholder="misal: 120" min="0" max="180" required="">
+                            <input type="number" class="form-control" value="{{ $ujian->durasi }}" id="durasi" name="durasi" placeholder="misal: 120" min="0" max="180" required="">
                         </div>
                     </div>
                     <div class="form-group row justify-content-center">
                         <label class="col-sm-8" for="block-form-password3">Kategori Ujian</label>
                         <div class="col-sm-8">
                             <select class="form-control js-example-basic-single" id="kategori" name="kategori" style="width: 100%" required="">
-                                <option value="" disabled="" selected="">Pilih Kategori</option>
-                                <option value="UTAMA">Utama</option>
-                                <option value="SUSULAN">Susulan</option>
-                                <option value="OFFLINE">Offline</option>
+                                <option value="{{ $ujian->pelaksanaan }}" selected="">{{ ucfirst(strtolower($ujian->pelaksanaan)) }}</option>
+                                @if($ujian->pelaksanaan != "UTAMA")
+                                    <option value="UTAMA">Utama</option>
+                                @endif
+                                @if($ujian->pelaksanaan != "SUSULAN")
+                                    <option value="SUSULAN">Susulan</option>
+                                @endif
+                                @if($ujian->pelaksanaan != "OFFLINE")
+                                    <option value="OFFLINE">Offline</option>
+                                @endif
                             </select>
                         </div>
                     </div>

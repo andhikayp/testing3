@@ -24,7 +24,7 @@ class PeringkatController extends Controller
 		$ranking_sekolah_2013 = $this->peringkat_sekolah('2013');
 		$ranking_sekolah_2006 = $this->peringkat_sekolah('2006');
 		$mapel = Pelajaran::all()->sortBy('kurikulum');
-        return view('peringkat.index', compact('ranking', 'ranking_2013', 'ranking_2006', 'ranking_sekolah', 'ranking_sekolah_2013', 'ranking_sekolah_2006', 'mapel'));
+	    return view('peringkat.index', compact('ranking', 'ranking_2013', 'ranking_2006', 'ranking_sekolah', 'ranking_sekolah_2013', 'ranking_sekolah_2006', 'mapel'));
 	}
 
 	public function peringkat_kota($id){

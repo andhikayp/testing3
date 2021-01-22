@@ -36,7 +36,6 @@ class NilaiController extends Controller
         $nilai_terendah = $urutan_nilai->reverse()->take(3);
 
         $statistik = $this->get_statistik($all_nilai);
-        // dd($statistik);
 
         return view('nilai.nilai_individu', compact('nilai','sekolah', 'nilai_tertinggi', 'nilai_terendah', 'statistik'));
     }

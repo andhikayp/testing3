@@ -42,13 +42,13 @@
                     {{-- diisi disini --}}
                     <div class="block block-fx-shadow text-center">
                         <a class="d-block bg-warning font-w600 text-uppercase py-5">
-                            <span class="text-white">Penskoran tanpa koreksi</span>
+                            <span class="text-white">Nilai</span>
                         </a>
                         <div class="block-content block-content-full">
                             <div id="nilai"></div>
                         </div>
                     </div>
-                    <div class="block block-fx-shadow text-center">
+                    {{-- <div class="block block-fx-shadow text-center">
                         <a class="d-block bg-warning font-w600 text-uppercase py-5">
                             <span class="text-white">Penskoran ada koreksi jawaban</span>
                         </a>
@@ -56,7 +56,7 @@
                             <div id="nilai_jawaban"></div>
                         </div>
                     </div>
-                    <div class="row">
+ --}}                    <div class="row">
                         <div class="col-sm-6">
                             <div class="block block-fx-shadow text-center">
                                 <div class="block-header block-header-default">

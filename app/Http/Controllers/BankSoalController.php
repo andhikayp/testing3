@@ -68,13 +68,13 @@ class BankSoalController extends Controller
     	$count['revisi'] = 0;
     	$count['tolak'] = 0;
     	foreach($soals as $k => $val){
-			if($val->analisis->daya_pembeda > 0.3) { 
+    		if($val->analisis->daya_pembeda > 0.3) { 
     			$count['terima'] += 1;
-			} else if($val->analisis->daya_pembeda < 0.3 and $val->analisis->daya_pembeda > 0.2) { 
+    		} else if($val->analisis->daya_pembeda < 0.3 and $val->analisis->daya_pembeda > 0.2) { 
     			$count['revisi'] += 1;
-			} else if($val->analisis->daya_pembeda < 0.2) { 
+    		} else if($val->analisis->daya_pembeda < 0.2) { 
     			$count['tolak'] += 1;
-			} 
+    		} 
     	}
     	return view('bank_soal.view', compact('pelajaran_id', 'pelajaran', 'count'));
     }

@@ -22,29 +22,29 @@ class SiswaController extends Controller
         return Datatables::of($kota)->make(true);
     }
 
-    public function ajaxSekolah($param, $id)
-    {
-        $kode_kota = '__'.$id.'%'; 
-        $sekolah = Sekolah::where('kode','LIKE',$kode_kota)->orderBy('created_at', 'asc')->get();
-        if ($param == 'nilai') {
-            return Datatables::of($sekolah)
-            	->addColumn('action', function ($user) {
-                    return '<a href="'.url('nilai', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
-                })
-                ->rawColumns(['action'])
-            	->make(true);
-        } elseif ($param == 'siswa') {
-            foreach($sekolah as $s){
-                $s->jumlah_siswa = User::where('level', 'siswa')->where('sekolah_id', $s->id)->count();
-            }
-            return Datatables::of($sekolah)
-                ->addColumn('action', function ($user) {
-                    return '<a href="'.url('siswa', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
-                })
-                ->rawColumns(['action'])
-                ->make(true);
+public function ajaxSekolah($param, $id)
+{
+    $kode_kota = '__'.$id.'%'; 
+    $sekolah = Sekolah::where('kode','LIKE',$kode_kota)->orderBy('created_at', 'asc')->get();
+    if ($param == 'nilai') {
+        return Datatables::of($sekolah)
+        	->addColumn('action', function ($user) {
+                return '<a href="'.url('nilai', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+            })
+            ->rawColumns(['action'])
+        	->make(true);
+    } elseif ($param == 'siswa') {
+        foreach($sekolah as $s){
+            $s->jumlah_siswa = User::where('level', 'siswa')->where('sekolah_id', $s->id)->count();
         }
+        return Datatables::of($sekolah)
+            ->addColumn('action', function ($user) {
+                return '<a href="'.url('siswa', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75">Lihat Detail</button></a>';
+            })
+            ->rawColumns(['action'])
+            ->make(true);
     }
+}
 
     public function siswa($id)
     {
@@ -78,12 +78,24 @@ class SiswaController extends Controller
         	->where('level','siswa')
           	->groupBy('jenis_kelamin')
            	->get();
-    	$data['jurusan'] = DB::table('user')
+     	$data['jurusan'] = DB::table('user')
         	->select('jurusan', DB::raw('count(*) as total'))
         	->where('sekolah_id', $id)
         	->where('level','siswa')
           	->groupBy('jurusan')
            	->get();
-        return response()->json($data);
+        if(!$data['jenis_kelamin']->count() and !$data['jurusan']->count()){
+            return response()->json([
+                'code' => 400,
+                'message' => "Data Kosong",
+                'data' => null
+            ]);
+        } else {
+            return response()->json([
+                'code' => 200,
+                'message' => "Success",
+                'data' => $data
+            ]);
+        }
     }
 }

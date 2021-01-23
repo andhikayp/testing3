@@ -44,13 +44,13 @@
             </div>
             <div class="col-3 text-center">
                 <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
-                    <div class="font-size-h3 font-w600 text-success">{{ $count['tolak'] }}</div>
+                    <div class="font-size-h3 font-w600 text-primary">{{ $count['tolak'] }}</div>
                     <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Ditolak</div>
                 </div>
             </div>
             <div class="col-3 text-center border-l">
                 <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
-                    <div class="font-size-h3 font-w600 text-success">{{ $count['tidak_diuji'] }}</div>
+                    <div class="font-size-h3 font-w600 text-primary-dark">{{ $count['tidak_diuji'] }}</div>
                     <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Tidak Diujikan</div>
                 </div>
             </div>
@@ -79,7 +79,7 @@
 {{-- SOAL DITERIMA --}}
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-statistik" role="tabpanel">
                     <div class="block-content">
-                        <h4 class="font-w400" id="dinamis_sekolah_teks">
+                        <h4 class="font-w400 text-center" id="dinamis_sekolah_teks">
                             Soal Diterima
                         </h4>
                         <div class="block">
@@ -96,6 +96,7 @@
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
                                                 <th>Tingkat Kesulitan</th>
+                                                <th>Paket</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -106,7 +107,7 @@
                 </div>
 {{-- SOAL DIREVISI--}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail" role="tabpanel">
-                    <div class="block-content">
+                    <div class="block-content text-center">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
                             Soal Direvisi
                         </h4>
@@ -124,6 +125,7 @@
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
                                                 <th>Tingkat Kesulitan</th>
+                                                <th>Paket</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -134,7 +136,7 @@
                 </div>
 {{-- SOAL DITOLAK --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail2" role="tabpanel">
-                    <div class="block-content">
+                    <div class="block-content text-center">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
                             Soal Ditolak
                         </h4>
@@ -152,6 +154,7 @@
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
                                                 <th>Tingkat Kesulitan</th>
+                                                <th>Paket</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -162,7 +165,7 @@
                 </div>
 {{-- SOAL TIDAK DIUJI --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail3" role="tabpanel">
-                    <div class="block-content">
+                    <div class="block-content text-center">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
                             Soal Tidak Diuji
                         </h4>
@@ -180,6 +183,7 @@
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
                                                 <th>Tingkat Kesulitan</th>
+                                                <th>Paket</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -217,6 +221,7 @@
                     { data: 'pilihan_e'},
                     { data: 'kunci_jawaban'},
                     { data: 'tingkat_kesulitan'},
+                    { data: 'nama_paket'},
                 ],
                 "order": [[1, "asc"]]
             });
@@ -240,6 +245,7 @@
                     { data: 'pilihan_e'},
                     { data: 'kunci_jawaban'},
                     { data: 'tingkat_kesulitan'},
+                    { data: 'nama_paket'},
                 ],
                 "order": [[1, "asc"]]
             });
@@ -263,6 +269,7 @@
                     { data: 'pilihan_e'},
                     { data: 'kunci_jawaban'},
                     { data: 'tingkat_kesulitan'},
+                    { data: 'nama_paket'},
                 ],
                 "order": [[1, "asc"]]
             });
@@ -286,6 +293,7 @@
                     { data: 'pilihan_e'},
                     { data: 'kunci_jawaban'},
                     { data: 'tingkat_kesulitan'},
+                    { data: 'nama_paket'},
                 ],
                 "order": [[1, "asc"]]
             });

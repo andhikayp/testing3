@@ -32,6 +32,7 @@ class BankSoalController extends Controller
             })->where('tipe_soal', 'pilihan_ganda')->get();
 
             foreach($soals as $k => $val){
+                $val->nama_paket = str_replace('_', ' ', $val->paket->nama);
                 if($val->analisis->tingkat_kesulitan > 0.7){
                     $val->tingkat_kesulitan = "Sukar";
                 } elseif($val->analisis->tingkat_kesulitan > 0.3){
@@ -58,6 +59,7 @@ class BankSoalController extends Controller
                 $query->select('id')->from(with(new Paket)->getTable())->whereIn('id', $paket_id_tidak_diuji);
             })->where('tipe_soal', 'pilihan_ganda')->get();
             foreach($soals as $val){
+                $val->nama_paket = str_replace('_', ' ', $val->paket->nama);
                 $val->tingkat_kesulitan = "-";
             }
         }

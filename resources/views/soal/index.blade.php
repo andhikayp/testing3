@@ -28,7 +28,7 @@
         <div class="block">
             <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#btabs-animated-slideright-statistik" id="peringkat_kota">Statistik</a>
+                    <a class="nav-link active" href="#btabs-animated-slideright-statistik" id="peringkat_kota">Infografis</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-detail" id="peringkat_sekolah">Detail Paket</a>
@@ -40,7 +40,7 @@
                     <div class="block-content">
                         <div class="block-content block-content-full">
                             <h4 class="font-w400 text-center" id='dinamis_kota_teks'>
-                                Statistik
+                                Infografis
                             </h4>
                             @if(Auth()->user()->level == 'admin')
                                 <div class="row py-20">
@@ -152,7 +152,8 @@
                     '<tr>'+
                         '<th>Paket</th>'+
                         '<th>Keterangan</th>'+
-                        '<th></th>'+
+                        '<th>Jumlah</th>'+
+                        '<th>Aksi</th>'+
                     '</tr>'+
                 '</thead>'+
             '</table>';
@@ -207,6 +208,7 @@
                     columns: [
                         { data: 'nama', name: 'nama' },
                         { data: 'keterangan', name: 'keterangan' },
+                        { data: 'count_siswa', name: 'count_siswa' },
                         {data: 'action', name: 'action', orderable: false, searchable: false},
                     ]
                 })

@@ -77,9 +77,13 @@ class SoalController extends Controller
     public function ajaxPaket($pelajaran){
         $paket = Paket::where('pelajaran_id', $pelajaran)->get();
         foreach($paket as $k => $p){
-            if (UjianSiswa::where('paket_id', $p->id)->exists()) {
+            $p->nama = str_replace('_', ' ', $p->nama);
+            $count_siswa = UjianSiswa::where('paket_id', $p->id)->count(); 
+            if ($count_siswa>0){
+                $p->count_siswa = number_format($count_siswa , 0, ',', '.')." siswa";
                 $p->keterangan = "Diujikan";
-            } else {
+            } else{
+                $p->count_siswa = "-";
                 if(Auth()->user()->level != 'admin') {
                     unset($paket[$k]);
                 } else {
@@ -87,7 +91,7 @@ class SoalController extends Controller
                 }
             }
         }
-        
+
         return Datatables::of($paket)
         	->addColumn('action', function ($user) {
                 return '<a href="'.url('paket', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75 float-right">Lihat Detail</button></a>';
@@ -101,7 +105,12 @@ class SoalController extends Controller
         $paket = Paket::find($id);
     	$soal_pilgan = Soal::where('paket_id', $id)->where('tipe_soal','pilihan_ganda')->orderBy('created_at', 'asc')->get();
         $soal_essai = Soal::where('paket_id', $id)->where('tipe_soal','essai')->orderBy('created_at', 'asc')->get();
-        return view('ujian.soal', compact('soal_pilgan', 'soal_essai', 'paket'));
+        if(UjianSiswa::where('paket_id', $id)->exists()){
+            $uji = 1;
+        } else{
+            $uji = 0;
+        }
+        return view('ujian.soal', compact('soal_pilgan', 'soal_essai', 'paket', 'uji'));
     }
 
     public function ajaxSoal($id)

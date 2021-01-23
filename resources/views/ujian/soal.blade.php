@@ -31,6 +31,7 @@
     <div class="col-lg-12">
         <div class="block">
             <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
+            @if($uji)
                 <li class="nav-item">
                     <a class="nav-link active" href="#btabs-animated-slideright-statistik" id="peringkat_kota">Statistik</a>
                 </li>
@@ -40,10 +41,18 @@
                 <li class="nav-item ml-auto">
                     <a class="nav-link" href="" onclick="cetak_soal()"><i class="fa fa-print"><span class="ml-1">Cetak Soal</span></i></a>
                 </li>
+            @else
+                <li class="nav-item">
+                    <a class="nav-link active" href="#btabs-animated-slideright-detail" id="peringkat_sekolah">Detail Pilihan Ganda</a>
+                </li>
+                <li class="nav-item ml-auto">
+                    <a class="nav-link" href="" onclick="cetak_soal()"><i class="fa fa-print"><span class="ml-1">Cetak Soal</span></i></a>
+                </li>
+            @endif
             </ul>
             <div class="block-content tab-content overflow-hidden">
 {{-- STATISTIK --}}
-                <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-statistik" role="tabpanel">
+                <div class="tab-pane fade fade-right @if($uji) show active @endif" id="btabs-animated-slideright-statistik" role="tabpanel">
                     <div class="block-content">
                         <h4 class="font-w400" id='dinamis_kota_teks'>
                             Statistik Analisis Butir Soal Paket {{ str_replace('_', ' ', $paket->nama) }}
@@ -98,11 +107,33 @@
                     </div>
                 </div>
 {{-- DETAIL --}}
-                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail" role="tabpanel">
+                <div class="tab-pane fade fade-right @if(!$uji) show active @endif" id="btabs-animated-slideright-detail" role="tabpanel">
                     <div class="block-content">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
-                            Detail Analisis Butir Soal
+                            @if($uji)
+                                Detail Analisis Butir Soal
+                            @else
+                                Detail Pilihan Ganda
+                            @endif
                         </h4>
+                        @if(!$uji)
+                        <div class="block-content block-content-full">
+                            <div class="row py-20">
+                                <div class="col-6 text-right border-r">
+                                    <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
+                                        <div class="font-size-h3 font-w600 text-info">{{ count($soal_pilgan) }}</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Pilihan Ganda</div>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                                        <div class="font-size-h3 font-w600 text-success">{{ count($soal_essai) }}</div>
+                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Essai</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endif
                         <div class="block">
                             <div class="block-header block-header-default bg-gd-primary">
                                 <h3 class="block-title text-white">Soal Paket {{ str_replace('_', ' ', $paket->nama) }}</h3>
@@ -111,6 +142,7 @@
                                 <div class="table-responsive">  
                                     <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
                                         <thead>
+                                        @if($uji)
                                             <tr>
                                                 <th rowspan="2" style="text-align: center; vertical-align: middle;">No</th>
                                                 <th rowspan="2" style="text-align: center; vertical-align: middle;">Soal</th>
@@ -129,136 +161,163 @@
                                                 <th>Pilihan</th>
                                                 <th>Fungsi Pengecoh</th>
                                             </tr>
+                                        @else
+                                            <tr>
+                                                <th style="text-align: center; vertical-align: middle;">No</th>
+                                                <th style="text-align: center; vertical-align: middle;">Soal</th>
+                                                <th style="text-align: center; vertical-align: middle;">Kunci Jawaban</th>
+                                            </tr>
+                                        @endif
                                         </thead>
                                         <tbody>
                                             @php 
                                                 $no=1;
                                             @endphp
                                             @foreach($soal_pilgan as $soal)
-                                            <tr>
-                                                <td class="" rowspan="5">{{ $no++ }}</td>
-                                                <td class="" rowspan="5">
-                                                    {!! $soal->deskripsi !!}
-                                                    <div class="row" style="margin-top: -10px;">
-                                                        <div class="col-1">A).</div>
-                                                        <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_a !!}</div>
-                                                    </div>
-                                                    <div class="row" style="margin-top: -20px;">
-                                                        <div class="col-1">B).</div>
-                                                        <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_b !!}</div>
-                                                    </div>
-                                                    <div class="row" style="margin-top: -20px;">
-                                                        <div class="col-1">C).</div>
-                                                        <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_c !!}</div>
-                                                    </div>
-                                                    <div class="row" style="margin-top: -20px;">
-                                                        <div class="col-1">D).</div>
-                                                        <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_d !!}</div>
-                                                    </div>
-                                                    <div class="row" style="margin-top: -20px;">
-                                                        <div class="col-1">E).</div>
-                                                        <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_e !!}</div>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center" rowspan="5" style="font-weight: bold;">
-                                                    {{ strtoupper($soal->kunci_jawaban) }}
-                                                </td>
-                                                {{-- <td class="text-center" style="font-weight: bold;">
-                                                    {{ number_format((float)$soal->analisis->tingkat_kesulitan, 2, '.', '') }}% <br>
-                                                    @if($soal->analisis->tingkat_kesulitan > 0.70)
-                                                        (Sulit)
-                                                    @elseif($soal->analisis->tingkat_kesulitan > 0.3)
-                                                        (Sedang)
-                                                    @else
-                                                        (Mudah)
-                                                    @endif
-                                                </td> --}}
-                                                <td class="text-center" rowspan="5" style="font-weight: bold;">
-                                                    {{ number_format((float)$soal->analisis->tingkat_kesukaran, 4, '.', '') }} <br>
-                                                    @if($soal->analisis->tingkat_kesukaran > 0.7)
-                                                        (Mudah)
-                                                    @elseif($soal->analisis->tingkat_kesukaran > 0.3)
-                                                        (Sedang)
-                                                    @else
-                                                        (Sulit)
-                                                    @endif
-                                                </td>
-
-                                                <td class="text-center" rowspan="5" style="font-weight: bold;">
-                                                    @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
-                                                        @php
-                                                            $daya_pembeda = $soal->analisis->daya_pembeda;
-                                                        @endphp
-                                                        {{ number_format((float)($daya_pembeda), 4, '.', '') }} <br>
-                                                        @if($daya_pembeda > 0.4)
-                                                            (Sangat baik)
-                                                        @elseif($daya_pembeda > 0.3)
-                                                            (Cukup baik)
-                                                        @elseif($daya_pembeda > 0.2)
-                                                            (Revisi)
+                                            @if($uji)
+                                                <tr>
+                                                    <td class="" rowspan="5">{{ $no++ }}</td>
+                                                    <td class="" rowspan="5">
+                                                        {!! $soal->deskripsi !!}
+                                                        <div class="row" style="margin-top: -10px;">
+                                                            <div class="col-1">A).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_a !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">B).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_b !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">C).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_c !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">D).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_d !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">E).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_e !!}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" rowspan="5" style="font-weight: bold;">
+                                                        {{ strtoupper($soal->kunci_jawaban) }}
+                                                    </td>
+                                                    <td class="text-center" rowspan="5" style="font-weight: bold;">
+                                                        {{ number_format((float)$soal->analisis->tingkat_kesukaran, 4, '.', '') }} <br>
+                                                        @if($soal->analisis->tingkat_kesukaran > 0.7)
+                                                            (Mudah)
+                                                        @elseif($soal->analisis->tingkat_kesukaran > 0.3)
+                                                            (Sedang)
                                                         @else
-                                                            (Ditolak)
+                                                            (Sulit)
                                                         @endif
-                                                    @endif
-                                                </td>
-
-                                                <td class="text-center" @if($soal->kunci_jawaban=="a") style="font-weight: bold;" @endif>
-                                                    Pilihan A
-                                                </td>
-                                                <td>
-                                                    @if($soal->jumlah_siswa > 0)
-                                                        {{ number_format((float)( $soal->jawaban_a/$soal->jumlah_siswa), 4, '.', '')  }}
-                                                    @endif
-                                                </td>
-                                                <td rowspan="5">
-                                                    @if($daya_pembeda<0.2)
-                                                        <button type="button" class="btn btn-danger">Soal Ditolak!</button>     
-                                                    @elseif($daya_pembeda>0.3)
-                                                        <button type="button" class="btn btn-success">
-                                                            Soal Diterima!
-                                                        </button>   
-                                                    @else
-                                                        <button type="button" class="btn btn-warning">Soal Direvisi!</button>     
-                                                    @endif
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center"  @if($soal->kunci_jawaban=="b") style="font-weight: bold;" @endif>
-                                                    Pilihan B
-                                                </td>
-                                                <td>
-                                                    @if($soal->jumlah_siswa > 0)
-                                                        {{ number_format((float)( $soal->jawaban_b/$soal->jumlah_siswa), 4, '.', '')  }}</td>
-                                                    @endif
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center"  @if($soal->kunci_jawaban=="c") style="font-weight: bold;" @endif>
-                                                    Pilihan C
-                                                </td>
-                                                <td>
-                                                    @if($soal->jumlah_siswa > 0)
-                                                        {{ number_format((float)( $soal->jawaban_c/$soal->jumlah_siswa), 4, '.', '')  }}</td>
-                                                    @endif
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center"  @if($soal->kunci_jawaban=="d") style="font-weight: bold;" @endif>
-                                                    Pilihan D
-                                                </td>
-                                                <td>
-                                                    @if($soal->jumlah_siswa > 0)
-                                                        {{ number_format((float)( $soal->jawaban_d/$soal->jumlah_siswa), 4, '.', '')  }}</td>
-                                                    @endif
-                                            </tr>
-                                            <tr>
-                                                <td class="text-center"  @if($soal->kunci_jawaban=="e") style="font-weight: bold;" @endif>
-                                                    Pilihan E
-                                                </td>
-                                                <td>
-                                                    @if($soal->jumlah_siswa > 0)
-                                                        {{ number_format((float)( $soal->jawaban_e/$soal->jumlah_siswa), 4, '.', '')  }}
-                                                    @endif
-                                                </td>
-                                            </tr>
+                                                    </td>
+                                                    <td class="text-center" rowspan="5" style="font-weight: bold;">
+                                                        @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
+                                                            @php
+                                                                $daya_pembeda = $soal->analisis->daya_pembeda;
+                                                            @endphp
+                                                            {{ number_format((float)($daya_pembeda), 4, '.', '') }} <br>
+                                                            @if($daya_pembeda > 0.4)
+                                                                (Sangat baik)
+                                                            @elseif($daya_pembeda > 0.3)
+                                                                (Cukup baik)
+                                                            @elseif($daya_pembeda > 0.2)
+                                                                (Revisi)
+                                                            @else
+                                                                (Ditolak)
+                                                            @endif
+                                                        @endif
+                                                    </td>
+                                                    <td class="text-center" @if($soal->kunci_jawaban=="a") style="font-weight: bold;" @endif>
+                                                        Pilihan A
+                                                    </td>
+                                                    <td>
+                                                        @if($soal->jumlah_siswa > 0)
+                                                            {{ number_format((float)( $soal->jawaban_a/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                        @endif
+                                                    </td>
+                                                    <td rowspan="5">
+                                                        @if($daya_pembeda<0.2)
+                                                            <button type="button" class="btn btn-danger">Soal Ditolak!</button>     
+                                                        @elseif($daya_pembeda>0.3)
+                                                            <button type="button" class="btn btn-success">
+                                                                Soal Diterima!
+                                                            </button>   
+                                                        @else
+                                                            <button type="button" class="btn btn-warning">Soal Direvisi!</button>     
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="b") style="font-weight: bold;" @endif>
+                                                        Pilihan B
+                                                    </td>
+                                                    <td>
+                                                        @if($soal->jumlah_siswa > 0)
+                                                            {{ number_format((float)( $soal->jawaban_b/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                                                        @endif
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="c") style="font-weight: bold;" @endif>
+                                                        Pilihan C
+                                                    </td>
+                                                    <td>
+                                                        @if($soal->jumlah_siswa > 0)
+                                                            {{ number_format((float)( $soal->jawaban_c/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                                                        @endif
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="d") style="font-weight: bold;" @endif>
+                                                        Pilihan D
+                                                    </td>
+                                                    <td>
+                                                        @if($soal->jumlah_siswa > 0)
+                                                            {{ number_format((float)( $soal->jawaban_d/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                                                        @endif
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="e") style="font-weight: bold;" @endif>
+                                                        Pilihan E
+                                                    </td>
+                                                    <td>
+                                                        @if($soal->jumlah_siswa > 0)
+                                                            {{ number_format((float)( $soal->jawaban_e/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                        @endif
+                                                    </td>
+                                                </tr>
+                                            @else
+                                                <tr>
+                                                    <td class="">{{ $no++ }}</td>
+                                                    <td class="">
+                                                        {!! $soal->deskripsi !!}
+                                                        <div class="row" style="margin-top: -10px;">
+                                                            <div class="col-1">A).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_a !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">B).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_b !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">C).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_c !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">D).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_d !!}</div>
+                                                        </div>
+                                                        <div class="row" style="margin-top: -20px;">
+                                                            <div class="col-1">E).</div>
+                                                            <div class="col-11" style="margin-left: -15px;">{!! $soal->pilihan_e !!}</div>
+                                                        </div>
+                                                    </td>
+                                                    <td class="text-center" style="font-weight: bold;">
+                                                        {{ strtoupper($soal->kunci_jawaban) }}
+                                                    </td>
+                                                </tr>
+                                            @endif
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -267,16 +326,6 @@
                         </div>
                     </div>
                 </div>
-{{-- SISWA --}}
-{{--                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
-                    <div class="block-content">
-                        <h4 class="font-w400" id='dinamis_siswa_teks'>
-                            100 Besar Nilai Rata-rata Terbaik
-                        </h4>
-                        <div class="table-responsive" id="dinamis_siswa_table">
-                        </div>
-                    </div>
-                </div> --}}
             </div>
         </div>
     </div>
@@ -549,72 +598,6 @@
                 }
             });
         }
-    </script>
-    <script>
-        var dataSource = [{
-            year: "1750",
-            africa: 106000000,
-            asia: 502000000,
-            europe: 163000000,
-            latinamerica: 16000000,
-            northamerica: 2000000,
-            oceania: 2000000,
-            total: 791000000
-        }, {
-            year: "1800",
-            africa: 107000000,
-            asia: 635000000,
-            europe: 203000000,
-            latinamerica: 24000000,
-            northamerica: 7000000,
-            oceania: 2000000,
-            total: 978000000
-        }, {
-            year: "1850",
-            africa: 111000000,
-            asia: 809000000,
-            europe: 276000000,
-            latinamerica: 38000000,
-            northamerica: 26000000,
-            oceania: 2000000,
-            total: 1262000000
-        }, {
-            year: "1900",
-            africa: 133000000,
-            asia: 947000000,
-            europe: 408000000,
-            latinamerica: 74000000,
-            northamerica: 82000000,
-            oceania: 6000000,
-            total: 1650000000
-        }, {
-            year: "1950",
-            africa: 229895000,
-            asia: 1403388000,
-            europe: 547287000,
-            latinamerica: 167368000,
-            northamerica: 171614000,
-            oceania: 12675000,
-            total: 2532227000
-        }, {
-            year: "2000",
-            africa: 811101000,
-            asia: 3719044000,
-            europe: 726777000,
-            latinamerica: 521419000,
-            northamerica: 313289000,
-            oceania: 31130000,
-            total: 6122770000
-        }, {
-            year: "2050",
-            africa: 2191599000,
-            asia: 5142220000,
-            europe: 719257000,
-            latinamerica: 750956000,
-            northamerica: 446862000,
-            oceania: 55223000,
-            total: 9306128000
-        }];
     </script>
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>

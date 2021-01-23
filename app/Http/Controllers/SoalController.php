@@ -87,6 +87,7 @@ class SoalController extends Controller
                 }
             }
         }
+        
         return Datatables::of($paket)
         	->addColumn('action', function ($user) {
                 return '<a href="'.url('paket', $user->id).'"><button type="button" class="btn btn-primary bg-gd-primary min-width-75 float-right">Lihat Detail</button></a>';

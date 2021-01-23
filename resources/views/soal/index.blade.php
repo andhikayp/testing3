@@ -114,7 +114,7 @@
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail" role="tabpanel">
                     <div class="block-content">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
-                            Detail Paket
+                            Pilih Paket
                         </h4>
                         <div class="block">
                             {{-- <div class="block-header block-header-default bg-gd-primary">

@@ -187,7 +187,7 @@
                                                 <td class="text-center" rowspan="5" style="font-weight: bold;">
                                                     @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
                                                         @php
-                                                            $daya_pembeda = ($soal->analisis->salah_bawah-$soal->analisis->salah_atas)/($soal->jumlah_siswa*0.27);
+                                                            $daya_pembeda = $soal->analisis->daya_pembeda;
                                                         @endphp
                                                         {{ number_format((float)($daya_pembeda), 4, '.', '') }} <br>
                                                         @if($daya_pembeda > 0.4)

@@ -35,7 +35,7 @@
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-detail" role="tabpanel">
                     <div class="block-content">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
-                            Detail Paket
+                            Pilih Pelajaran
                         </h4>
                         <div class="block">
                             <div class="block-content">
@@ -81,7 +81,7 @@
                     { data: 'jenjang'},
                     { data: 'action'},
                 ],
-                "order": [[1, "asc"]]
+                "order": [[0, "asc"]]
             });
         });
     </script>

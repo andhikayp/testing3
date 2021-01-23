@@ -30,22 +30,28 @@
     </div>
     <div class="block-content">
         <div class="row py-20">
-            <div class="col-4 text-center border-r">
+            <div class="col-3 text-center border-r">
                 <div class="js-appear-enabled animated fadeInLeft" data-toggle="appear" data-class="animated fadeInLeft">
                     <div class="font-size-h3 font-w600 text-info">{{ $count['terima'] }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-muted">Diterima</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Diterima</div>
                 </div>
             </div>
-            <div class="col-4 text-center">
+            <div class="col-3 text-center border-r">
                 <div class="js-appear-enabled animated fadeInUp" data-toggle="appear" data-class="animated fadeInUp">
                     <div class="font-size-h3 font-w600 text-success">{{ $count['revisi'] }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-muted">Direvisi</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Direvisi</div>
                 </div>
             </div>
-            <div class="col-4 text-center border-l">
+            <div class="col-3 text-center">
                 <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
                     <div class="font-size-h3 font-w600 text-success">{{ $count['tolak'] }}</div>
-                    <div class="font-size-sm font-w600 text-uppercase text-muted">Ditolak</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Ditolak</div>
+                </div>
+            </div>
+            <div class="col-3 text-center border-l">
+                <div class="js-appear-enabled animated fadeInRight" data-toggle="appear" data-class="animated fadeInRight">
+                    <div class="font-size-h3 font-w600 text-success">{{ $count['tidak_diuji'] }}</div>
+                    <div class="font-size-sm font-w600 text-uppercase text-muted">Soal Tidak Diujikan</div>
                 </div>
             </div>
         </div>
@@ -65,9 +71,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-detail2" id="ditolak">Ditolak</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#btabs-animated-slideright-detail3" id="tidak_diuji">Tidak Diuji</a>
+                </li>
             </ul>
             <div class="block-content tab-content overflow-hidden">
-{{-- STATISTIK PAKET--}}
+{{-- SOAL DITERIMA --}}
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-statistik" role="tabpanel">
                     <div class="block-content">
                         <h4 class="font-w400" id="dinamis_sekolah_teks">
@@ -85,6 +94,8 @@
                                                 <th>Pilihan C</th>
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
+                                                <th>Kunci Jawaban</th>
+                                                <th>Tingkat Kesulitan</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -111,6 +122,8 @@
                                                 <th>Pilihan C</th>
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
+                                                <th>Kunci Jawaban</th>
+                                                <th>Tingkat Kesulitan</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -137,6 +150,36 @@
                                                 <th>Pilihan C</th>
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
+                                                <th>Kunci Jawaban</th>
+                                                <th>Tingkat Kesulitan</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+{{-- SOAL TIDAK DIUJI --}}
+                <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail3" role="tabpanel">
+                    <div class="block-content">
+                        <h4 class="font-w400" id="dinamis_sekolah_teks">
+                            Soal Tidak Diuji
+                        </h4>
+                        <div class="block">
+                            <div class="block-content">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="table_tidak_diuji">
+                                        <thead>
+                                            <tr>
+                                                <th>Soal</th>
+                                                <th>Pilihan A</th>
+                                                <th>Pilihan B</th>
+                                                <th>Pilihan C</th>
+                                                <th>Pilihan D</th>
+                                                <th>Pilihan E</th>
+                                                <th>Kunci Jawaban</th>
+                                                <th>Tingkat Kesulitan</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -172,6 +215,8 @@
                     { data: 'pilihan_c'},
                     { data: 'pilihan_d'},
                     { data: 'pilihan_e'},
+                    { data: 'kunci_jawaban'},
+                    { data: 'tingkat_kesulitan'},
                 ],
                 "order": [[1, "asc"]]
             });
@@ -193,6 +238,8 @@
                     { data: 'pilihan_c'},
                     { data: 'pilihan_d'},
                     { data: 'pilihan_e'},
+                    { data: 'kunci_jawaban'},
+                    { data: 'tingkat_kesulitan'},
                 ],
                 "order": [[1, "asc"]]
             });
@@ -214,10 +261,34 @@
                     { data: 'pilihan_c'},
                     { data: 'pilihan_d'},
                     { data: 'pilihan_e'},
+                    { data: 'kunci_jawaban'},
+                    { data: 'tingkat_kesulitan'},
                 ],
                 "order": [[1, "asc"]]
             });
 
+            var table_tidak_diuji = $('#table_tidak_diuji').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "searchDelay": 1000,
+                "autoWidth": false,
+                "ajax":{
+                    "url": "{{ url('ajax/bank_soal/tidak_diuji')}}/{{ $pelajaran->id }}",
+                    "dataType": "json",
+                    "type": "GET",
+                },
+                "columns": [
+                    { data: 'deskripsi'},
+                    { data: 'pilihan_a'},
+                    { data: 'pilihan_b'},
+                    { data: 'pilihan_c'},
+                    { data: 'pilihan_d'},
+                    { data: 'pilihan_e'},
+                    { data: 'kunci_jawaban'},
+                    { data: 'tingkat_kesulitan'},
+                ],
+                "order": [[1, "asc"]]
+            });
         });
     </script>
     <!-- Page JS Plugins -->

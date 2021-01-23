@@ -230,12 +230,19 @@
                                                             @endif
                                                         @endif
                                                     </td>
-                                                    <td class="text-center" @if($soal->kunci_jawaban=="a") style="font-weight: bold;" @endif>
+                                                    <td class="text-center" @if($soal->kunci_jawaban=="a" or $soal->kunci_jawaban=="A") style="font-weight: bold;" @endif>
                                                         Pilihan A
                                                     </td>
                                                     <td>
                                                         @if($soal->jumlah_siswa > 0)
                                                             {{ number_format((float)( $soal->jawaban_a/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                            @if($soal->kunci_jawaban=="a" or $soal->kunci_jawaban=="A")
+                                                                (Kunci Jawaban)
+                                                            @elseif($soal->jawaban_a/$soal->jumlah_siswa > 0.05)
+                                                                (Berfungsi)
+                                                            @else
+                                                                (Tidak Berfungsi)
+                                                            @endif
                                                         @endif
                                                     </td>
                                                     <td rowspan="5">
@@ -251,39 +258,70 @@
                                                     </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center"  @if($soal->kunci_jawaban=="b") style="font-weight: bold;" @endif>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="b" or $soal->kunci_jawaban=="B") style="font-weight: bold;" @endif>
                                                         Pilihan B
                                                     </td>
                                                     <td>
                                                         @if($soal->jumlah_siswa > 0)
-                                                            {{ number_format((float)( $soal->jawaban_b/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                                                            {{ number_format((float)( $soal->jawaban_b/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                            @if($soal->kunci_jawaban=="b" or $soal->kunci_jawaban=="B")
+                                                                (Kunci Jawaban)
+                                                            @elseif($soal->jawaban_b/$soal->jumlah_siswa > 0.05)
+                                                                (Berfungsi)
+                                                            @else
+                                                                (Tidak Berfungsi)
+                                                            @endif
                                                         @endif
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center"  @if($soal->kunci_jawaban=="c") style="font-weight: bold;" @endif>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="c" or $soal->kunci_jawaban=="C") style="font-weight: bold;" @endif>
                                                         Pilihan C
                                                     </td>
                                                     <td>
                                                         @if($soal->jumlah_siswa > 0)
-                                                            {{ number_format((float)( $soal->jawaban_c/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                                                            {{ number_format((float)( $soal->jawaban_c/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                            @if($soal->kunci_jawaban=="c" or $soal->kunci_jawaban=="C")
+                                                                (Kunci Jawaban)
+                                                            @elseif($soal->jawaban_c/$soal->jumlah_siswa > 0.05)
+                                                                (Berfungsi)
+                                                            @else
+                                                                (Tidak Berfungsi)
+                                                            @endif
                                                         @endif
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center"  @if($soal->kunci_jawaban=="d") style="font-weight: bold;" @endif>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="d" or $soal->kunci_jawaban=="D") style="font-weight: bold;" @endif>
                                                         Pilihan D
                                                     </td>
                                                     <td>
                                                         @if($soal->jumlah_siswa > 0)
-                                                            {{ number_format((float)( $soal->jawaban_d/$soal->jumlah_siswa), 4, '.', '')  }}</td>
+                                                            {{ number_format((float)( $soal->jawaban_d/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                            @if($soal->kunci_jawaban=="d" or $soal->kunci_jawaban=="D")
+                                                                (Kunci Jawaban)
+                                                            @elseif($soal->jawaban_d/$soal->jumlah_siswa > 0.05)
+                                                                (Berfungsi)
+                                                            @else
+                                                                (Tidak Berfungsi)
+                                                            @endif
                                                         @endif
+                                                    </td>
                                                 </tr>
                                                 <tr>
-                                                    <td class="text-center"  @if($soal->kunci_jawaban=="e") style="font-weight: bold;" @endif>
+                                                    <td class="text-center"  @if($soal->kunci_jawaban=="e" or $soal->kunci_jawaban=="E") style="font-weight: bold;" @endif>
                                                         Pilihan E
                                                     </td>
                                                     <td>
                                                         @if($soal->jumlah_siswa > 0)
                                                             {{ number_format((float)( $soal->jawaban_e/$soal->jumlah_siswa), 4, '.', '')  }}
+                                                            @if($soal->kunci_jawaban=="e" or $soal->kunci_jawaban=="E")
+                                                                (Kunci Jawaban)
+                                                            @elseif($soal->jawaban_e/$soal->jumlah_siswa > 0.05)
+                                                                (Berfungsi)
+                                                            @else
+                                                                (Tidak Berfungsi)
+                                                            @endif
                                                         @endif
                                                     </td>
                                                 </tr>

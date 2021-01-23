@@ -187,9 +187,9 @@ class SoalController extends Controller
     public function getFungsiPengecoh($paket_id){
         $soals = Soal::where('paket_id', $paket_id)->where('tipe_soal', 'pilihan_ganda')->orderBy('created_at', 'asc')->get();
         $no = 1;
-        foreach ($soals as $soal) {
+        foreach ($soals as $soal){
             $soal->no_soal = "Soal ".$no++;
-            $soal->jumlah_pengecoh = $this->getCountPengecoh($soal);
+            $soal->jumlah_pengecoh = $this->getCountPengecoh($soal)-1;
         }
         return $soals;
     }
@@ -204,7 +204,7 @@ class SoalController extends Controller
 
     public function initDistribusiFungsiPengecoh(){
         $distribusi = array();
-        for($i=1; $i <= 5; $i++){
+        for($i=1; $i <= 4; $i++){
             $distribusi[$i]['nama'] = $i.' pilihan jawaban';
             $distribusi[$i]['jumlah'] = 0;
         }
@@ -219,7 +219,7 @@ class SoalController extends Controller
             elseif($soal->jumlah_pengecoh == 2) $distribusi[2]['jumlah']++;
             elseif($soal->jumlah_pengecoh == 3) $distribusi[3]['jumlah']++;
             elseif($soal->jumlah_pengecoh == 4) $distribusi[4]['jumlah']++;
-            elseif($soal->jumlah_pengecoh == 5) $distribusi[5]['jumlah']++;        
+            // elseif($soal->jumlah_pengecoh == 5) $distribusi[5]['jumlah']++;      
         }
         return Datatables::of($distribusi)->make(true);
     }
@@ -248,7 +248,7 @@ class SoalController extends Controller
             $soal->no_soal = "Soal ".$no++;
             $soal->tingkat_kesukaran = $soal->analisis->tingkat_kesukaran;
             $soal->daya_pembeda = $soal->analisis->daya_pembeda;
-            $soal->jumlah_pengecoh = $this->getCountPengecoh($soal)/5;
+            $soal->jumlah_pengecoh = ($this->getCountPengecoh($soal)-1)/4;
         }
         return response()->json($soals);
     }

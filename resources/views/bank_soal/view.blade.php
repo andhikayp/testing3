@@ -95,7 +95,7 @@
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
-                                                <th>Tingkat Kesulitan</th>
+                                                <th>Tingkat Kesukaran</th>
                                                 <th>Paket</th>
                                             </tr>
                                         </thead>
@@ -124,7 +124,7 @@
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
-                                                <th>Tingkat Kesulitan</th>
+                                                <th>Tingkat Kesukaran</th>
                                                 <th>Paket</th>
                                             </tr>
                                         </thead>
@@ -153,7 +153,7 @@
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
-                                                <th>Tingkat Kesulitan</th>
+                                                <th>Tingkat Kesukaran</th>
                                                 <th>Paket</th>
                                             </tr>
                                         </thead>
@@ -182,7 +182,7 @@
                                                 <th>Pilihan D</th>
                                                 <th>Pilihan E</th>
                                                 <th>Kunci Jawaban</th>
-                                                <th>Tingkat Kesulitan</th>
+                                                <th>Tingkat Kesukaran</th>
                                                 <th>Paket</th>
                                             </tr>
                                         </thead>

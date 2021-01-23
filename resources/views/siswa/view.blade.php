@@ -67,6 +67,7 @@
 @endsection
 
 @section('moreJS')
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <script>
         $(function(){
             var table = $('#users-table').DataTable({
@@ -102,7 +103,7 @@
                 },
                 palette: "office",
                 dataSource: gridDataSource.jenis_kelamin,
-                title: "Statistik Jenis Kelamin",
+                title: "Grafik Sebaran Jenis Kelamin",
                 margin: {
                     bottom: 0
                 },
@@ -141,7 +142,7 @@
                 },
                 palette: "ocean",
                 dataSource: gridDataSource.jurusan,
-                title: "Statistik Jurusan",
+                title: "Grafik Sebaran Jurusan",
                 margin: {
                     bottom: 0
                 },
@@ -174,8 +175,6 @@
             }).dxPieChart("instance");
         }
     </script>
-    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
-
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

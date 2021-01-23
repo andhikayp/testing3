@@ -51,51 +51,6 @@
         <!-- END Stylesheets -->
     </head>
     <body>
-
-        <!-- Page Container -->
-        <!--
-            Available classes for #page-container:
-
-        GENERIC
-
-            'enable-cookies'                            Remembers active color theme between pages (when set through color theme helper Template._uiHandleTheme())
-
-        SIDEBAR & SIDE OVERLAY
-
-            'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
-            'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
-            'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
-            'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
-            'sidebar-inverse'                           Dark themed sidebar
-
-            'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
-            'side-overlay-o'                            Visible Side Overlay by default
-
-            'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
-
-            'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
-
-        HEADER
-
-            ''                                          Static Header if no class is added
-            'page-header-fixed'                         Fixed Header
-
-        HEADER STYLE
-
-            ''                                          Classic Header style if no class is added
-            'page-header-modern'                        Modern Header style
-            'page-header-inverse'                       Dark themed Header (works only with classic Header style)
-            'page-header-glass'                         Light themed Header with transparency by default
-                                                        (absolute position, perfect for light images underneath - solid light background on scroll if the Header is also set as fixed)
-            'page-header-glass page-header-inverse'     Dark themed Header with transparency by default
-                                                        (absolute position, perfect for dark images underneath - solid dark background on scroll if the Header is also set as fixed)
-
-        MAIN CONTENT LAYOUT
-
-            ''                                          Full width Main Content if no class is added
-            'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
-            'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
-        -->
         <div id="page-container" class="sidebar-o sidebar-inverse enable-page-overlay side-scroll page-header-fixed page-header-modern main-content-boxed">
             <!-- Side Overlay-->
             <aside id="side-overlay">
@@ -114,43 +69,26 @@
 
                 <!-- Side Content -->
                 <div class="content-side">
-                    <!-- Mini Stats -->
-                    <div class="block pull-r-l">
-                        <div class="block-content block-content-full block-content-sm bg-body-light">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="font-size-sm font-w600 text-uppercase text-muted">Clients</div>
-                                    <div class="font-size-h4">460</div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="font-size-sm font-w600 text-uppercase text-muted">Sales</div>
-                                    <div class="font-size-h4">728</div>
-                                </div>
-                                <div class="col-4">
-                                    <div class="font-size-sm font-w600 text-uppercase text-muted">Earnings</div>
-                                    <div class="font-size-h4">$7,860</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!-- END Mini Stats -->
 
                     <!-- Profile -->
                     <div class="block pull-r-l">
                         <div class="block-header bg-body-light">
                             <h3 class="block-title">
-                                <i class="fa fa-fw fa-pencil font-size-default mr-5"></i>Profile
+                                <i class="fa fa-fw fa-pencil font-size-default mr-5"></i>Profil
                             </h3>
                             <div class="block-options">
                                 <button type="button" class="btn-block-option" data-toggle="block-option" data-action="content_toggle"></button>
                             </div>
                         </div>
                         <div class="block-content">
-                            <form action="be_pages_dashboard.html" method="post" onsubmit="return false;">
+                            <form action="{{ url('/ubah/password/') }}" method="post">
+                                {{csrf_field()}}
+                                <input type="text" hidden="" class="form-control" id="id" name="id" value="{{ Auth()->user()->id }}">
                                 <div class="form-group mb-15">
-                                    <label for="side-overlay-profile-name">Name</label>
+                                    <label for="nama">Nama</label>
                                     <div class="input-group">
-                                        <input type="text" class="form-control" id="side-overlay-profile-name" name="side-overlay-profile-name" placeholder="Your name.." value="John Smith">
+                                        <input type="text" class="form-control" id="nama" name="nama" value="{{ Auth()->user()->nama }}" disabled="">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="fa fa-user"></i>
@@ -159,9 +97,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-15">
-                                    <label for="side-overlay-profile-email">Email</label>
+                                    <label for="username">Username</label>
                                     <div class="input-group">
-                                        <input type="email" class="form-control" id="side-overlay-profile-email" name="side-overlay-profile-email" placeholder="Your email.." value="john.smith@example.com">
+                                        <input type="text" class="form-control" id="username" name="username" value="{{ Auth()->user()->username }}" disabled="">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="fa fa-envelope"></i>
@@ -169,10 +107,23 @@
                                         </div>
                                     </div>
                                 </div>
+                                @if(Auth()->user()->level == 'proktor')
                                 <div class="form-group mb-15">
-                                    <label for="side-overlay-profile-password">New Password</label>
+                                    <label for="sekolah">Sekolah</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="side-overlay-profile-password" name="side-overlay-profile-password" placeholder="New Password..">
+                                        <input type="text" class="form-control" id="sekolah" name="sekolah" value="{{ Auth()->user()->sekolah->nama }}" disabled="">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text">
+                                                <i class="fa fa-school"></i>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>   
+                                @endif
+                                <div class="form-group mb-15">
+                                    <label for="password">Password Baru</label>
+                                    <div class="input-group">
+                                        <input type="password" class="form-control" id="password" name="password" placeholder="Password Baru">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="fa fa-asterisk"></i>
@@ -181,9 +132,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group mb-15">
-                                    <label for="side-overlay-profile-password-confirm">Confirm New Password</label>
+                                    <label for="konfrimasi_password">Konfirmasi Password Baru</label>
                                     <div class="input-group">
-                                        <input type="password" class="form-control" id="side-overlay-profile-password-confirm" name="side-overlay-profile-password-confirm" placeholder="Confirm New Password..">
+                                        <input type="password" class="form-control" id="konfrimasi_password" name="konfrimasi_password" placeholder="Konfirmasi Password Baru">
                                         <div class="input-group-append">
                                             <span class="input-group-text">
                                                 <i class="fa fa-asterisk"></i>
@@ -194,7 +145,7 @@
                                 <div class="form-group row">
                                     <div class="col-6">
                                         <button type="submit" class="btn btn-block btn-alt-primary">
-                                            <i class="fa fa-refresh mr-5"></i> Update
+                                            <i class="fa fa-refresh mr-5"></i> Perbarui
                                         </button>
                                     </div>
                                 </div>
@@ -214,6 +165,16 @@
             <main id="main-container">
 
                 <!-- Page Content -->
+                @if(session('error'))
+                    <div class="alert alert-danger">
+                        <strong>Submit Form Tidak Berhasil!</strong>
+                        {{ session('error') }}
+                    </div>
+                @elseif(session('success'))
+                    <div class="alert alert-success">
+                        {{ session('success') }}                        
+                    </div>
+                @endif
                 <div class="content">
                     @yield('content')
                 </div>

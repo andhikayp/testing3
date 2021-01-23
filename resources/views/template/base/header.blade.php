@@ -100,20 +100,14 @@
                 </button>
                 <div class="dropdown-menu dropdown-menu-right min-width-200" aria-labelledby="page-header-user-dropdown">
                     <h5 class="h6 text-center py-10 mb-5 border-b text-uppercase">User</h5>
-                    <a class="dropdown-item" href="be_pages_generic_profile.html">
-                        <i class="si si-user mr-5"></i> Profile
-                    </a>
-
-                    <!-- Toggle Side Overlay -->
-                    <!-- Layout API, functionality initialized in Template._uiApiLayout() -->
                     <a class="dropdown-item" href="javascript:void(0)" data-toggle="layout" data-action="side_overlay_toggle">
-                        <i class="si si-wrench mr-5"></i> Settings
+                        <i class="si si-user mr-5"></i> Profil
                     </a>
                     <!-- END Side Overlay -->
 
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{url('/logout')}}">
-                        <i class="si si-logout mr-5"></i> Sign Out
+                        <i class="si si-logout mr-5"></i> Keluar
                     </a>
                 </div>
             </div>

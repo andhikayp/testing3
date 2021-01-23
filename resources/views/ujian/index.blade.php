@@ -55,6 +55,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-profile" role="tabpanel">
+                    @if(Auth()->user()->level == 'admin')
                     <div>
                         <a href="{{ url('/ujian/tambah/') }}" class="float-right mb-10">
                             <button class="btn btn-primary min-width-125">
@@ -62,6 +63,7 @@
                             </button>
                         </a>
                     </div>
+                    @endif
                     <div class="table-responsive">
                         <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
                             <thead>

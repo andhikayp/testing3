@@ -105,7 +105,7 @@
         </div>
         @elseif(Auth()->user()->level == 'proktor')
         <div class="content content-full text-center">
-            <h1 class="h2 font-w700 mb-10">Selamat datang, {{ Auth()->user()->sekolah->nama }}!</h1>
+            <h1 class="h2 font-w700 mb-10">Selamat Datang<br> Proktor {{ Auth()->user()->sekolah->nama }}!</h1>
         </div>
         <div class="row js-appear-enabled animated fadeIn" data-toggle="appear">
             <div class="col-6 col-xl-3">

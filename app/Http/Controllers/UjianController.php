@@ -87,17 +87,29 @@ class UjianController extends Controller
             ->addColumn('action', function ($ujian) {
                 date_default_timezone_set("Asia/Bangkok");
                 $today = date("Y-m-d H:i:s");
-                if($ujian->waktu_mulai > $today){
+                if($ujian->waktu_mulai > $today and Auth()->user()->level == 'admin'){
                     return '
                     <div style="width:165px;">
                         <a href="" class="button text-center mr-2 btn btn-danger bg-gd-danger min-width-75 float-right" data-id="'.$ujian->id.'">Hapus</a>
                         <a href="'.url('ujian/edit', $ujian->id).'"><button type="button" class="text-center mr-2 btn btn-warning bg-gd-warning min-width-75 float-right">Edit</button></a>
                     </div>';
                 } else{
-                    return '
-                    <div style="width:165px;">
-                        <div class="mr-2 btn btn-success bg-gd-success min-width-75 float-right text-center">Ujian Terlaksana</div>
-                    </div>';
+                    if($ujian->waktu_selesai > $today){
+                        return '
+                        <div style="">
+                            <div class="mr-2 btn btn-primary bg-gd-primary min-width-75 float-right text-center">Ujian Sedang Berlangsung</div>
+                        </div>';
+                    } elseif($ujian->waktu_selesai < $today){
+                        return '
+                        <div style="width:165px;">
+                            <div class="mr-2 btn btn-success bg-gd-success min-width-75 float-right text-center">Ujian Terlaksana</div>
+                        </div>';
+                    } else{
+                        return '
+                        <div style="">
+                            <div class="mr-2 btn btn-info bg-gd-info min-width-75 float-right text-center">Ujian Belum Terlaksana</div>
+                        </div>';
+                    }
                 }
             })
             ->rawColumns(['action'])

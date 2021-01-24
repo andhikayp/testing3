@@ -15,19 +15,19 @@ use DB;
 
 class NilaiController extends Controller
 {
-    public function index() {
+    public function index(){
         return view('nilai.index');
     }
 
-    public function nilai($id) {
+    public function nilai($id){
     	$sekolah = Sekolah::where('id',$id)->first();
         return view('nilai.view', compact('sekolah'));
     }
 
-    public function nilai_individu($sekolah, $id) {
+    public function nilai_individu($sekolah, $id){
     	$nilai = UjianSiswa::where('user_id', $id)->get();
         $all_nilai = []; 
-        foreach ($nilai as $n) {
+        foreach ($nilai as $n){
             $n->skor = $n->jumlah_benar/($n->jumlah_benar+$n->jumlah_salah+$n->jumlah_kosong-5)*100;
             array_push($all_nilai, $n->skor);
         }
@@ -36,14 +36,13 @@ class NilaiController extends Controller
         $nilai_terendah = $urutan_nilai->reverse()->take(3);
 
         $statistik = $this->get_statistik($all_nilai);
-        // dd($statistik);
-
+        // dd($all_nilai, $statistik);
         return view('nilai.nilai_individu', compact('nilai','sekolah', 'nilai_tertinggi', 'nilai_terendah', 'statistik'));
     }
 
     public function get_statistik($all_nilai) {
         $statistik['mean'] = $this->mean($all_nilai);
-        // $statistik['modus'] = $this->modus($all_nilai);
+        $statistik['modus'] = $this->modus($all_nilai);
         $statistik['min'] = $this->min($all_nilai);
         $statistik['max'] = $this->max($all_nilai);
         $statistik['range'] = $statistik['max'] - $statistik['min'];
@@ -62,7 +61,47 @@ class NilaiController extends Controller
     }
 
     public function modus($array){
-    
+        $count_values = array();
+        foreach ($array as $a) {
+            @$count_values["$a"]++;
+        }
+        arsort($count_values);
+        $init = max($count_values);
+        if($init < 2){
+            return "-";
+        }
+        $sum = 0;
+        $jumlah = 0;
+        foreach($count_values as $key=>$value){
+            if($init == $value){
+                $sum += floatval($key);
+                $jumlah++;
+            } else break;
+        }
+        return $sum/$jumlah;
+    }
+
+    function aasort (&$array, $key) {
+        $sorter=array();
+        $ret=array();
+        reset($array);
+        foreach ($array as $ii => $va) {
+            $sorter[$ii]=$va[$key];
+        }
+        asort($sorter);
+        foreach ($sorter as $ii => $va) {
+            $ret[$ii]=$array[$ii];
+        }
+        $array=$ret;
+        return $array;
+    }
+
+    function array_sort_by_column(&$arr, $col, $dir = SORT_ASC) {
+        $sort_col = array();
+        foreach ($arr as $key=> $row) {
+            $sort_col[$key] = $row[$col];
+        }
+        return array_multisort($sort_col, $dir, $arr);
     }
 
     public function min($array){
@@ -118,13 +157,18 @@ class NilaiController extends Controller
     public function soal_individu($mapel_id, $id)
     {
         ini_set('memory_limit', '-1');
-        $ujian_siswa = UjianSiswa::where('id', $mapel_id)->first();
+        $ujian_siswa = UjianSiswa::where('id', $mapel_id)->where('user_id', $id)->first();
         $random_soal = json_decode($ujian_siswa->random_soal);
         $jawaban_posisi = json_decode($ujian_siswa->random_jawaban);
         $jawabans = json_decode($ujian_siswa->jawaban_siswa);
         $all_soal = array();
+        
+        // $user_sekolah = User::select('id')->where('sekolah_id', $ujian_siswa->user->sekolah->id)->get();
         foreach ($random_soal as $key => $soal_id) {
             $soal = Soal::find($soal_id);
+            // $ujian_id_benar = json_decode($soal->siswa_id_benar);
+            // $ujian_siswa_sekolah = UjianSiswa::select('user_id')->whereIn('id', $ujian_id_benar)->whereIn('user_id', $user_sekolah)->count();
+            // $soal->sekolah_benar = $ujian_siswa_sekolah/count($user_sekolah);
             $soal->benar = 0;                        
             $soal->kosong = 0;                        
             if($soal->tipe_soal == "pilihan_ganda"){
@@ -146,7 +190,6 @@ class NilaiController extends Controller
                 array_push($all_soal, $soal);
             }
         }
-        Debugbar::error($all_soal);
         return view('nilai.soal_individu', compact('ujian_siswa','all_soal'));
     }
 

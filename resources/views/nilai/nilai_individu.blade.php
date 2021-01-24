@@ -17,7 +17,7 @@
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <a class="breadcrumb-item" href="{{ url('/nilai') }}">Sekolah</a>
+    <a class="breadcrumb-item" href="{{ url('/nilai') }}">Statistik Nilai</a>
     <a class="breadcrumb-item" href="{{ url('/nilai', ['id'=>$sekolah]) }}">Data Siswa</a>
     <span class="breadcrumb-item active">Nilai</span>
 </nav>
@@ -34,21 +34,21 @@
                     <a class="nav-link active" href="#btabs-animated-slideright-home">Statistik</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#btabs-animated-slideright-profile">Nilai</a>
+                    <a class="nav-link" href="#btabs-animated-slideright-profile">Detail Nilai</a>
                 </li>
             </ul>
             <div class="block-content tab-content overflow-hidden">
                 <div class="tab-pane fade fade-right show active" id="btabs-animated-slideright-home" role="tabpanel">
                     {{-- diisi disini --}}
                     <div class="block block-fx-shadow text-center">
-                        <a class="d-block bg-warning font-w600 text-uppercase py-5">
-                            <span class="text-white">Penskoran tanpa koreksi</span>
+                        <a class="d-block bg-primary font-w600 text-uppercase py-5">
+                            <span class="text-white">Nilai Tiap Mata Pelajaran</span>
                         </a>
                         <div class="block-content block-content-full">
                             <div id="nilai"></div>
                         </div>
                     </div>
-                    <div class="block block-fx-shadow text-center">
+{{--                     <div class="block block-fx-shadow text-center">
                         <a class="d-block bg-warning font-w600 text-uppercase py-5">
                             <span class="text-white">Penskoran ada koreksi jawaban</span>
                         </a>
@@ -56,7 +56,7 @@
                             <div id="nilai_jawaban"></div>
                         </div>
                     </div>
-                    <div class="row">
+ --}}                    <div class="row">
                         <div class="col-sm-6">
                             <div class="block block-fx-shadow text-center">
                                 <div class="block-header block-header-default">
@@ -116,8 +116,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                         <div class="col-sm-12">
                             <div class="block block-fx-shadow text-center">
                                 <div class="block-header block-header-default">
@@ -147,7 +145,13 @@
                                                 <td>{{ round($statistik['min'],2) }}</td>
                                                 <td>{{ round($statistik['max'],2) }}</td>
                                                 <td>{{ round($statistik['range'],2) }}</td>
-                                                <td>{{ round($statistik['mean'],2) }}</td>
+                                                <td>
+                                                    @php
+                                                        if($statistik['modus'] == "-") $modus = "-";
+                                                        else $modus = round($statistik['modus'],2);
+                                                    @endphp
+                                                    {{ $modus }}
+                                                </td>
                                                 <td>{{ round($statistik['standar_deviasi'],2) }}</td>
                                                 <td>{{ round($statistik['varian'],2) }}</td>
                                                 <td>{{ round($statistik['q1'],2) }}</td>
@@ -167,22 +171,48 @@
                         @foreach($nilai as $nilais)
                         <div class="col-lg-6 col-xl-6">
                             <div class="block block-fx-shadow text-center">
-                                <a class="d-block bg-warning font-w600 text-uppercase py-5" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
+                                <a class="d-block bg-primary font-w600 text-uppercase py-5" href="{{ url('/nilai/soal', ['mapel'=>$nilais->id, 'id'=>$nilai[0]->user->id]) }}">
                                     <span class="text-white">{{ $nilais->paket->pelajaran->nama }}</span>
                                 </a>
                                 <div class="block-content block-content-full">
                                     <div class="pt-20 pb-30">
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Benar | Salah | Essai</div>
-                                        <div class="font-size-h3 font-w700">{{ $nilais->jumlah_benar }} || {{ $nilais->jumlah_salah }} || {{ $nilais->jumlah_kosong }}</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">{{ $nilais->JadwalUjian->waktu_mulai }} - {{ $nilais->JadwalUjian->waktu_selesai }}</div>
-                                        <div class="font-size-sm font-w600 text-uppercase text-muted">Paket {{ $nilais->Paket->nama[-1] }}</div>
+                                        <table class="table table-hover table-vcenter">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center" style="width: 25%px;">Pilgan Benar</th>
+                                                    <th class="text-center" style="width: 25%px;">Pilgan Salah</th>
+                                                    <th class="text-center" style="width: 25%;">Essai</th>
+                                                    <th class="text-center" style="width: 25%;">Nilai</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center font-size-h3 font-w700" scope="row">
+                                                        <span class="badge badge-success">{{ $nilais->jumlah_benar }}</span>
+                                                        </td>
+                                                    <td class="text-center font-size-h3 font-w700" scope="row"> 
+                                                        <span class="badge badge-danger">{{ $nilais->jumlah_salah }}</span>
+                                                        </td>
+                                                    <td class="text-center font-size-h3 font-w700">
+                                                        <span class="badge badge-warning">{{ $nilais->jumlah_kosong }}</span>
+                                                    </td>
+                                                    <td class="text-center font-size-h3 font-w700">
+                                                        <span class="badge badge-info">
+                                                            {{ number_format($nilais->jumlah_benar/($nilais->jumlah_benar+$nilais->jumlah_salah+$nilais->jumlah_kosong-5)*100, 2) }}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="font-size-h6 font-w700 text-uppercase text-muted">{{ $nilais->JadwalUjian->waktu_mulai }} - {{ $nilais->JadwalUjian->waktu_selesai }}</div>
+                                        <div class="font-size-h4 font-w700 text-uppercase text-muted">Paket {{ $nilais->Paket->nama[-1] }}</div>
                                     </div>
                                     <a class="btn btn-secondary" href="{{ url('/nilai/soal', ['mapel'=>$nilais->id, 'id'=>$nilai[0]->user->id]) }}">
                                         <i class="fa fa-send mr-5"></i> Analisis Soal
                                     </a>
-                                    <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
+{{--                                     <a class="btn btn-secondary" href="javascript:void(0)" data-toggle="modal" data-target="#modal-crypto-wallet-{{ $nilais->id }}">
                                         <i class="fa fa-qrcode mr-5"></i> Nilai
-                                    </a>
+                                    </a> --}}
                                 </div>
                             </div>
                         </div>
@@ -200,8 +230,6 @@
             <div class="block block-themed block-transparent mb-0">
                 <div class="block-header bg-primary-dark">
                     <h3 class="block-title">
-                        {{-- <i class="si si-wallet text-warning mr-5"></i> --}}
-                        {{-- {{ $nilais->jumlah_benar }} --}}
                         Nilai {{ $nilai[0]->user->nama }}
                     </h3>
                     <div class="block-options">
@@ -215,7 +243,6 @@
                         <tbody>
                             <tr>
                                 <td class="text-center">
-                                    {{-- JAN<br>10 --}}
                                     1
                                 </td>
                                 <td>
@@ -223,7 +250,6 @@
                                     <span class="text-muted">Setiap butir soal dijawab benar mendapatkan nilai 1</span>
                                 </td>
                                 <td class="text-right text-success font-w600">
-                                    {{-- + 0.50 BTC --}}
                                     Skala 0-100
                                 </td>
                                 <td class="d-none d-sm-table-cell text-right text-danger font-w600">
@@ -232,7 +258,6 @@
                             </tr>
                             <tr>
                                 <td class="text-center">
-                                    {{-- JAN<br>05 --}}
                                     2
                                 </td>
                                 <td>
@@ -240,7 +265,6 @@
                                     <span class="text-muted">Memberikan pertimbangan pada butir soal yang dijawab salah dan tidak dijawab</span>
                                 </td>
                                 <td class="text-right text-success font-w600">
-                                    {{-- + 0.50 BTC --}}
                                     Skala 0-100
                                 </td>
                                 <td class="d-none d-sm-table-cell text-right text-danger font-w600">
@@ -262,6 +286,7 @@
 @endsection
 
 @section('moreJS')
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <script>
         $.getJSON('{{ url('/ajax/grafik/nilai_siswa')}}/{{ $nilai[0]->user_id }}').done(function(result) {
             renderDataGrid(result);
@@ -357,8 +382,6 @@
             });
         }
     </script>
-    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
-
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

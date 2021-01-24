@@ -102,7 +102,7 @@
                                                 <th>Paket</th>
                                                 <th>Jumlah Siswa Sekolah</th>
                                                 <th>Rata-rata Sekolah</th>
-                                                <th>Jumlah Siswa Semua</th>    
+                                                <th>Jumlah Semua Siswa</th>    
                                                 <th>Rata-rata Semua</th>
                                                 <th>Keterangan</th>
                                                 <th></th>

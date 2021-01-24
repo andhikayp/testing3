@@ -12,7 +12,7 @@
 @section('content')
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <a class="breadcrumb-item" href="{{ url('/siswa') }}">Sekolah</a>
+    <a class="breadcrumb-item" href="{{ url('/nilai') }}">Statistik Nilai</a>
     <span class="breadcrumb-item active">Data Siswa</span>
 </nav>
 <div class="block">
@@ -30,7 +30,7 @@
                         <th>Username</th>
                         <th>Password</th>
                         <th>Jurusan</th>
-                        <th></th>
+                        <th>Aksi</th>
                     </tr>
                 </thead>
             </table>

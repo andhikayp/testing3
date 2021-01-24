@@ -18,6 +18,12 @@
     tr.shown td.details-control {
         background: url('{{ asset('img/details_close.png') }}') no-repeat center center;
     }
+    #nilai {
+        height: 440px;
+    }
+    #sekolah {
+        height: 440px;
+    }
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
@@ -43,9 +49,13 @@
                         <div class="row" style="margin-top: 10px;">
                             <div class="col-6">
                                 <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
-                                    <option value="All">Semua</option>
-                                    <option value="2013">Kurikulum 2013</option>
-                                    <option value="2006">Kurikulum 2006</option>
+                                    @if(Auth()->user()->level == 'admin')
+                                        <option value="All">Semua</option>
+                                        <option value="2013">Kurikulum 2013</option>
+                                        <option value="2006">Kurikulum 2006</option>
+                                    @elseif(Auth()->user()->level == 'proktor')
+                                        <option value="{{ Auth()->user()->sekolah->kurikulum }}">Kurikulum {{ Auth()->user()->sekolah->kurikulum }}</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -102,8 +112,14 @@
 @endsection
 
 @section('moreJS')
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <script>
-        getStatJawaTimur('all')
+        @if(Auth()->user()->level == 'admin')
+            getStatJawaTimur('all')
+        @elseif(Auth()->user()->level == 'proktor')
+            getStatJawaTimur('{{ Auth()->user()->sekolah->kurikulum }}')
+        @endif
+
         getStatJawaTimurSekolah('all')
 
         function myFunction(selectObject) {
@@ -184,7 +200,7 @@
                 series: {
                     argumentField: "nama",
                     valueField: "jumlah",
-                    name: "nama",
+                    name: "Jumlah Sekolah",
                     type: "bar",
                     color: '#ffaa66'
                 },
@@ -297,7 +313,6 @@
         });
 
     </script>
-    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
 
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>

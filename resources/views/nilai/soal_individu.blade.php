@@ -21,7 +21,7 @@
 </style>
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
-    <a class="breadcrumb-item" href="{{ url('/nilai') }}">Sekolah</a>
+    <a class="breadcrumb-item" href="{{ url('/nilai') }}">Statistik Nilai</a>
     <a class="breadcrumb-item" href="{{ url('/nilai', ['id'=>$ujian_siswa->user->sekolah->id]) }}">Data Siswa</a>
     <a class="breadcrumb-item" href="{{ url('/nilai', ['sekolah'=>$ujian_siswa->user->sekolah->id, 'id'=>$ujian_siswa->user->id]) }}">Nilai</a>
     <span class="breadcrumb-item active">Analisis Soal</span>
@@ -29,7 +29,7 @@
 <div class="block">
     <div class="block-header block-header-default bg-gd-primary">
         <h3 class="block-title text-white">
-            Analisis Soal {{ $ujian_siswa->paket->pelajaran->nama }} - {{ $ujian_siswa->user->nama }}
+            Analisis Soal {{ $ujian_siswa->paket->pelajaran->nama }} Paket {{ $ujian_siswa->paket->nama[-1] }} - {{ $ujian_siswa->user->nama }}
         </h3>
     </div>
     <div class="block-content">
@@ -37,25 +37,34 @@
             <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
                 <thead>
                     <tr>
-                        <th rowspan="2" style="text-align: center; vertical-align: middle;">Soal</th>
-                        <th rowspan="2" style="text-align: center; vertical-align: middle;">Jawaban Siswa</th>
-                        <th rowspan="2" style="text-align: center; vertical-align: middle;">Kunci Jawaban</th>
-                        <th rowspan="2" style="text-align: center; vertical-align: middle;">
-                            <a href="#" data-toggle="tooltip" title="Pengukuran seberapa besar derajat kesukaran suatu soal.">Tingkat Kesulitan</a>
+                        <th style="text-align: center; vertical-align: middle;">Soal</th>
+                        <th style="text-align: center; vertical-align: middle;">Jawaban Siswa</th>
+                        <th style="text-align: center; vertical-align: middle;">Kunci Jawaban</th>
+                        <th style="text-align: center; vertical-align: middle;">
+                            <a href="#" data-toggle="tooltip" title="Pengukuran seberapa besar derajat kesukaran suatu soal.">Tingkat Kesukaran</a>
                         </th>
-                        <th rowspan="2" style="text-align: center; vertical-align: middle;">
+                        {{-- <th style="text-align: center; vertical-align: middle;">
                             <a href="#" data-toggle="tooltip" title="Pengukuran sejauh mana suatu butir soal mampu membedakan peserta didik yang sudah menguasai kompetensi dengan peserta didik yang belum menguasai kompetensi.">Daya Pembeda</a>
-                        </th>
-                        <th colspan="2" style="text-align: center; vertical-align: middle;">Persentase menjawab benar</th>
+                        </th> --}}
+                        <th style="text-align: center; vertical-align: middle;">Persentase menjawab benar</th>
+                        {{-- <th style="text-align: center; vertical-align: middle;">Sekolah</th> --}}
+                        {{-- <th colspan="2" style="text-align: center; vertical-align: middle;">Persentase menjawab benar</th> --}}
                     </tr>
-                    <tr>
+                    {{-- <tr>
                         <th>Keseluruhan</th>
                         <th>Sekolah</th>
-                    </tr>
+                    </tr>--}}                
                 </thead>
                 <tbody>
+                    @php
+                        $user_sekolah = App\Models\User::select('id')->where('sekolah_id', $ujian_siswa->user->sekolah->id)->get();
+                    @endphp
                     @foreach($all_soal as $soal)
-                    <tr>
+                    <tr class="
+                    @if($soal->jawaban_siswa != $soal->kunci_jawaban)
+                        bg-danger text-white
+                    @endif
+                        ">
                         <td class="">
                             {!! $soal->deskripsi !!}
                             <div class="row" style="margin-top: -10px;">
@@ -86,19 +95,19 @@
                             {{ $soal->kunci_jawaban }}
                         </td>
                         <td class="text-center" style="font-weight: bold;">
-                            {{ number_format((float)$soal->analisis->tingkat_kesulitan*100, 2, '.', '') }}% <br>
-                            @if($soal->analisis->tingkat_kesulitan > 0.7)
-                                (Sukar)
-                            @elseif($soal->analisis->tingkat_kesulitan > 0.3)
-                                (Sedang)
+                            {{-- {{ number_format((float)$soal->analisis->tingkat_kesukaran*100, 2, '.', '') }}% <br> --}}
+                            @if($soal->analisis->tingkat_kesukaran > 0.7)
+                                Sukar
+                            @elseif($soal->analisis->tingkat_kesukaran > 0.3)
+                                Sedang
                             @else
-                                (Mudah)
+                                Mudah
                             @endif
                         </td>
-                        <td class="text-center" style="font-weight: bold;">
+                        {{-- <td class="text-center" style="font-weight: bold;">
                             @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
                                 @php
-                                    $daya_pembeda = ($soal->analisis->salah_bawah-$soal->analisis->salah_atas)/($soal->jumlah_siswa*0.27);
+                                    $daya_pembeda = $soal->analisis->daya_pembeda;
                                 @endphp
                                 {{ number_format((float)($daya_pembeda), 2, '.', '') }} <br>
                                 @if($daya_pembeda > 0.4)
@@ -111,13 +120,20 @@
                                     (Ditolak)
                                 @endif
                             @endif
-                        </td>
+                        </td> --}}
                         <td class="text-center" style="font-weight: bold;">
                             @if($soal->tipe_soal == 'pilihan_ganda' && $soal->jumlah_siswa!=0)
-                                {{ number_format((float)$soal->jumlah_benar_siswa/$soal->jumlah_siswa*100, 2, '.', '') }}%
+                                {{ $soal->jumlah_benar_siswa }} / {{$soal->jumlah_siswa}}<br>
+                                ({{ number_format((float)$soal->jumlah_benar_siswa/$soal->jumlah_siswa*100, 2, '.', '') }}%)
                             @endif
                         </td>
-                        <td></td>
+{{--                         <td>
+                            @php
+                                $ujian_id_benar = json_decode($soal->siswa_id_benar);
+                                $ujian_siswa_sekolah = App\Models\UjianSiswa::select('user_id')->whereIn('id', $ujian_id_benar)->whereIn('user_id', $user_sekolah)->count();
+                                $soal->sekolah_benar = $ujian_siswa_sekolah/count($user_sekolah);
+                            @endphp
+                        </td> --}}
                     </tr>
                     @endforeach
                 </tbody>

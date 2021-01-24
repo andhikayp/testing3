@@ -29,7 +29,7 @@
         <div class="block">
             <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" href="#btabs-animated-slideright-home">Statistik</a>
+                    <a class="nav-link active" href="#btabs-animated-slideright-home">Statistik Paket</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#btabs-animated-slideright-detail-sekolah">Detail</a>
@@ -46,8 +46,12 @@
                                 <h6>Kurikulum</h6>
                                 <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
                                     <option disabled selected>Pilih Kurikulum</option>
-                                    <option value="2013">Kurikulum 2013</option>
-                                    <option value="2006">Kurikulum 2006</option>
+                                    @if(Auth()->user()->level == 'admin')
+                                        <option value="2013">Kurikulum 2013</option>
+                                        <option value="2006">Kurikulum 2006</option>
+                                    @elseif(Auth()->user()->level == 'proktor')
+                                        <option value="{{ Auth()->user()->sekolah->kurikulum }}">Kurikulum {{ Auth()->user()->sekolah->kurikulum }}</option>
+                                    @endif
                                 </select>
                             </div>
                         </div>
@@ -118,6 +122,7 @@
 @endsection
 
 @section('moreJS')
+    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
     <script>
         var table = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">'+
                         '<thead>'+
@@ -211,7 +216,11 @@
                     dataSource: gridDataSource.data, 
                     series: {
                         argumentField: "nama_baru",
-                        valueField: "nilai_rata_rata",
+                        @if(Auth()->user()->level == 'admin')
+                            valueField: "nilai_rata_rata",
+                        @elseif(Auth()->user()->level == 'proktor')
+                            valueField: "rata2_sekolah",
+                        @endif
                         name: "Nilai rata-rata tiap paket",
                         type: "bar",
                         color: '#ffaa66'
@@ -263,16 +272,12 @@
                 '</div>'+
             '</div>';
         }
-
-
     </script>
     <script type="text/javascript">
         $('.js-example-basic-single').select2({
             width: 'resolve'
         });
     </script>
-    <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
-
     <!-- Page JS Plugins -->
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/jquery.dataTables.min.js')}}"></script>
     <script src="{{ asset('codebase/src/assets/js/plugins/datatables/dataTables.bootstrap4.min.js')}}"></script>

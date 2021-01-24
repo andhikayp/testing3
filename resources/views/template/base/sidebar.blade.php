@@ -101,7 +101,7 @@ Sidebar -->
                     </ul>
                 </li>
                 <li>
-                    <a href="{{ url('peringkat') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat Sekolah</span></a>
+                    <a href="{{ url('peringkat') }}"><i class="si si-trophy"></i><span class="sidebar-mini-hide">Peringkat</span></a>
                 </li>
                 <li>
                     <a href="{{ url('soal') }}"><i class="si si-puzzle"></i><span class="sidebar-mini-hide">Analisis Butir Soal</span></a>

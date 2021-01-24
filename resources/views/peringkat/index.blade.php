@@ -108,16 +108,17 @@
 {{-- SISWA --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-siswa" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active rata_rata_siswa" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
+                        <li class="nav-item active show rata_rata_siswa" id="rat">
+                            <a class="nav-link rata_rata_siswa" href="#btabs-animated-slideright-siswa" id="rata_rata_siswa">Semua</a>
                         </li>
-                        <li class="nav-item tiap_pelajaran">
-                            <a class="nav-link" href="#btabs-animated-slideright-pelajaran">Tiap Pelajaran</a>
+                        <li class="nav-item tiap_pelajaran" id="pel2">
+                            <a class="nav-link tiap_pelajaran2" href="#btabs-animated-slideright-pelajaran">Tiap Pelajaran</a>
                         </li>
                     </ul>
                     <div class="row" style="margin-top: 30px;">
                         <div class="col-6">
                             <select class="form-control js-example-basic-single" id="example-select" name="example-select" onchange="myFunction(this)" style="width: 100%">
+                                <option value="" disabled="" selected="">Pilih Kurikulum</option>
                                 <option value="All">Semua</option>
                                 <option value="2013">Kurikulum 2013</option>
                                 <option value="2006">Kurikulum 2006</option>
@@ -146,10 +147,10 @@
 {{-- PELAJARAN --}}
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-pelajaran" role="tabpanel">
                     <ul class="nav nav-tabs nav-tabs-block" data-toggle="tabs" role="tablist">
-                        <li class="nav-item">
+                        <li class="nav-item" id="rat2">
                             <a class="nav-link rata_rata_siswa" href="#btabs-animated-slideright-siswa" id="">Semua</a>
                         </li>
-                        <li class="nav-item active">
+                        <li class="nav-item active show tiap_pelajaran" id="pel">
                             <a class="nav-link tiap_pelajaran" href="#btabs-animated-slideright-pelajaran" id="tiap_pelajaran">Tiap Pelajaran</a>
                         </li>
                     </ul>
@@ -180,7 +181,17 @@
 @endsection
 @section('moreJS')
     <script>
-        var table = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table"><thead><tr><th>Peringkat</th><th>Kota / Kabupaten</th><th>Jumlah Sekolah</th><th>Nilai rata_rata</th></tr></thead></table>';
+        var table = 
+            '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_kota-table">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Peringkat</th>'+
+                        '<th>Kota / Kabupaten</th>'+
+                        '<th>Jumlah Sekolah</th>'+
+                        '<th>Nilai rata_rata</th>'+
+                    '</tr>'+
+                '</thead>'+
+            '</table>';
 
         $('#kota_all').on('click', function(e){
             getRankKota()            
@@ -244,7 +255,16 @@
             });
         });
 
-        var table_peringkat_sekolah = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_sekolah-table"><thead><tr><th>Peringkat</th><th>Sekolah</th><th>Nilai rata-rata</th></tr></thead></table>';
+        var table_peringkat_sekolah = 
+            '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_sekolah-table">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Peringkat</th>'+
+                        '<th>Sekolah</th>'+
+                        '<th>Nilai rata-rata</th>'+
+                    '</tr>'+
+                '</thead>'+
+            '</table>';
         
         $('#sekolah_all').on('click', function(e){
             getRankSekolah()
@@ -270,7 +290,6 @@
                 ]
             });
         }
-
         
         $('#sekolah_2013').on('click', function(e){
             $('#dinamis_sekolah_table').empty();
@@ -324,11 +343,32 @@
             getRankSiswa('all')
         });
 
-        $('#rata_rata_siswa').on('click', function(e){
+        $('.rata_rata_siswa').on('click', function(e){
             getRankSiswa('all')
+            $('.peringkat_siswa').removeClass('active show');
+            $('#rat').addClass('active show');
+            $('#btabs-animated-slideright-pelajaran').removeClass('active show');            
         });
 
-        var table_peringkat_siswa = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas_rata2-table"><thead><tr><th></th><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Nilai Rata-rata</th></tr></thead></table>';
+        $('.tiap_pelajaran').on('click', function(e){
+            $('.rata_rata_siswa').removeClass('active show');
+            $('.tiap_pelajaran2').removeClass('active show');
+            $('#pel').addClass('active show');
+            $('#btabs-animated-slideright-siswa').removeClass('active show');
+        });
+
+        var table_peringkat_siswa = 
+            '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas_rata2-table">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th></th>'+
+                        '<th>Nama</th>'+
+                        '<th>NISN</th>'+
+                        '<th>Sekolah</th>'+
+                        '<th>Nilai Rata-rata</th>'+
+                    '</tr>'+
+                '</thead>'+
+            '</table>';
 
         function getRankSiswa(kurikulum){
             kurikulum = kurikulum.toLowerCase()
@@ -358,7 +398,18 @@
             getRankSiswa(value)
         }
 
-        var table_peringkat_siswa_individu = '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table"><thead><tr><th></th><th>Nama</th><th>NISN</th><th>Sekolah</th><th>Nilai</th></tr></thead></table>';
+        var table_peringkat_siswa_individu = 
+            '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="siswas-table">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th></th>'+
+                        '<th>Nama</th>'+
+                        '<th>NISN</th>'+
+                        '<th>Sekolah</th>'+
+                        '<th>Nilai</th>'+
+                    '</tr>'+
+                '</thead>'+
+            '</table>';
 
         function getRankSiswaIndividu(id, kurikulum, mapel){
             console.log(id)

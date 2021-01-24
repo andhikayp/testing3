@@ -18,7 +18,9 @@
 <nav class="breadcrumb bg-white push">
     <a class="breadcrumb-item" href="{{ url('/dashboard') }}">Dashboard</a>
     <a class="breadcrumb-item" href="{{ url('/nilai') }}">Statistik Nilai</a>
+    @if(Auth()->user()->level == 'admin')
     <a class="breadcrumb-item" href="{{ url('/nilai', ['id'=>$sekolah]) }}">Data Siswa</a>
+    @endif
     <span class="breadcrumb-item active">Nilai</span>
 </nav>
 <div class="block">

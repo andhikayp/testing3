@@ -63,7 +63,7 @@
                             <div id="nilai"></div>
                         </div>
                     </div>
-
+                    @if(Auth()->user()->level == 'admin')
                     <div class="block">
                         <h4 class="font-w400" id='dinamis_siswa_teks'>
                             Distribusi Sebaran Nilai Rata-rata tiap Sekolah
@@ -81,24 +81,44 @@
                             <div id="sekolah"></div>
                         </div>
                     </div>
-
+                    @endif
                 </div>
                 <div class="tab-pane fade fade-right" id="btabs-animated-slideright-detail-sekolah" role="tabpanel">
                     <div class="block">
                         <div class="block-header block-header-default bg-gd-primary">
-                            <h3 class="block-title text-white">Sekolah</h3>
+                            @if(Auth()->user()->level == 'admin')
+                                <h3 class="block-title text-white">Sekolah</h3>
+                            @elseif(Auth()->user()->level == 'proktor')
+                                <h3 class="block-title text-white">Data Siswa {{ Auth()->user()->sekolah->nama }}</h3>
+                            @endif
                         </div>
                         <div class="block-content">
                             <div class="table-responsive">
-                                <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
-                                    <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Kode Rayon</th>
-                                            <th>Kota / Kabupaten</th>
-                                        </tr>
-                                    </thead>
-                                </table>
+                                @if(Auth()->user()->level == 'admin')
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table">
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th>Kode Rayon</th>
+                                                <th>Kota / Kabupaten</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                @elseif(Auth()->user()->level == 'proktor')
+                                    <table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="users-table2">
+                                        <thead>
+                                            <tr>
+                                                <th>Nama</th>
+                                                <th>Jenis Kelamin</th>
+                                                <th>NISN</th>
+                                                <th>Username</th>
+                                                <th>Password</th>
+                                                <th>Jurusan</th>
+                                                <th>Aksi</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -310,6 +330,30 @@
                     ]
                 })
             }
+        });
+
+        $(function(){
+            var table = $('#users-table2').DataTable({
+                "processing": true,
+                "serverSide": true,
+                "searchDelay": 1000,
+                "autoWidth": false,
+                "ajax":{
+                    "url": "{{ url('ajax/datatables/siswa/nilai')}}/{{ Auth()->user()->sekolah->id }}",
+                    "dataType": "json",
+                    "type": "GET",
+                },
+                "columns": [
+                    { data: 'nama'},
+                    { data: 'jenis_kelamin'},
+                    { data: 'nisn'},
+                    { data: 'username'},
+                    { data: 'password_siswa'},
+                    { data: 'jurusan'},
+                    { data: 'action', name: 'action', orderable: false, searchable: false },
+                ],
+                "order": [[0, "asc"]]
+            });
         });
 
     </script>

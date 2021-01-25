@@ -265,6 +265,20 @@
                     '</tr>'+
                 '</thead>'+
             '</table>';
+        var table_peringkat_sekolah_kurikulum = 
+            '<table class="table table-bordered table-striped table-hover dataTable js-basic-example" id="peringkat_sekolah-table">'+
+                '<thead>'+
+                    '<tr>'+
+                        '<th>Peringkat</th>'+
+                        '<th>Sekolah</th>'+
+                        '<th>Kategori Atas</th>'+
+                        '<th>Kategori Tengah</th>'+
+                        '<th>Kategori Bawah</th>'+
+                        '<th>Nilai rata-rata</th>'+
+                    '</tr>'+
+                '</thead>'+
+            '</table>';
+
         
         $('#sekolah_all').on('click', function(e){
             getRankSekolah()
@@ -293,7 +307,7 @@
         
         $('#sekolah_2013').on('click', function(e){
             $('#dinamis_sekolah_table').empty();
-            $('#dinamis_sekolah_table').append(table_peringkat_sekolah);
+            $('#dinamis_sekolah_table').append(table_peringkat_sekolah_kurikulum);
             $('#dinamis_sekolah_teks').html('Peringkat Sekolah Kurikulum 2013');
 
             $('#peringkat_sekolah-table').DataTable( {
@@ -303,6 +317,9 @@
                 "columns": [
                     { "data": "no" },
                     { "data": "nama" },
+                    { "data": "persentase_user_atas" },
+                    { "data": "persentase_user_tengah" },
+                    { "data": "persentase_user_bawah" },
                     { "data": "nilai_rata_rata" },
                 ]
             });
@@ -310,7 +327,7 @@
 
         $('#sekolah_2006').on('click', function(e){
             $('#dinamis_sekolah_table').empty();
-            $('#dinamis_sekolah_table').append(table_peringkat_sekolah);
+            $('#dinamis_sekolah_table').append(table_peringkat_sekolah_kurikulum);
             $('#dinamis_sekolah_teks').html('Peringkat Sekolah Kurikulum 2006');
 
             $('#peringkat_sekolah-table').DataTable( {
@@ -320,6 +337,9 @@
                 "columns": [
                     { "data": "no" },
                     { "data": "nama" },
+                    { "data": "persentase_user_atas" },
+                    { "data": "persentase_user_tengah" },
+                    { "data": "persentase_user_bawah" },
                     { "data": "nilai_rata_rata" },
                 ]
             });

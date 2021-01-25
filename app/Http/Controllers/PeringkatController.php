@@ -13,6 +13,7 @@ use App\Models\JadwalUjian;
 use App\Models\UjianSiswa;
 use App\Models\Paket;
 use App\Models\Pelajaran;
+use App\Models\OTP;
 
 class PeringkatController extends Controller
 {
@@ -21,10 +22,10 @@ class PeringkatController extends Controller
 		$ranking_2013 = $this->peringkat_kota('2013');
 		$ranking_2006 = $this->peringkat_kota('2006');
 		$ranking_sekolah = $this->peringkat_sekolah('all');
-		$ranking_sekolah_2013 = $this->peringkat_sekolah('2013');
-		$ranking_sekolah_2006 = $this->peringkat_sekolah('2006');
+		// $ranking_sekolah_2013 = $this->peringkat_sekolah('2013');
+		// $ranking_sekolah_2006 = $this->peringkat_sekolah('2006');
 		$mapel = Pelajaran::all()->sortBy('kurikulum');
-        return view('peringkat.index', compact('ranking', 'ranking_2013', 'ranking_2006', 'ranking_sekolah', 'ranking_sekolah_2013', 'ranking_sekolah_2006', 'mapel'));
+        return view('peringkat.index', compact('ranking', 'ranking_2013', 'ranking_2006', 'ranking_sekolah', 'mapel'));
 	}
 
 	public function peringkat_kota($id){
@@ -54,14 +55,29 @@ class PeringkatController extends Controller
 	}
 
 	public function peringkat_sekolah($id){
-		if($id == 'all') {
+		if($id == 'all'){
 			$sekolah = Sekolah::all();
-		} else {
+		} else{
 			$sekolah = Sekolah::where('kurikulum', $id)->get();
+			$mean = OTP::select('value')->where('kunci', 'mean_'.$id)->first();
+			$stddev = OTP::select('value')->where('kunci', 'standar_deviasi_'.$id)->first();
+			$batas_atas = $mean->value + $stddev->value;
+			$batas_bawah = $mean->value - $stddev->value;
+			// dd($batas_atas, $batas_bawah);
 		}
 		$no = 1;
 		$sekolah = $sekolah->sortByDesc('nilai_rata_rata');
-		foreach($sekolah as $s) {
+		foreach($sekolah as $s){
+			if($id !='all'){
+				$user = User::select('id','nilai_rata_rata')->where('sekolah_id', $s->id)->get();
+				$s->user_atas = $user->where('nilai_rata_rata','>=', $batas_atas)->count();
+				$s->user_bawah = $user->where('nilai_rata_rata','<=', $batas_bawah)->count();
+				$s->total = count($user);
+				$s->user_tengah = $s->total-($s->user_atas+$s->user_bawah);
+				$s->persentase_user_atas = strval($s->user_atas)."<br>(".strval(number_format($s->user_atas/$s->total*100,2))."%)";
+				$s->persentase_user_tengah = strval($s->user_tengah)."<br>(".strval(number_format($s->user_tengah/$s->total*100,2))."%)";
+				$s->persentase_user_bawah = strval($s->user_bawah)."<br>(".strval(number_format($s->user_bawah/$s->total*100,2))."%)";
+			}
 			$s->no = $no++;
 			$s->nilai_rata_rata = round($s->nilai_rata_rata*100, 2);
 		}
@@ -75,7 +91,9 @@ class PeringkatController extends Controller
 
 	public function ajax_peringkat_sekolah($id){
 		$ranking = $this->peringkat_sekolah($id);
-        return Datatables::of($ranking)->make(true);
+        return Datatables::of($ranking)
+            ->rawColumns(['persentase_user_atas', 'persentase_user_tengah', 'persentase_user_bawah'])
+        	->make(true);
 	}
 
 	public function ajax_sebaran_peringkat_sekolah($kurikulum) {

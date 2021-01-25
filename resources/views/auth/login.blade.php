@@ -8,7 +8,7 @@
         <div class="hero-static col-md-6 col-xl-8 d-none d-md-flex align-items-md-end">
             <div class="p-30 invisible" data-toggle="appear">
                 <p class="font-size-h3 font-w600 text-white">
-                    MONEV USP-BKS - Aplikasi Monitoring dan Evaluasi USP-BKS Dinas Pendidikan Provinsi Jawa Timur
+                    MONEV USP BKS 2020- Aplikasi Monitoring dan Evaluasi USP BKS Dinas Pendidikan Provinsi Jawa Timur
                 </p>
                 <p class="font-italic text-white-op">
                     Copyright &copy; Dinas Pendidikan Provinsi Jawa Timur <span class="js-year-copy"></span>
@@ -19,8 +19,8 @@
             <div class="content content-full">
                 <div class="px-30 py-10 text-center">
                     <img src="{{ asset('img/logo_jatim.png') }}" alt="Logo Sidoarjo" width="50%" height="100%"><br>
-                    <a class="link-effect font-w700" href="index.html">
-                        <span class="font-size-xl text-primary-dark">MONEV USP-BKS 2020</span><br><span class="font-size-xl">Dinas Pendidikan <br>Provinsi Jawa Timur</span>
+                    <a class="link-effect font-w700" href="https://dindik.jatimprov.go.id/main" target="_blank">
+                        <span class="font-size-xl text-primary-dark">MONEV USP BKS 2020</span><br><span class="font-size-xl">Dinas Pendidikan <br>Provinsi Jawa Timur</span>
                     </a>
                 </div>
                 <!-- Header -->

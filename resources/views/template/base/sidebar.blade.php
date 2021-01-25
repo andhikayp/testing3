@@ -37,7 +37,7 @@ Sidebar -->
                 <!-- Logo -->
                 <div class="content-header-item">
                     <a class="link-effect font-w700" href="index.html">
-                        <span class="font-size-l text-dual-primary-dark">MONEV </span><span class="font-size-l text-primary">USP-BKS 2020</span>
+                        <span class="font-size-l text-dual-primary-dark">MONEV </span><span class="font-size-l text-primary">USP BKS 2020</span>
                     </a>
                 </div>
                 <!-- END Logo -->

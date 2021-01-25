@@ -339,7 +339,7 @@
                 "searchDelay": 1000,
                 "autoWidth": false,
                 "ajax":{
-                    "url": "{{ url('ajax/datatables/siswa/nilai')}}/{{ Auth()->user()->sekolah->id }}",
+                    "url": "{{ url('ajax/datatables/siswa/nilai')}}/{{ Auth()->user()->sekolah_id }}",
                     "dataType": "json",
                     "type": "GET",
                 },

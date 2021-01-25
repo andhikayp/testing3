@@ -158,11 +158,9 @@
 @endsection
 @section('moreJS')
 <script>
-    // $(window).on('load', function () {
-    //     $.getJSON('{{ url('/count_ujian')}}', function(result) {
-    //         getCountUjian(result);
-    //     });
-    // });
+    $.getJSON('{{ url('/count_ujian')}}', function(result) {
+        getCountUjian(result);
+    });
     function getCountUjian(result){
         var div = document.getElementById('count_ujian');
         var reverse = result.toString().split('').reverse().join(''),
@@ -171,13 +169,5 @@
         div.innerHTML += ribuan;
     }
 </script>
-
 <script src="{{ asset('js/devextreme/dx.all.js') }}"></script>
-<script>
-    $.getJSON('{{ url('/admindt') }}')
-      .done(function(result) {
-        console.log(result);
-        // renderDataGrid(result.data);
-      });
-</script>
 @endsection

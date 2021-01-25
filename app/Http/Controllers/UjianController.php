@@ -11,6 +11,7 @@ use App\Models\UjianSiswa;
 use App\Models\Paket;
 use App\Models\User;
 use App\Models\Pelajaran;
+use App\Models\OTP;
 use Ramsey\Uuid\Uuid;
 
 class UjianController extends Controller
@@ -117,8 +118,8 @@ class UjianController extends Controller
     }
 
     public function ajaxCountUjian(){
-        $count_ujian = UjianSiswa::count();
-        return response()->json($count_ujian);
+        $count_ujian = OTP::select('value')->where('kunci','jumlah_ujian')->first();
+        return response()->json($count_ujian['value']);
     }
 
     public function getPelajaranId(){
